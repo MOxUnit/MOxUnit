@@ -1,0 +1,3 @@
+function tf=wasSuccessful(obj)
+    tf=all([numel(obj.errors),...
+            numel(obj.failures)]==0);
