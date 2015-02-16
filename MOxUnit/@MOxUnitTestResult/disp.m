@@ -4,15 +4,20 @@ function disp(obj)
     horline=sprintf('%s\n\n',repmat('-',1,50));
 
     keys={'errors','failures','skips','successes'};
+
+    % define minimum verbosity level for each key to show result
+    required_verbosity=[1 1 2 Inf];
+
     counts=cellfun(@(x)numel(obj.(x)),keys);
 
+    % only has non successes if either error or failure
     has_non_successes=sum(counts(1:3));
 
-    if obj.verbosity>0 && has_non_successes
-        fprintf(obj.stream, horline);
-        show_non_successes(obj,'errors');
-        show_non_successes(obj,'skips');
-        show_non_successes(obj,'failures');
+    for j=1:numel(keys)
+        if obj.verbosity>=required_verbosity(j) && counts(j)>0
+            fprintf(obj.stream, horline);
+            show_non_successes(obj,keys{j});
+        end
     end
 
     if obj.verbosity>0
