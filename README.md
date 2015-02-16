@@ -17,9 +17,9 @@ MOxUnit is an lightweight unit test framework for Matlab and GNU Octave.
 - On the Matlab or GNU Octave prompt, ```cd``` to the ``MOxUnit`` root directory, then run:
 
   ```
-  cd MOxUnit      # cd to MOxUnit subdirectory
-  addpath(pwd())  # add the current directory to the Matlab/GNU Octave path
-  savepath        # save the path
+  cd MOxUnit      % cd to MOxUnit subdirectory
+  addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
+  savepath        % save the path
   ```
 
 
