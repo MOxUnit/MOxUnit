@@ -14,22 +14,6 @@ function obj=addFromFile(obj,fn)
             obj=addTest(obj,test_case);
         end
     catch
-        caught_error=lasterror();
-
-        if is_parse_error(caught_error)
-            % add a test case that shows the parsing error
-            subfunction_name='';
-            func=@()rethrow(caught_error);
-            test_case=MOxUnitFunctionHandleTestCase(subfunction_name,...
-                                                    fn, func);
-            obj=addTest(obj,test_case);
-        else
-            % ignore silently, assuming that the file was not a test case
-        end
+        % ignore silently, assuming that the file was not a test case
     end
-
-
-function tf=is_parse_error(caught_error)
-    tf=isempty(caught_error.identifier) && ...
-            ~isempty(regexp(caught_error.message,'^parse error','once'));
 
