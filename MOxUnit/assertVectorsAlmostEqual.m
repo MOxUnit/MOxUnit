@@ -44,7 +44,7 @@ function assertVectorsAlmostEqual(a,b,varargin)
 
     metric=@norm;
     [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(...
-                                                  a,b,metric,varargin{:});
+                                            a,b,metric,false,varargin{:});
 
     if isempty(error_id)
         if ~isvector(a)

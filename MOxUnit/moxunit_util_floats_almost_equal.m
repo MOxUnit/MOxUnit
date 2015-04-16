@@ -1,13 +1,15 @@
-function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,varargin)
+function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,nonfin_eq,varargin)
 % compare equality of two float arrays up to certain tolerance
 %
-% [message,error_id,whatswrong]=moxunit_is_almost_equal(a,b[,tol_type,tol,floor_tol,msg])
+% [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,nonfin_eq,[,tol_type,tol,floor_tol,msg])
 %
 % Inputs:
 %   a           float array
 %   b           float array
 %   f           function handle to a function that takes one vector input
 %               and returns a scalar output.
+%   nonfin_eq   if true, non-finite elements are treated equal if they
+%               are both NaN or both Infinity with the same sign
 %   tol_type    'relative' or 'absolute' (default: 'relative')
 %   tol         tolerance       } default: sqrt(eps) if a is double,
 %   floor_tol   floor_tolerance } sqrt(eps('single')) otherwise)
@@ -68,25 +70,47 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,va
 
     switch tol_type
         case 'relative'
-            test_func=@(x,y) all(f(x(:)-y(:))<=...
-                                tol*max(f(y(:)),f(x(:)))+floor_tol);
+            test_func=@(x,y) f(x-y)<=tol*max(f(y),f(x))+floor_tol;
         case 'absolute'
-            test_func=@(x,y) all(f(x(:)-y(:))<=tol);
+            test_func=@(x,y) f(x-y)<=tol;
 
         otherwise
             error('moxunit:illegalParameter',...
                     'unsupported tolerance type %s', tol_type);
     end
 
-    all_equal=(iscomplex(a) && test_func(real(a),real(b)) && ...
-                                    test_func(imag(a),imag(b))) ||...
-              (isreal(a) && test_func(a,b));
+    a_vec=a(:);
+    b_vec=b(:);
+    if iscomplex(a)
+        cmp_func=@()test_func(real(a_vec),real(b_vec)) & ...
+                        test_func(imag(a_vec),imag(b_vec));
+    else
+        cmp_func=@()test_func(a_vec,b_vec);
+    end
+
+    msk_equal=cmp_func();
+
+    if nonfin_eq
+        msk_equal(~isfinite(a_vec))=false;
+        msk_equal(nonfinite_elements_equal(a_vec,b_vec))=true;
+    else
+        msk_equal=msk_equal & isfinite(a_vec) & isfinite(b_vec);
+    end
+
+    all_equal=all(msk_equal);
 
     if ~all_equal
         whatswrong=sprintf(['inputs are not equal within '...
                                 '%s tolerance %d'],tol_type,tol);
         error_id='moxunit:floatsNotAlmostEqual';
     end
+
+function msk_equal=nonfinite_elements_equal(a,b)
+    msk_nan=isnan(a) & isnan(b);
+    msk_inf=isinf(a) & isinf(b) & sign(a)==sign(b);
+
+    msk_equal=msk_nan | msk_inf;
+
 
 
 function [message,tol_type,tol,floor_tol]=get_params(a,varargin)

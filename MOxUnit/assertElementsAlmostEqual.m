@@ -40,7 +40,7 @@ function assertElementsAlmostEqual(a,b,varargin)
 
     metric=@abs;
     [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(...
-                                                  a,b,metric,varargin{:});
+                                             a,b,metric,true,varargin{:});
 
     if isempty(error_id)
         return;
