@@ -31,8 +31,8 @@ function assertVectorsAlmostEqual(a,b,varargin)
 %
 %           all(norm(a-b)<=tol);
 %
-%   - It follows that if any value in a or b is not finite (+Inf, -Inf, or
-%     NaN), then a and b are not almost equal.
+%   - Values are considered equal if they are both NaN, or both infinite
+%     with the same sign.
 %   - If a custom message is provided, then any error message is prefixed
 %     by this custom message
 %   - This function attempts to show similar behaviour as in
