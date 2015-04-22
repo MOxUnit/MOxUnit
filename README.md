@@ -1,4 +1,4 @@
-# MOxUnit - an xUnit framework for Matlab and Octave
+# MOxUnit - an xUnit framework for Matlab and Octave [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/nno/MOxUnit)
 
 MOxUnit is an lightweight unit test framework for Matlab and GNU Octave.
 
