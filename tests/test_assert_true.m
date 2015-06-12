@@ -1,5 +1,5 @@
 function test_suite=test_assert_true()
-    initTestSuite
+    initTestSuite;
 
 function test_assert_true_exceptions
 

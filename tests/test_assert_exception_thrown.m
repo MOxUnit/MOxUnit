@@ -1,5 +1,5 @@
 function test_suite=test_assert_exception_thrown()
-    initTestSuite
+    initTestSuite;
 
 function test_assert_exception_thrown_exceptions
     try

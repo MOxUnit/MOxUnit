@@ -1,5 +1,5 @@
 function test_suite=test_assert_equal()
-    initTestSuite
+    initTestSuite;
 
 function test_assert_equal_exceptions
     assertExceptionThrown(@()assertEqual(...

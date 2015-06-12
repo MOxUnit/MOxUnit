@@ -1,5 +1,5 @@
 function test_suite=test_assert_elements_almost_equal()
-    initTestSuite
+    initTestSuite;
 
 function test_assert_elements_almost_equal_exceptions
     assertExceptionThrown(@()assertElementsAlmostEqual(...
@@ -28,10 +28,10 @@ function test_assert_elements_almost_equal_exceptions
                                         'moxunit:floatsNotAlmostEqual');
     assertExceptionThrown(@()assertElementsAlmostEqual(...
                                 struct(),struct()),...
-                                        'moxunit:notFloat')
+                                        'moxunit:notFloat');
     assertExceptionThrown(@()assertElementsAlmostEqual(...
                                 {1,'a'},{1,'a'}),...
-                                        'moxunit:notFloat')
+                                        'moxunit:notFloat');
 
 
 

@@ -1,5 +1,5 @@
 function test_suite=test_assert_false()
-    initTestSuite
+    initTestSuite;
 
 function test_assert_false_exceptions
     assertExceptionThrown(@()assertFalse(...

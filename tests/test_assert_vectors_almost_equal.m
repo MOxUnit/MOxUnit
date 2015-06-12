@@ -1,5 +1,5 @@
 function test_suite=test_assert_vectors_almost_equal()
-    initTestSuite
+    initTestSuite;
 
 function test_assert_vectors_almost_equal_exceptions
 
@@ -32,10 +32,10 @@ function test_assert_vectors_almost_equal_exceptions
                                         'moxunit:notVector');
     assertExceptionThrown(@()assertVectorsAlmostEqual(...
                                 struct(),struct()),...
-                                        'moxunit:notFloat')
+                                        'moxunit:notFloat');
     assertExceptionThrown(@()assertVectorsAlmostEqual(...
                                 {1,'a'},{1,'a'}),...
-                                        'moxunit:notFloat')
+                                        'moxunit:notFloat');
 
 
 
