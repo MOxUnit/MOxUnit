@@ -58,8 +58,8 @@ Then, define subfunctions whose name start with ``test_`` or end with ``_test``.
 - ```assertTrue(a)```: assert that ```a``` is true.
 - ```assertFalse(a)```: assert that ```a``` is false.
 - ```assertEqual(a,b)```: assert that ```a``` and ```b``` are equal.
-- ```assertElementsAlmostEqual(a,b)```: assert that floating point arrays ```a``` and ```b``` are equal within some numeric tolerance.
-- ```assertElementsAlmostEqual(a,b)```: assert that floating point vectors ```a``` and ```b``` are equal within some numeric tolerance based on their vector norm.
+- ```assertElementsAlmostEqual(a,b)```: assert that the floating point arrays ```a``` and ```b``` have the same size, and that corresponding elements are equal within some numeric tolerance.
+- ```assertVectorsAlmostEqual(a,b)```: assert that floating point vectors ```a``` and ```b``` have the same size, and are equal within some numeric tolerance based on their vector norm.
 - ```assertExceptionThrown(f,id)```: assert that calling ``f()`` throws an exception with identifier ``id``. (To deal with cases where Matlab and GNU Octave throw errors with different identifiers, use ```moxunit_util_platform_is_octave``)`.
 
 As a special case, ```moxunit_throw_test_skipped_exception('reason')``` throws an exception that is caught when running the test; ``moxunit_run_tests`` will report that the test is skipped for reason ```reason```.
@@ -101,7 +101,7 @@ Some more examples of unit tests are in MOxUnit's ``tests`` directory, which tes
 
 ### Limitations
 Currently MOxUnit does not support:
-- Documentation tests (these would require ``evalc``, which is not available on ``GNU Octave`` (as of January 2014).
+- Documentation tests (these would require ``evalc``, which is not available on ``GNU Octave`` (as of January 2014)).
 - Support for setup and teardown functions in ``TestCase`` classes.
 
 
