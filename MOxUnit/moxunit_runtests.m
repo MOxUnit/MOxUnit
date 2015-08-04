@@ -5,7 +5,8 @@ function result=moxunit_runtests(varargin)
 %
 % Inputs:
 %   '-verbose'          show verbose output. If not provided, non-verbose
-%                       output is shown
+%                       output is shown.
+%   '-quiet'            do not show output
 %   filename            } test the unit tests in filename
 %   directory           } (which must initialize a test suite through
 %                       } initTestSuite) or in directory. Multiple filename
@@ -16,7 +17,8 @@ function result=moxunit_runtests(varargin)
 %                       output id directed to the terminal window
 %
 % Output:
-%   result              true if no test failed or raises an error.
+%   result              true if no test failed or raised an error, in other
+%                       words, if all tests either passed or were skipped.
 %                       (therefore, result is true if no tests were run)
 %
 % Notes:
@@ -34,17 +36,23 @@ function result=moxunit_runtests(varargin)
 %     Steve Eddins' MATLAB xUnit Test Framework (2009-2012)
 %     URL: http://www.mathworks.com/matlabcentral/fileexchange/
 %                           22846-matlab-xunit-test-framework
+%   - To define tests, functions can be written that use initTestSuite.
+%
+% See also: initTestSuite
 %
 % NNO Jan 2014
 
 
     [verbosity, filenames, fid]=get_params(varargin{:});
     if fid>2
+        % not standard or error output; file most be closed
+        % afterwards
         cleaner=onCleanup(@()fclose(fid));
     end
 
     suite=MOxUnitTestSuite();
     for k=1:numel(filenames)
+        % add files to the test suite
         filename=filenames{k};
         if isdir(filename)
             suite=addFromDirectory(suite,filename);
@@ -52,13 +60,22 @@ function result=moxunit_runtests(varargin)
             suite=addFromFile(suite,filename);
         end
     end
-    fprintf(fid,'%s\n',str(suite));
 
+    % show summary of test suite
+    if verbosity>0
+        fprintf(fid,'%s\n',str(suite));
+    end
+
+    % initialize test results
     test_init=MOxUnitTestResult(verbosity, fid);
 
+    % run all tests
     test_result=run(suite, test_init);
+
+    % show summary of test result
     disp(test_result);
 
+    % return true if no errors or failures
     result=wasSuccessful(test_result);
 
 
@@ -81,6 +98,10 @@ function [verbosity,filenames,fid]=get_params(varargin)
         switch arg
             case '-verbose'
                 verbosity=verbosity+1;
+
+            case '-quiet'
+                verbosity=verbosity-1;
+
 
             case '-logfile'
                 if k==n
