@@ -25,7 +25,7 @@ function test_assert_exception_thrown_exceptions
 function test_assert_exception_thrown_exceptions_not_thrown
 
     try
-        assertExceptionThrown(@()disp(''),'moxunit:failed','msg');
+        assertExceptionThrown(@do_nothing,'moxunit:failed','msg');
         did_throw=false;
     catch
         caught_error=lasterror();
@@ -49,3 +49,6 @@ function test_assert_exception_thrown_passes
                                             'moxunit:error');
     assertExceptionThrown(@()error('moxunit:error','msg'),...
                                             'moxunit:error','message');
+
+function do_nothing
+    % do nothing
