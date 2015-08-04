@@ -23,14 +23,14 @@ function tf=moxunit_isa_test_skipped_exception(exception)
     if isempty(cached_test_skipped_identifier)
         if moxunit_util_platform_is_octave()
             try
-                moxunit_throw_test_skipped_exception('error')
+                moxunit_throw_test_skipped_exception('error');
             catch
                 last_caught_error=lasterror();
             end
 
         else
             try
-                moxunit_throw_test_skipped_exception('error')
+                moxunit_throw_test_skipped_exception('error');
             catch last_caught_error
             end
         end
