@@ -33,12 +33,13 @@ function disp(obj)
     failure_keys={'errors','failures'};
 
     all_keys=fieldnames(required_verbosity);
-    get_counts=@(key_cell) cellfun(@(x)numel(obj.(x)),key_cell);
+    get_counts=@(key_cell) get_counts_from_obj(obj, key_cell);
 
     % show all errors, failures, and skips (if any).
     % skips are only shown with verbose output; errors and failures are
     % always shown.
     all_counts=get_counts(all_keys);
+
     for j=1:numel(all_keys)
         key=all_keys{j};
         if obj.verbosity>=required_verbosity.(key) && ...
@@ -91,3 +92,14 @@ function disp(obj)
 
         fprintf(obj.stream,'%s%s\n', prefix, postfix);
     end
+
+
+function cs=get_counts_from_obj(obj, key_cell)
+    n=numel(key_cell);
+    cs=zeros(1,n);
+    for k=1:n
+        key=key_cell{k};
+        cs(k)=numel(obj.(key));
+    end
+
+
