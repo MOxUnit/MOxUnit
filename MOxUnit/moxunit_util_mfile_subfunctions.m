@@ -51,7 +51,7 @@ function names=moxunit_util_mfile_subfunctions(fn)
             all_names=all_names{1};
         end
 
-        % remove first funciton, because that is the main one
+        % remove first function, because that is the main one
         names=all_names(2:end);
     end
 
