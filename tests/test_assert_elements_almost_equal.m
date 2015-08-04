@@ -9,9 +9,6 @@ function test_assert_elements_almost_equal_exceptions
                                 [1 2],[1;2]),...
                                         'moxunit:differentSize');
     assertExceptionThrown(@()assertElementsAlmostEqual(...
-                                sparse(1),1),...
-                                        'moxunit:differentSparsity');
-    assertExceptionThrown(@()assertElementsAlmostEqual(...
                                 [1 2],[1 3]),...
                                         'moxunit:floatsNotAlmostEqual');
     assertExceptionThrown(@()assertElementsAlmostEqual(...
@@ -35,6 +32,7 @@ function test_assert_elements_almost_equal_exceptions
 
 
 
+
 function test_assert_elements_almost_equal_passes
     assertElementsAlmostEqual(0,0);
     assertElementsAlmostEqual(0,1e-10);
@@ -47,4 +45,6 @@ function test_assert_elements_almost_equal_passes
     assertElementsAlmostEqual(NaN,NaN,'absolute',0);
     assertElementsAlmostEqual(Inf,Inf);
     assertElementsAlmostEqual([-Inf,Inf,NaN,2],[-Inf,Inf,NaN,2]);
+    assertElementsAlmostEqual(0,sparse(0));
+    assertElementsAlmostEqual(double(0),single(0));
 

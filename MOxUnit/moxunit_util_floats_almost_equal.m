@@ -59,8 +59,12 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
     elseif ~isnumeric(b)
         whatswrong='second input is not float';
         error_id='moxunit:notFloat';
+    elseif ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='moxunit:differentSize';
     else
-        [error_id,whatswrong]=moxunit_util_elements_compatible(a,b);
+        whatswrong='';
+        error_id=[];
     end
 
     if ~isempty(error_id)

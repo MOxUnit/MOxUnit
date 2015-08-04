@@ -14,5 +14,3 @@ function tf=moxunit_util_is_test_function_name(name)
 
     tf=ischar(name) && numel(name)>=5 &&...
             (strcmp(name(1:5),'test_') || strcmp(name(end-(4:0)),'_test'));
-
-

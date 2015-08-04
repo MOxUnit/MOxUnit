@@ -25,15 +25,25 @@ function assertEqual(a, b, message)
 %
 % NNO Jan 2014
 
-    [error_id,whatswrong]=moxunit_util_elements_compatible(a,b);
+    if ~isequal(class(a), class(b))
+        whatswrong='inputs are not of the same class';
+        error_id='moxunit:differentClass';
 
-    if isempty(error_id)
-        if isequaln(a, b)
-            return
-        else
-            whatswrong='elements are not equal';
-            error_id='moxunit:elementsNotEqual';
-        end
+    elseif ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='moxunit:differentSize';
+
+    elseif issparse(a)~=issparse(b)
+        whatswrong='inputs do not have the same sparsity';
+        error_id='moxunit:differentSparsity';
+
+    elseif ~isequaln(a, b)
+        whatswrong='elements are not equal';
+        error_id='moxunit:elementsNotEqual';
+
+    else
+        % elements are equal
+        return;
     end
 
     if nargin<3
