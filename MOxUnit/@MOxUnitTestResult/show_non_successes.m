@@ -1,4 +1,23 @@
 function show_non_successes(obj, label)
+% Produce output describing test errors, failures, or skips
+%
+% show_non_successes(obj, label)
+%
+% Inputs:
+%   obj             MOxUnitTestResult instance containing tests that have
+%                   been run.
+%   label           One of 'errors',' 'failures', or 'skips'
+%
+% Notes:
+%   - This function provides output to the file descriptor provided when
+%     obj was instantiated (default: 1, Command Window output)
+%   - This function is typically called after all tests are run, in order
+%     to show a summary of tests that did not pass.
+%   - If no tests with label are present in obj, then no output is
+%     produced.
+%
+% NNO 2015
+
     if obj.verbosity<1
         return;
     end

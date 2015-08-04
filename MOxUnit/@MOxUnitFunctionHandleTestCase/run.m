@@ -1,4 +1,21 @@
 function result=run(obj,result)
+% Run test associated with MoxUnitFunctionHandleTestCase
+%
+% result=run(obj,result)
+%
+% Inputs:
+%   obj             MoxUnitFunctionHandleTestCase object
+%   result          MoxUnitTestResult instance to which test results are to
+%                   be reported.
+%
+% Output:
+%   result          MoxUnitTestResult containing tests results
+%                   after running the test associated with obj.
+%
+% See also: MoxUnitTestResult
+%
+% NNO 2015
+
     try
         passed=false;
         try
