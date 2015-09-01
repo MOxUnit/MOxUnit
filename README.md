@@ -63,7 +63,7 @@ To define unit tests, write a function with the following header:
         initTestSuite
 ```
 
-*Important*: it is crucial that the output of the main function is called ``test_suite``
+*Important*: it is crucial that the output of the main function is called ``test_suite``.
 
 Then, define subfunctions whose name start with ``test_`` or end with ``_test``. These functions can use the following ``assert*`` functions:
 - ```assertTrue(a)```: assert that ```a``` is true.
@@ -112,7 +112,7 @@ Some examples of unit tests are in MOxUnit's ``tests`` directory, which test som
 
 ### Limitations
 Currently MOxUnit does not support:
-- Documentation tests (these would require ``evalc``, which is not available on ``GNU Octave`` (as of January 2014)).
+- Documentation tests (these would require ``evalc``, which is not available on ``GNU Octave`` as of January 2014).
 - Support for setup and teardown functions in ``TestCase`` classes.
 
 
@@ -154,6 +154,4 @@ Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
 [MOxUnit]: github.com/nno/MOxUnit
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
-
-
 
