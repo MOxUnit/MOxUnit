@@ -19,9 +19,10 @@ before_install:
     - travis_retry sudo apt-get install -y -qq software-properties-common python-software-properties
     - travis_retry sudo apt-add-repository -y ppa:octave/stable
     - travis_retry sudo apt-get -y -qq update
-    # get Octave 3.8
+    # get Octave 4,0
     - travis_retry sudo apt-get -y -qq install octave
-    # go up one level to retrieve MOxUnit
+    # remove OpenBLAS because it gives issues on Ubuntu 12.04
+    - travis_retry sudo apt-get purge libopenblas-base
 script:
     - PTH=`pwd`
     - CMD="more('off');"
