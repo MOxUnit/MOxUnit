@@ -21,8 +21,6 @@ before_install:
     - travis_retry sudo apt-get -y -qq update
     # get Octave 4,0
     - travis_retry sudo apt-get -y -qq install octave
-    # remove OpenBLAS because it gives issues on Ubuntu 12.04
-    - travis_retry sudo apt-get purge libopenblas-base
 script:
     - PTH=`pwd`
     - CMD="more('off');"
