@@ -1,4 +1,7 @@
-.PHONY: help install-matlab install-octave uninstall-matlab uninstall-octave has-matlab has-octave
+.PHONY: help \
+        install-matlab install-octave install \
+        uninstall-matlab uninstall-octave uninstall \
+        test-matlab test-octave test
 
 MATLAB?=matlab
 OCTAVE?=octave
@@ -46,6 +49,7 @@ help:
 
 
 ifneq ($(MATLAB_BIN),)
+	# for Apple OSX, try to locate Matlab elsewhere if not found
     MATLAB_BIN=$(shell ls /Applications/MATLAB_R20*/bin/${MATLAB} 2>/dev/null | tail -1)
 endif
 	
