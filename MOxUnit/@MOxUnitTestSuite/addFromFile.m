@@ -30,6 +30,11 @@ function obj=addFromFile(obj,fn)
 
     try
         func=str2func(name);
+
+        if nargout(func)~=1
+            return;
+        end
+
         test_case=func();
         if isa(test_case,'MOxUnitTestNode')
             obj=addTest(obj,test_case);
