@@ -13,7 +13,7 @@ MATLAB_BIN=$(shell which $(MATLAB))
 OCTAVE_BIN=$(shell which $(OCTAVE))
 
 MATLAB_RUN=$(MATLAB) -nojvm -nodisplay -nosplash -r 
-OCTAVE_RUN=$(OCTAVE) --no-gui --eval
+OCTAVE_RUN=$(OCTAVE) --no-gui --quiet --eval
 
 ADDPATH="addpath('$(ROOTDIR)');"
 RMPATH="rmpath('$(ROOTDIR)');"
@@ -107,7 +107,7 @@ test-matlab:
 	fi;
 
 test-octave:
-	if [ -n "$(OCTAVE_BIN)" ]; then \
+	@if [ -n "$(OCTAVE_BIN)" ]; then \
 		$(OCTAVE_RUN) $(TEST); \
 	else \
 		echo "octave binary could not be found, skipping"; \
