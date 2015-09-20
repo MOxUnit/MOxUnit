@@ -1,6 +1,6 @@
-# MOxUnit - an xUnit framework for Matlab and Octave [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/nno/MOxUnit)
+# MOxUnit [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/nno/MOxUnit)
 
-MOxUnit is an lightweight unit test framework for Matlab and GNU Octave.
+MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 ### Features
 
@@ -13,19 +13,24 @@ MOxUnit is an lightweight unit test framework for Matlab and GNU Octave.
 
 ### Installation
 
-- Clone the git repository:
+- Using the shell (requires a Unix-like operating system such as GNU/Linux or Apple OSX):
 
-       git clone https://github.com/nno/MOxUnit.git
+       git clone https://github.com/MOxUnit/MOxUnit.git
+       cd MOxUnit
+       make install
 
-    Alternatively, download the zip archive from the [MOxUnit] website.
-- Start Matlab or GNU Octave.
-- On the Matlab or GNU Octave prompt, ```cd``` to the ``MOxUnit`` root directory, then run:
+    This will add the MOxUnit directory to the Matlab and/or GNU Octave searchpath. If both Matlab and GNU Octave are available on yoru
 
-  ```
-  cd MOxUnit      % cd to MOxUnit subdirectory
-  addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
-  savepath        % save the path
-  ```
+- Manual installation:
+
+    + Download the zip archive from the [MOxUnit] website.
+
+    + Start Matlab or GNU Octave.
+    + On the Matlab or GNU Octave prompt, ```cd``` to the ``MOxUnit`` root directory, then run::
+
+          cd MOxUnit      % cd to MOxUnit subdirectory
+          addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
+          savepath        % save the path
 
 
 ### Running MOxUnit tests
@@ -51,6 +56,10 @@ MOxUnit is an lightweight unit test framework for Matlab and GNU Octave.
   - ```file.m```: run unit tests in file ```file.m```.
   - ```-logfile logfile.txt```: store the output in file ```logfile.txt```.
 
+- To test MOxUnit itself using a shell, run:
+
+        make test
+
 
 ### Use with travis-ci
 MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). As a result, the test suite is run automatically every time it is pushed to the github repository, or when a pull request is made. If a test fails, the developers are notified by email.
@@ -60,7 +69,7 @@ MOxUnit uses the [Travis-ci] service for continuous integration testing. This is
 To define unit tests, write a function with the following header:
 ```
     function test_suite=my_test_of_abs
-        initTestSuite
+        initTestSuite;
 ```
 
 *Important*: it is crucial that the output of the main function is called ``test_suite``.
@@ -99,10 +108,10 @@ For example, the following function defines three unit tests that tests some pos
         end
 ```
 
-Some examples of unit tests are in MOxUnit's ``tests`` directory, which test some of MOxUnit's functions itself.
+Examples of unit tests are in MOxUnit's ``tests`` directory, which test some of MOxUnit's functions itself.
 
 ### Compatibility notes
-- Because GNU Octave does not support (as of January 2014) ``classdef`` syntax, 'old-style' object-oriented syntax is used for the class definitions. For similar reasons, MOxUnit uses the ``lasterror`` function, even though its use in Matlab is discouraged.
+- Because GNU Octave 3.8 does not support ``classdef``` syntax, 'old-style' object-oriented syntax is used for the class definitions. For similar reasons, MOxUnit uses the ``lasterror`` function, even though its use in Matlab is discouraged.
 
 
 ### Acknowledgements
@@ -151,7 +160,8 @@ Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
 [GNU Octave]: http://www.gnu.org/software/octave/
 [Matlab]: http://www.mathworks.com/products/matlab/
 [Matlab xUnit test framework]: http://it.mathworks.com/matlabcentral/fileexchange/22846-matlab-xunit-test-framework
-[MOxUnit]: github.com/nno/MOxUnit
+[MOxUnit]: github.com/MOxUnit/MOxUnit
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
+
 
