@@ -9,12 +9,6 @@ OCTAVE?=octave
 TESTDIR=$(CURDIR)/tests
 ROOTDIR=$(CURDIR)/MOxUnit
 
-MATLAB_BIN=$(shell which $(MATLAB))
-OCTAVE_BIN=$(shell which $(OCTAVE))
-
-MATLAB_RUN=$(MATLAB) -nojvm -nodisplay -nosplash -r 
-OCTAVE_RUN=$(OCTAVE) --no-gui --quiet --eval
-
 ADDPATH="addpath('$(ROOTDIR)');"
 RMPATH="rmpath('$(ROOTDIR)');"
 SAVEPATH="savepath();exit(0)"
@@ -47,14 +41,19 @@ help:
 
 
 
+MATLAB_BIN=$(shell which $(MATLAB))
+OCTAVE_BIN=$(shell which $(OCTAVE))
 
-ifneq ($(MATLAB_BIN),)
+ifeq ($(MATLAB_BIN),)
 	# for Apple OSX, try to locate Matlab elsewhere if not found
     MATLAB_BIN=$(shell ls /Applications/MATLAB_R20*/bin/${MATLAB} 2>/dev/null | tail -1)
 endif
 	
+MATLAB_RUN=$(MATLAB_BIN) -nojvm -nodisplay -nosplash -r
+OCTAVE_RUN=$(OCTAVE_BIN) --no-gui --quiet --eval
+
 install-matlab:
-	@if [ -n "$(MATLAB_BIN)" ]; then \
+	if [ -n "$(MATLAB_BIN)" ]; then \
 		$(MATLAB_RUN) $(INSTALL); \
 	else \
 		echo "matlab binary could not be found, skipping"; \
