@@ -14,24 +14,23 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 ### Installation
 
 - Using the shell (requires a Unix-like operating system such as GNU/Linux or Apple OSX):
-
+    ```
        git clone https://github.com/MOxUnit/MOxUnit.git
        cd MOxUnit
        make install
-
+    ```
     This will add the MOxUnit directory to the Matlab and/or GNU Octave searchpath. If both Matlab and GNU Octave are available on yoru
 
 - Manual installation:
 
     + Download the zip archive from the [MOxUnit] website.
-
     + Start Matlab or GNU Octave.
     + On the Matlab or GNU Octave prompt, ```cd``` to the ``MOxUnit`` root directory, then run::
-
+        ```
           cd MOxUnit      % cd to MOxUnit subdirectory
           addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
           savepath        % save the path
-
+        ```
 
 ### Running MOxUnit tests
 
@@ -57,9 +56,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
   - ```-logfile logfile.txt```: store the output in file ```logfile.txt```.
 
 - To test MOxUnit itself using a shell, run:
-
+    ```
         make test
-
+    ```
 
 ### Use with travis-ci
 MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). As a result, the test suite is run automatically every time it is pushed to the github repository, or when a pull request is made. If a test fails, the developers are notified by email.
@@ -163,5 +162,6 @@ Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
 [MOxUnit]: github.com/MOxUnit/MOxUnit
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
+
 
 
