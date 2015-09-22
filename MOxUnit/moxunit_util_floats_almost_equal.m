@@ -53,15 +53,15 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 
     [message,tol_type,tol,floor_tol]=get_params(a,varargin{:});
 
-    if ~isfloat(a)
+    if ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='moxunit:differentSize';
+    elseif ~isfloat(a)
         whatswrong='first input is not float';
         error_id='moxunit:notFloat';
     elseif ~isnumeric(b)
         whatswrong='second input is not float';
         error_id='moxunit:notFloat';
-    elseif ~isequal(size(a), size(b))
-        whatswrong='inputs are not of the same size';
-        error_id='moxunit:differentSize';
     else
         whatswrong='';
         error_id=[];
