@@ -53,7 +53,7 @@ MATLAB_RUN=$(MATLAB_BIN) -nojvm -nodisplay -nosplash -r
 OCTAVE_RUN=$(OCTAVE_BIN) --no-gui --quiet --eval
 
 install-matlab:
-	if [ -n "$(MATLAB_BIN)" ]; then \
+	@if [ -n "$(MATLAB_BIN)" ]; then \
 		$(MATLAB_RUN) $(INSTALL); \
 	else \
 		echo "matlab binary could not be found, skipping"; \
