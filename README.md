@@ -127,7 +127,6 @@ Currently MOxUnit does not support:
 
 
 ### Contact
-
 Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
 
 
