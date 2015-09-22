@@ -85,11 +85,11 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 
     a_vec=a(:);
     b_vec=b(:);
-    if iscomplex(a)
+    if isreal(a)
+        cmp_func=@()test_func(a_vec,b_vec);
+    else
         cmp_func=@()test_func(real(a_vec),real(b_vec)) & ...
                         test_func(imag(a_vec),imag(b_vec));
-    else
-        cmp_func=@()test_func(a_vec,b_vec);
     end
 
     msk_equal=cmp_func();
