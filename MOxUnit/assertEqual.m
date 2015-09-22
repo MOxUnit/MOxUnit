@@ -37,7 +37,7 @@ function assertEqual(a, b, message)
         whatswrong='inputs do not have the same sparsity';
         error_id='moxunit:differentSparsity';
 
-    elseif ~isequaln(a, b)
+    elseif ~isequaln_wrapper(a, b)
         whatswrong='elements are not equal';
         error_id='moxunit:elementsNotEqual';
 
@@ -58,3 +58,10 @@ function assertEqual(a, b, message)
         throwAsCaller(MException(error_id, full_message));
     end
 
+function tf=isequaln_wrapper(a,b)
+% wrapper to support old versions of Matlab
+    if isempty(which('isequaln'))
+        tf=isequalwithequalnans(a,b);
+    else
+        tf=isequaln(a,b);
+    end
