@@ -20,7 +20,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
        cd MOxUnit
        make install
     ```
-    This will add the MOxUnit directory to the Matlab and/or GNU Octave searchpath. If both Matlab and GNU Octave are available on yoru
+    This will add the MOxUnit directory to the Matlab and/or GNU Octave searchpath. If both Matlab and GNU Octave are available on your machine, it will install MOxUnit for both.
 
 - Manual installation:
 
