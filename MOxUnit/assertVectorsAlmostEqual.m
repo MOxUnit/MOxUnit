@@ -49,10 +49,10 @@ function assertVectorsAlmostEqual(a,b,varargin)
     if isempty(error_id)
         if ~isvector(a)
             whatswrong='first input is not a vector';
-            error_id='moxunit:notVector';
+            error_id='assertVectorsAlmostEqual:notVector';
         elseif ~isvector(b)
             whatswrong='second input is not a vector';
-            error_id='moxunit:notVector';
+            error_id='assertVectorsAlmostEqual:notVector';
         else
             return;
         end

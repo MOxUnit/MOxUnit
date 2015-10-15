@@ -23,10 +23,10 @@ function assertTrue(a, message)
 
     if ~isscalar(a) || ~islogical(a)
         whatswrong='input is not a logical scalar';
-        error_id='MOxUnit:notLogicalScalar';
+        error_id='assertTrue:invalidCondition';
     elseif ~a
         whatswrong='input does not evaluate to true';
-        error_id='MOxUnit:notTrue';
+        error_id='assertTrue:falseCondition';
     else
         return
     end

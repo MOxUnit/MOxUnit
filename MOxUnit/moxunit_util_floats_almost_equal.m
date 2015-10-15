@@ -53,15 +53,16 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 
     [message,tol_type,tol,floor_tol]=get_params(a,varargin{:});
 
+
     if ~isequal(size(a), size(b))
         whatswrong='inputs are not of the same size';
-        error_id='moxunit:differentSize';
+        error_id=get_error_id(f, 'sizeMismatch');
     elseif ~isfloat(a)
         whatswrong='first input is not float';
-        error_id='moxunit:notFloat';
+        error_id=get_error_id(f, 'notFloat');
     elseif ~isnumeric(b)
         whatswrong='second input is not float';
-        error_id='moxunit:notFloat';
+        error_id=get_error_id(f, 'notFloat');
     else
         whatswrong='';
         error_id=[];
@@ -79,7 +80,7 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
             test_func=@(x,y) f(x-y)<=tol;
 
         otherwise
-            error('moxunit:illegalParameter',...
+            error('compareFloats:unrecognizedToleranceType',...
                     'unsupported tolerance type %s', tol_type);
     end
 
@@ -106,7 +107,8 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
     if ~all_equal
         whatswrong=sprintf(['inputs are not equal within '...
                                 '%s tolerance %d'],tol_type,tol);
-        error_id='moxunit:floatsNotAlmostEqual';
+
+        error_id=get_error_id(f, 'tolExceeded');
     end
 
 function msk_equal=nonfinite_elements_equal(a,b)
@@ -115,6 +117,19 @@ function msk_equal=nonfinite_elements_equal(a,b)
 
     msk_equal=msk_nan | msk_inf;
 
+
+function error_id=get_error_id(f, postfix)
+    f_name=func2str(f);
+    switch f_name
+        case 'abs'
+            prefix='assertElementsAlmostEqual';
+        case 'norm'
+            prefix='assertVectorsAlmostEqual';
+        otherwise
+            prefix=sprintf('assertAlmostEqual%s',f_name);
+    end
+
+    error_id=[prefix ':' postfix];
 
 
 function [message,tol_type,tol,floor_tol]=get_params(a,varargin)
@@ -137,6 +152,10 @@ function [message,tol_type,tol,floor_tol]=get_params(a,varargin)
             elseif k==n && isempty(message)
                 message=arg;
                 continue
+            else
+                error('compareFloats:unrecognizedToleranceType',...
+                        ['Tolerance type must be ''absolute'' '...
+                            'or ''relative''']);
             end
 
         elseif isscalar(arg)
@@ -149,7 +168,7 @@ function [message,tol_type,tol,floor_tol]=get_params(a,varargin)
             end
         end
 
-        error('moxunit:illegalParameter',...
+        error('compareFloats:illegalParameter',...
                     'Illegal argument at position %d', k);
     end
 

@@ -22,14 +22,14 @@ function assertExceptionThrown(func, expected_id, message)
     exception_was_raised=false;
     if moxunit_util_platform_is_octave()
         try
-            func()
+            func();
         catch
             exception_was_raised=true;
             [unused,found_id]=lasterr();
         end
     else
         try
-            func()
+            func();
         catch mexception
             exception_was_raised=true;
             found_id=mexception.identifier;
@@ -39,12 +39,12 @@ function assertExceptionThrown(func, expected_id, message)
     if ~exception_was_raised
         whatswrong=sprintf('expected exception ''%s'' was not raised',...
                                 expected_id);
-        error_id='moxunit:exceptionNotRaised';
+        error_id='assertExceptionThrown:noException';
     elseif ~isequal(expected_id, found_id)
         whatswrong=sprintf(['exception ''%s'' was raised, '...
                                 'expected ''%s'''],...
                                 found_id, expected_id);
-        error_id='moxunit:wrongExceptionRaised';
+        error_id='assertExceptionThrown:wrongException';
     else
         return;
     end

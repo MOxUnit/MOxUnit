@@ -28,19 +28,19 @@ function assertEqual(a, b, message)
 
     if ~isequal(size(a), size(b))
         whatswrong='inputs are not of the same size';
-        error_id='moxunit:differentSize';
+        error_id='assertEqual:nonEqual';
 
     elseif ~isequal(class(a), class(b))
         whatswrong='inputs are not of the same class';
-        error_id='moxunit:differentClass';
+        error_id='assertEqual:classNotEqual';
 
     elseif issparse(a)~=issparse(b)
         whatswrong='inputs do not have the same sparsity';
-        error_id='moxunit:differentSparsity';
+        error_id='assertEqual:sparsityNotEqual';
 
     elseif ~isequaln_wrapper(a, b)
         whatswrong='elements are not equal';
-        error_id='moxunit:elementsNotEqual';
+        error_id='assertEqual:nonEqual';
 
     else
         % elements are equal

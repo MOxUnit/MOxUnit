@@ -12,13 +12,13 @@ function test_assert_exception_thrown_exceptions
     end
 
     if did_throw
-        if ~strcmp(caught_error.identifier,'moxunit:wrongExceptionRaised')
-            error('moxunit:wrongExceptionRaised',...
+        if ~strcmp(caught_error.identifier,'assertExceptionThrown:wrongException')
+            error('assertExceptionThrown:wrongException',...
                     'Expected exception moxunit: error but got ''%s''',...
                         caught_error.identifier);
         end
     else
-        error('moxunit:exceptionNotRaised',...
+        error('assertExceptionThrown:noException',...
                 'Expected exception ''moxunit:error'' but not thrown');
     end
 
@@ -33,13 +33,13 @@ function test_assert_exception_thrown_exceptions_not_thrown
     end
 
     if did_throw
-        if ~strcmp(caught_error.identifier,'moxunit:exceptionNotRaised')
-            error('moxunit:wrongExceptionRaised',...
+        if ~strcmp(caught_error.identifier,'assertExceptionThrown:noException')
+            error('assertExceptionThrown:wrongException',...
                     'Expected exception ''moxunit:error'' but got %s',...
                         caught_error.identifier);
         end
     else
-        error('moxunit:exceptionNotRaised',...
+        error('assertExceptionThrown:noException',...
                 'Expected exception ''moxunit:error'' but not thrown');
     end
 
