@@ -101,6 +101,7 @@ For example, the following function defines three unit tests that tests some pos
         assertEqual(abs([-1 1 -3]),[1 1 3]);
 
     function test_abs_exceptions
+        % GNU Octave and Matlab use different error identifiers
         if moxunit_util_platform_is_octave()
             assertExceptionThrown(@()abs(struct),'');
         else
