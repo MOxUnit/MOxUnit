@@ -16,9 +16,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - Using the shell (requires a Unix-like operating system such as GNU/Linux or Apple OSX):
 
     ```
-       git clone https://github.com/MOxUnit/MOxUnit.git
-       cd MOxUnit
-       make install
+    git clone https://github.com/MOxUnit/MOxUnit.git
+    cd MOxUnit
+    make install
     ```
     This will add the MOxUnit directory to the Matlab and/or GNU Octave searchpath. If both Matlab and GNU Octave are available on your machine, it will install MOxUnit for both.
 
@@ -29,9 +29,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     + On the Matlab or GNU Octave prompt, ```cd``` to the ``MOxUnit`` root directory, then run:
     
         ```
-          cd MOxUnit      % cd to MOxUnit subdirectory
-          addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
-          savepath        % save the path
+        cd MOxUnit      % cd to MOxUnit subdirectory
+        addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
+        savepath        % save the path
         ```
 
 ### Running MOxUnit tests
@@ -59,7 +59,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - To test MOxUnit itself using a shell, run:
     ```
-        make test
+    make test
     ```
 
 ### Use with travis-ci
@@ -69,8 +69,8 @@ MOxUnit uses the [Travis-ci] service for continuous integration testing. This is
 
 To define unit tests, write a function with the following header:
 ```
-    function test_suite=my_test_of_abs
-        initTestSuite;
+function test_suite=my_test_of_abs
+    initTestSuite;
 ```
 
 *Important*: it is crucial that the output of the main function is called ``test_suite``.
@@ -87,27 +87,27 @@ As a special case, ```moxunit_throw_test_skipped_exception('reason')``` throws a
 
 For example, the following function defines three unit tests that tests some possible inputs from the builtin ``abs`` function::
 ```
-    function test_suite=my_test_of_abs
-        initTestSuite
+function test_suite=my_test_of_abs
+    initTestSuite
 
-    function test_abs_scalar
-        assertTrue(abs(-1)==1)
-        assertEqual(abs(-NaN),NaN);
-        assertEqual(abs(-Inf),Inf);
-        assertEqual(abs(0),0)
-        assertElementsAlmostEqual(abs(-1e-13),0)
+function test_abs_scalar
+    assertTrue(abs(-1)==1)
+    assertEqual(abs(-NaN),NaN);
+    assertEqual(abs(-Inf),Inf);
+    assertEqual(abs(0),0)
+    assertElementsAlmostEqual(abs(-1e-13),0)
 
-    function test_abs_vector
-        assertEqual(abs([-1 1 -3]),[1 1 3]);
+function test_abs_vector
+    assertEqual(abs([-1 1 -3]),[1 1 3]);
 
-    function test_abs_exceptions
-        % GNU Octave and Matlab use different error identifiers
-        if moxunit_util_platform_is_octave()
-            assertExceptionThrown(@()abs(struct),'');
-        else
-            assertExceptionThrown(@()abs(struct),...
-                                 'MATLAB:UndefinedFunction');
-        end
+function test_abs_exceptions
+    % GNU Octave and Matlab use different error identifiers
+    if moxunit_util_platform_is_octave()
+        assertExceptionThrown(@()abs(struct),'');
+    else
+        assertExceptionThrown(@()abs(struct),...
+                             'MATLAB:UndefinedFunction');
+    end
 ```
 
 Examples of unit tests are in MOxUnit's ``tests`` directory, which test some of MOxUnit's functions itself.
@@ -133,28 +133,28 @@ Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
 
 ### License
 
-    (The MIT License)
+(The MIT License)
 
-    Copyright (c) 2015 Nikolaas N. Oosterhof
+Copyright (c) 2015 Nikolaas N. Oosterhof
 
-    Permission is hereby granted, free of charge, to any person obtaining
-    a copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction,
-    including without limitation the rights to use, copy, modify, merge,
-    publish, distribute, sublicense, and/or sell copies of the Software,
-    and to permit persons to whom the Software is furnished to do so,
-    subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
