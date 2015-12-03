@@ -85,7 +85,7 @@ Then, define subfunctions whose name start with `test_` or end with `_test`. The
 
 As a special case, `moxunit_throw_test_skipped_exception('reason')` throws an exception that is caught when running the test; `moxunit_run_tests` will report that the test is skipped for reason `reason`.
 
-For example, the following function defines three unit tests that tests some possible inputs from the builtin `abs` function::
+For example, the following function defines three unit tests that tests some possible inputs from the builtin `abs` function:
 ```matlab
 function test_suite=my_test_of_abs
     initTestSuite
