@@ -15,7 +15,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - Using the shell (requires a Unix-like operating system such as GNU/Linux or Apple OSX):
 
-    ```
+    ```bash
     git clone https://github.com/MOxUnit/MOxUnit.git
     cd MOxUnit
     make install
@@ -28,7 +28,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     + Start Matlab or GNU Octave.
     + On the Matlab or GNU Octave prompt, `cd` to the `MOxUnit` root directory, then run:
     
-        ```
+        ```bash
         cd MOxUnit      % cd to MOxUnit subdirectory
         addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
         savepath        % save the path
@@ -68,7 +68,7 @@ MOxUnit uses the [Travis-ci] service for continuous integration testing. This is
 ### Defining MOxUnit tests
 
 To define unit tests, write a function with the following header:
-```
+```matlab
 function test_suite=my_test_of_abs
     initTestSuite;
 ```
@@ -86,7 +86,7 @@ Then, define subfunctions whose name start with `test_` or end with `_test`. The
 As a special case, `moxunit_throw_test_skipped_exception('reason')` throws an exception that is caught when running the test; `moxunit_run_tests` will report that the test is skipped for reason `reason`.
 
 For example, the following function defines three unit tests that tests some possible inputs from the builtin `abs` function::
-```
+```matlab
 function test_suite=my_test_of_abs
     initTestSuite
 
