@@ -54,12 +54,13 @@ function x = report_xml(obj,c,t,reason)
         case 'e'
             % Fill the contents for an error
             es = reason.stack(1);
+            reason.message = strip_xml(reason.message);
             x = [x, ' line="' num2str(es.line) '"' ...
                     '>' ...
                     '<system-err message="' ...
-                        strip_xml(reason.message) ...
+                        get_first_line(reason.message) ...
                         '">' ...
-                    strip_xml(reason.message) ...
+                    reason.message ...
                     '</system-err>' ...
                     '</testcase>' ...
                     ];
@@ -67,12 +68,13 @@ function x = report_xml(obj,c,t,reason)
         case 'f'
             % Fill the contents for a failure
             es = reason.stack(1);
+            reason.message = strip_xml(reason.message);
             x = [x, ' line="' num2str(es.line) '"' ...
                     '>' ...
                     '<failure message="' ...
-                        strip_xml(reason.message) ...
+                        get_first_line(reason.message) ...
                         '">' ...
-                    strip_xml(reason.message) ...
+                    reason.message ...
                     '</failure>' ...
                     '</testcase>' ...
                     ];
@@ -94,6 +96,7 @@ function x = report_xml(obj,c,t,reason)
                   'Unrecognised test case result code: %s', lower(c(1)));
 
     end
+
 
 function string=strip_xml(string)
 % Strip XML tags from a string
@@ -119,3 +122,42 @@ function string=strip_xml(string)
     % we need to include the leading non-'\' character (the first group)
     % in the replacement output.
     string = regexprep(string , '(^|[^\\])(<.*?[^\\]>)', '$1');
+
+
+function string=get_first_line(string)
+% Get the first line (before newline character) of a string
+%
+% string=get_first_line(string)
+%
+% Inputs:
+%   string          A string, possibly multiline.
+%
+% Output:
+%   string          The string with any XML tags removed. Any escaped
+%                   characters ('\<', '\>') remain as they are - still
+%                   escaped.
+%
+% SCL 2015
+
+    % Trim off any newlines from the start of the string
+    % NB: sprintf('\n')==10
+    string = strtrim(string);
+    start_index = find(string(2:end)~=10, 1);
+    if isempty(start_index)
+        % Only line feed characters are present.
+        string = '';
+        return;
+    end
+    string = string(start_index:end);
+
+    % Find the first new line character.
+    % The index returned is the index of the character before
+    % the newline.
+    term_index = find(string(2:end)==10, 1);
+    % If the index is empty, there are no new lines so we include the whole
+    % string in the output
+    if isempty(term_index)
+        return;
+    end
+    % Otherwise we can trim down to just before the first new line.
+    string = string(1:term_index);
