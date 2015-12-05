@@ -26,13 +26,13 @@ function assertEqual(a, b, message)
 % NNO Jan 2014
 
 
-    if ~isequal(size(a), size(b))
-        whatswrong='inputs are not of the same size';
-        error_id='assertEqual:nonEqual';
-
-    elseif ~isequal(class(a), class(b))
+    if ~isequal(class(a), class(b))
         whatswrong='inputs are not of the same class';
         error_id='assertEqual:classNotEqual';
+
+    elseif ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='assertEqual:nonEqual';
 
     elseif issparse(a)~=issparse(b)
         whatswrong='inputs do not have the same sparsity';
