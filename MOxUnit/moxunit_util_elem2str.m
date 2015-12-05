@@ -25,7 +25,7 @@ function elem_str=moxunit_util_elem2str(elem, max_chars)
     end
 
     if moxunit_util_platform_is_octave()
-        elem_str=sprintf('<%s>\n',class(elem));
+        elem_str=sprintf('%s\n',class(elem));
     else
         % Octave does not support evalc
         elem_str=evalc('disp(elem)');
