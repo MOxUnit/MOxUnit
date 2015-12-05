@@ -17,4 +17,5 @@ function obj=addSkip(obj,t,reason)
     obj.skips{end+1}={t,reason};
     obj.testsRun=obj.testsRun+1;
     report(obj,'s','SKIP',t);
-
+    % Append this XML report to the list of testcase reports
+    obj.xml_reports{end+1}=report_xml(obj,'s',t,reason);

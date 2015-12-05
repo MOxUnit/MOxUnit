@@ -15,4 +15,5 @@ function obj=addSuccess(obj,t)
     obj.successes{end+1}=t;
     obj.testsRun=obj.testsRun+1;
     report(obj,'.','passed',t);
-
+    % Append this XML report to the list of testcase reports
+    obj.xml_reports{end+1}=report_xml(obj,'.',t,'passed');

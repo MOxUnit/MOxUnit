@@ -17,3 +17,5 @@ function obj=addError(obj,t,e)
     obj.failures{end+1}={t,e};
     obj.testsRun=obj.testsRun+1;
     report(obj,'e','Error',t);
+    % Append this XML report to the list of testcase reports
+    obj.xml_reports{end+1}=report_xml(obj,'e',t,e);
