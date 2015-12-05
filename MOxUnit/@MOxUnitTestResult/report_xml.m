@@ -32,9 +32,23 @@ function x = report_xml(obj,c,t,reason)
     x = '<testcase classname="%s" file="%s" name="%s"';
 
     % We need to include the classname although we don't rightly have
-    % one to give. Let it be the filename for now.
-    % Name is the function name.
-    x = sprintf(x, get(t,'location'), get(t,'location'), get(t,'name'));
+    % a classname to give. Instead, we use the path to the file.
+    classpath = get(t,'location');
+    % Remove out the path to the testing directory
+    classpath = strrep(classpath, pwd, '');
+    % Remove the extension
+    [p,n] = fileparts(classpath);
+    classpath = fullfile(p,n);
+    % Remove the leading slash
+    if strcmp(classpath(1), '/')
+        classpath = classpath(2:end);
+    end
+    % Swap / separators for . separators, to resemble object oriented
+    % languages which JUnit is initially for.
+    %classpath = strrep(classpath, filesep, '.');
+
+    % Inject the parameters into the template
+    x = sprintf(x, classpath, get(t,'location'), get(t,'name'));
 
     switch lower(c(1))
         case 'e'
