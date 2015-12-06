@@ -51,11 +51,13 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
        1
   ```
+
 - `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
   - `-verbose`: show verbose output.
   - `directory`: run unit tests in directory `directory`.
   - `file.m`: run unit tests in file `file.m`.
   - `-logfile logfile.txt`: store the output in file `logfile.txt`.
+  - `-junitxml testresults.xml`: store a JUnit formatted XML file containing the test results in file `testresults.xml`.
 
 - To test MOxUnit itself using a shell, run:
     ```

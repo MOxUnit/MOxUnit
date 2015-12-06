@@ -43,7 +43,7 @@ function result=moxunit_runtests(varargin)
 % NNO Jan 2014
 
 
-    [verbosity, filenames, fid]=get_params(varargin{:});
+    [verbosity, filenames, fid, junitxml]=get_params(varargin{:});
     if fid>2
         % not standard or error output; file most be closed
         % afterwards
@@ -75,17 +75,23 @@ function result=moxunit_runtests(varargin)
     % show summary of test result
     disp(test_result);
 
+    % Write a JUnit XML file
+    if ~isempty(junitxml)
+        write_xml(junitxml, test_result)
+    end
+
     % return true if no errors or failures
     result=wasSuccessful(test_result);
 
 
-function [verbosity,filenames,fid]=get_params(varargin)
+function [verbosity,filenames,fid,junitxml]=get_params(varargin)
     n=numel(varargin);
 
     % set defaults
     verbosity=1;
     filenames=cell(n,1);
     fid=1;
+    junitxml='';
 
     k=0;
     while k<n
@@ -116,6 +122,14 @@ function [verbosity,filenames,fid]=get_params(varargin)
                     error('Could not open file %s for writing', fn);
                 end
 
+            case '-junitxml'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                junitxml=varargin{k};
+
             otherwise
 
                 if ~isempty(dir(arg))
@@ -142,3 +156,23 @@ function [verbosity,filenames,fid]=get_params(varargin)
         filenames={pwd()};
     end
 
+
+function write_xml(fname, test_result)
+% Write a JUnit formatted XML output file
+
+    % Open file to start writing XML report
+    fid=fopen(fname,'w');
+    if fid==-1
+        error('Could not open file %s for writing', fn);
+    end
+    % Auto-close file when we've finished
+    file_closer=onCleanup(@()fclose(fid))
+
+    % Start with the XML header
+    fprintf(fid, '<?xml version="1.0" encoding="utf-8"?>');
+    fprintf(fid, '<testsuites>');
+    % Generate a testsuite report for the results object
+    % If we had multiple test suites, we could add all of them to the
+    % same file now.
+    fprintf(fid, generate_xml(test_result));
+    fprintf(fid, '</testsuites>');

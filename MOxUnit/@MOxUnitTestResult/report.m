@@ -12,7 +12,7 @@ function report(obj,c,s,t)
 %                   's' : skip
 %                   '.' : success
 %   s               String description of test case result.
-%   t               MOxUnitTestNode instance with the test.
+%   t               MOxUnitTestCase instance with the test.
 %
 % Notes:
 %   - This is a helper function for addError, addFailure, addSkip and
