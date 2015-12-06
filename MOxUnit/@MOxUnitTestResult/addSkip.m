@@ -15,7 +15,7 @@ function obj=addSkip(obj,t,reason,dur)
 %
 % NNO 2015
 
-    obj.skips{end+1}={t,reason};
+    obj.skips{end+1}={t,dur,reason};
     obj.testsRun=obj.testsRun+1;
     obj.duration=obj.duration+dur;
     report(obj,'s','SKIP',t);
