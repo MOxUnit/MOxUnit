@@ -43,12 +43,6 @@ function elem_str=moxunit_util_elem2str(elem, max_chars)
         % remove trailing newlines
         elem_str=elem_str(1:(end-2));
 
-        if iscell(elem)
-            % Encapsulate output in curly braces if it is a cell.
-            % These are not included by disp.
-            elem_str = ['{ ' strtrim(elem_str) ' }'];
-        end
-
     else
         % Octave does not support evalc, so we need a work around.
         % As a fall back, we just show the class of the element
