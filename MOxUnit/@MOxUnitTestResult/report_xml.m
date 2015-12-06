@@ -35,7 +35,9 @@ function x = report_xml(obj,c,t,reason)
     % a classname to give. Instead, we use the path to the file.
     classpath = get(t,'location');
     % Remove out the path to the testing directory
-    classpath = strrep(classpath, pwd, '');
+    if strncmp(classpath, pwd, length(pwd))
+        classpath = classpath(min(length(pwd)+1,length(classpath)):end);
+    end
     % Remove the extension
     [p,n] = fileparts(classpath);
     classpath = fullfile(p,n);
