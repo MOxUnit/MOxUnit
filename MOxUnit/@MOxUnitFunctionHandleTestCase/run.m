@@ -16,6 +16,7 @@ function result=run(obj,result)
 %
 % NNO 2015
 
+    start_tic = tic;
     try
         passed=false;
         try
@@ -32,16 +33,16 @@ function result=run(obj,result)
                 end
 
                 reason=e.message((last_newline_pos+1):end);
-                result=addSkip(result, obj, reason);
+                result=addSkip(result, obj, toc(start_tic), reason);
             else
-                result=addFailure(result, obj, e);
+                result=addFailure(result, obj, toc(start_tic), e);
             end
         end
 
         if passed
-            result=addSuccess(result, obj);
+            result=addSuccess(result, obj, toc(start_tic));
         end
     catch
         e=lasterror();
-        result=addError(result, obj, e);
+        result=addError(result, obj, toc(start_tic), e);
     end
