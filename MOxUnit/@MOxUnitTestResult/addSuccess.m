@@ -13,7 +13,7 @@ function obj=addSuccess(obj,t,dur)
 %
 % NNO 2015
 
-    obj.successes{end+1}=t;
+    obj.successes{end+1}={t,dur};
     obj.testsRun=obj.testsRun+1;
     obj.duration=obj.duration+dur;
     report(obj,'.','passed',t);

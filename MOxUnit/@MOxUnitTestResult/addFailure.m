@@ -14,7 +14,7 @@ function obj=addFailure(obj,t,e,dur)
 %
 % NNO 2015
 
-    obj.failures{end+1}={t,e};
+    obj.failures{end+1}={t,dur,e};
     obj.testsRun=obj.testsRun+1;
     obj.duration=obj.duration+dur;
     report(obj,'F','FAILED',t);
