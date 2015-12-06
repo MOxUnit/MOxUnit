@@ -33,9 +33,9 @@ function result=run(obj,result)
                 end
 
                 reason=e.message((last_newline_pos+1):end);
-                result=addSkip(result, obj, reason, toc(start_tic));
+                result=addSkip(result, obj, toc(start_tic), reason);
             else
-                result=addFailure(result, obj, e, toc(start_tic));
+                result=addFailure(result, obj, toc(start_tic), e);
             end
         end
 
@@ -44,5 +44,5 @@ function result=run(obj,result)
         end
     catch
         e=lasterror();
-        result=addError(result, obj, e, toc(start_tic));
+        result=addError(result, obj, toc(start_tic), e);
     end

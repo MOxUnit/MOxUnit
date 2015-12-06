@@ -1,4 +1,4 @@
-function obj=addSkip(obj,t,reason,dur)
+function obj=addSkip(obj,t,dur,reason)
 % Add test case skip to a MoxUnitTestResult instance
 %
 % obj=addError(obj,t,e)
@@ -6,8 +6,8 @@ function obj=addSkip(obj,t,reason,dur)
 % Inputs:
 %   obj             MOxUnitTestResult instance.
 %   t               MoxUnitTestCase that gave an error.
-%   reason          String describing the reason why a test was skipped.
 %   dur             Duration of runtime until skipped (in seconds).
+%   reason          String describing the reason why a test was skipped.
 %
 % Output:
 %   obj             MOxUnitTestResult instance with the skipped test

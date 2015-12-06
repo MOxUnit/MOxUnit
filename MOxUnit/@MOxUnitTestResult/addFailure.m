@@ -1,4 +1,4 @@
-function obj=addFailure(obj,t,e,dur)
+function obj=addFailure(obj,t,dur,e)
 % Add test case failure to a MoxUnitTestResult instance
 %
 % obj=addError(obj,t,e)
@@ -6,8 +6,8 @@ function obj=addFailure(obj,t,e,dur)
 % Inputs:
 %   obj             MOxUnitTestResult instance.
 %   t               MoxUnitTestCase that gave a failure.
-%   e               Exception associated with the failure.
 %   dur             Duration of runtime until failure (in seconds).
+%   e               Exception associated with the failure.
 %
 % Output:
 %   obj             MOxUnitTestResult instance with the failure added.
