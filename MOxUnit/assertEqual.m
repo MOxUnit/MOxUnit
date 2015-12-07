@@ -9,8 +9,8 @@ function assertEqual(a, b, message)
 %   msg             optional custom message
 %
 % Raises:
-%   'moxunit:differentClass         a and b are of different class
 %   'moxunit:differentSize'         a and b are of different size
+%   'moxunit:differentClass         a and b are of different class
 %   'moxunit:differentSparsity'     a is sparse and b is not, or
 %                                         vice versa
 %   'moxunit:elementsNotEqual'      values in a and b are not equal
@@ -25,6 +25,9 @@ function assertEqual(a, b, message)
 %
 % NNO Jan 2014
 
+    % Note: although it may seem more logical to compare class before size,
+    % for compatibility reasons the order of tests matches that of the
+    % MATLAB xUnit framework
 
     if ~isequal(size(a), size(b))
         whatswrong='inputs are not of the same size';
