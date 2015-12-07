@@ -9,7 +9,7 @@ OCTAVE?=octave
 TESTDIR=$(CURDIR)/tests
 ROOTDIR=$(CURDIR)/MOxUnit
 
-ADDPATH="addpath('$(ROOTDIR)');"
+ADDPATH="cd('$(ROOTDIR)');moxunit_set_path();"
 RMPATH="rmpath('$(ROOTDIR)');"
 SAVEPATH="savepath();exit(0)"
 
