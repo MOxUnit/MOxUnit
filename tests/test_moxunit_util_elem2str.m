@@ -55,7 +55,16 @@ function test_moxunit_util_elem2str_custom_class
 
     classname=sprintf('my_class');
     classdir=fullfile(tmpdir,sprintf('@%s',classname));
+
+    if ~exist(tmpdir,'dir')
+        % GNU Octave returns a temporary directory that does not exist;
+        % so create it first
+        mkdir(tmpdir);
+    end
+
+    % make subdirectory for the class
     mkdir(classdir);
+
     write_contents(classdir,classname,...
                     ['function obj=%s()\n'...
                             'obj=class(struct(),''%s'');'],...
@@ -64,8 +73,10 @@ function test_moxunit_util_elem2str_custom_class
                     ['function size(obj)\n'...
                             'error(''raises error'');']);
     addpath(tmpdir);
-    s=str2func(classname);
-    obj=s();
+    constructor=str2func(classname);
+
+    % make object instance
+    obj=constructor();
 
     aeq=get_comparator(false);
     aeq(sprintf('(%s)',classname),obj);
