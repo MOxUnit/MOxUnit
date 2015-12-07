@@ -33,7 +33,7 @@ function show_non_successes(obj, label)
     label_singular=label(1:(end-1));
 
     for k=1:n
-        e=content{k}{2};
+        e=content{k}{3};
         if isstruct(e)
             fprintf(stream,'%s: %s\n',label_singular,e.message);
             for j=1:numel(e.stack)

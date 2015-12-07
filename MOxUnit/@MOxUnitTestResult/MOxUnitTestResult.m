@@ -34,5 +34,6 @@ function obj=MOxUnitTestResult(verbosity,stream)
     s.skips=cell(0);
     s.successes=cell(0);
     s.testsRun=0;
+    s.duration=0;
     obj=class(s,'MOxUnitTestResult');
 
