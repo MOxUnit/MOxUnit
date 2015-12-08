@@ -4,12 +4,12 @@ function obj=addSuccess(obj,t,dur)
 % obj=addError(obj,t,e)
 %
 % Inputs:
-%   obj             MOxUnitTestResult instance.
+%   obj             MOxUnitTestReport instance.
 %   t               MoxUnitTestCase that gave a success.
 %   dur             Duration of runtime (in seconds).
 %
 % Output:
-%   obj             MOxUnitTestResult instance with the test success added.
+%   obj             MOxUnitTestReport instance with the test success added.
 %
 % NNO 2015
 

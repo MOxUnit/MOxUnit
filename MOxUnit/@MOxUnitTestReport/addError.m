@@ -4,13 +4,13 @@ function obj=addError(obj,t,dur,e)
 % obj=addError(obj,t,e)
 %
 % Inputs:
-%   obj             MOxUnitTestResult instance.
+%   obj             MOxUnitTestReport instance.
 %   t               MoxUnitTestCase that gave an error.
 %   dur             Duration of runtime until error (in seconds).
 %   e               Exception associated with the error.
 %
 % Output:
-%   obj             MOxUnitTestResult instance with the error added.
+%   obj             MOxUnitTestReport instance with the error added.
 %
 % NNO 2015
 

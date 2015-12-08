@@ -4,7 +4,7 @@ function show_non_successes(obj, label)
 % show_non_successes(obj, label)
 %
 % Inputs:
-%   obj             MOxUnitTestResult instance containing tests that have
+%   obj             MOxUnitTestReport instance containing tests that have
 %                   been run.
 %   label           One of 'errors',' 'failures', or 'skips'
 %

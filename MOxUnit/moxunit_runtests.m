@@ -67,7 +67,7 @@ function result=moxunit_runtests(varargin)
     end
 
     % initialize test results
-    test_init=MOxUnitTestResult(verbosity, fid);
+    test_init=MOxUnitTestReport(verbosity, fid);
 
     % run all tests
     test_result=run(suite, test_init);

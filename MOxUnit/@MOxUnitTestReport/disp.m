@@ -3,7 +3,7 @@ function disp(obj)
 %
 % disp(obj)
 %
-%   obj             MOxUnitTestResult instance.
+%   obj             MOxUnitTestReport instance.
 %
 % Notes:
 %   - this function writes results to the file descriptor provided when

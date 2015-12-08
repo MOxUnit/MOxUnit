@@ -4,7 +4,7 @@ function report(obj,c,s,t)
 % report(obj,c,s,t)
 %
 % Inputs:
-%   obj             MOxUnitTestResult instance.
+%   obj             MOxUnitTestReport instance.
 %   c               Single character representation of test case result;
 %                   Typically, the following characters are used:
 %                   'e' : error
