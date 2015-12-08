@@ -13,5 +13,12 @@ function tf=wasSuccessful(obj)
 %
 % NNO 2015
 
-    tf=all([numel(obj.errors),...
-            numel(obj.failures)]==0);
+    for i=1:countTestOutcomes(obj)
+        test_outcome=getTestOutcome(obj,i);
+        if ~isNonFailure(test_outcome)
+            tf=false;
+            return;
+        end
+    end
+
+    tf=true;
