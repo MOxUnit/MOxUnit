@@ -44,7 +44,7 @@ function status=obj2stat_str_text(obj)
         parts=cell(1,n_labels);
         for k=1:n_labels
             label=labels{k};
-            parts{k}=sprintf('%s=%d',label,label2count(label));
+            parts{k}=sprintf('%s=%d',label,label2count.(label));
         end
 
         status=sprintf('%s (%s)',status,strjoin(parts,', '));
