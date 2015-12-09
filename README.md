@@ -131,6 +131,10 @@ Currently MOxUnit does not support:
 Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
 
 
+### Contributions
+- Thanks to Scott Lowe and Thomas Feher for contributions.
+
+
 ### License
 
 (The MIT License)
