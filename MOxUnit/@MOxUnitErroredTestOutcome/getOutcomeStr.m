@@ -14,5 +14,5 @@ function outcome=getOutcomeStr(obj, verbosity)
 %                       2: 'error'
 %
 
-    outcome_cell={'','e','error'};
+    outcome_cell={'','E','error'};
     outcome=outcome_cell{verbosity+1};
