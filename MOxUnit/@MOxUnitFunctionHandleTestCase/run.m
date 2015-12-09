@@ -1,22 +1,23 @@
-function result=run(obj,result)
+function report=run(obj,report)
 % Run test associated with MoxUnitFunctionHandleTestCase
 %
-% result=run(obj,result)
+% report=run(obj,report)
 %
 % Inputs:
 %   obj             MoxUnitFunctionHandleTestCase object
-%   result          MoxUnitTestResult instance to which test results are to
+%   report          MoxUnitTestReport instance to which test results are to
 %                   be reported.
 %
 % Output:
-%   result          MoxUnitTestResult containing tests results
+%   report          MoxUnitTestReport containing tests results
 %                   after running the test associated with obj.
 %
-% See also: MoxUnitTestResult
+% See also: MoxUnitTestReport
 %
 % NNO 2015
 
     start_tic = tic;
+
     try
         passed=false;
         try
@@ -33,16 +34,26 @@ function result=run(obj,result)
                 end
 
                 reason=e.message((last_newline_pos+1):end);
-                result=addSkip(result, obj, toc(start_tic), reason);
+
+                test_outcome_constructor=@MOxUnitSkippedTestOutcome;
+                test_outcome_args={reason};
             else
-                result=addFailure(result, obj, toc(start_tic), e);
+                test_outcome_constructor=@MOxUnitFailedTestOutcome;
+                test_outcome_args={e};
             end
         end
 
         if passed
-            result=addSuccess(result, obj, toc(start_tic));
+            test_outcome_constructor=@MOxUnitPassedTestOutcome;
+            test_outcome_args={};
         end
     catch
         e=lasterror();
-        result=addError(result, obj, toc(start_tic), e);
+        test_outcome_constructor=@MOxUnitErroredTestOutcome;
+        test_outcome_args={e};
     end
+
+    test_outcome = test_outcome_constructor(obj, toc(start_tic), ...
+                            test_outcome_args{:});
+
+    report = reportTestOutcome(report, test_outcome);

@@ -17,7 +17,7 @@ function result=run(obj,result)
 % NNO 2015
 
     if nargin<2
-        result=MOxUnitTestResult();
+        result=MOxUnitTestReport();
     end
 
     for j=1:numel(obj.tests)

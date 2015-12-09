@@ -13,7 +13,7 @@ function tf=moxunit_isa_test_skipped_exception(exception)
 %
 % Notes:
 %   - if this exception is thrown when running a test through
-%     a MOxUnitTestResult instance, this instance will record the test as
+%     a MOxUnitTestReport instance, this instance will record the test as
 %     skipped, not as a failure
 %
 % NNO Jan 2014

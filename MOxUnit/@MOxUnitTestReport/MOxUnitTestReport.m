@@ -1,7 +1,7 @@
-function obj=MOxUnitTestResult(verbosity,stream)
-% Initialize empty MOxUnitTestResult instance
+function obj=MOxUnitTestReport(verbosity,stream)
+% Initialize empty MOxUnitTestReport instance
 %
-% obj=MOxUnitTestResult([verbosity[,stream]])
+% obj=MOxUnitTestReport([verbosity[,stream]])
 %
 % Inputs:
 %   verbosity       Integer indicating how verbose the output is when
@@ -11,7 +11,7 @@ function obj=MOxUnitTestResult(verbosity,stream)
 %                   Command Window).
 %
 % Returns:
-%   obj             Empty MOxUnitTestResult instance, with no test errors,
+%   obj             Empty MOxUnitTestReport instance, with no test errors,
 %                   failures, skips, or successes stored.
 %
 % See also: addError, addFailure, addSkip, addSuccess, report
@@ -29,11 +29,6 @@ function obj=MOxUnitTestResult(verbosity,stream)
     s=struct();
     s.verbosity=verbosity;
     s.stream=stream;
-    s.errors=cell(0);
-    s.failures=cell(0);
-    s.skips=cell(0);
-    s.successes=cell(0);
-    s.testsRun=0;
-    s.duration=0;
-    obj=class(s,'MOxUnitTestResult');
+    s.test_outcomes=cell(0);
+    obj=class(s,'MOxUnitTestReport');
 
