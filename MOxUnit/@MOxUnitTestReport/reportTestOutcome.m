@@ -21,7 +21,11 @@ function obj=reportTestOutcome(obj, test_outcome)
     stream=obj.stream;
 
     postfix=''; % the default
-    if mod(numel(obj.test_outcomes),60)==0 && verbosity==1
+
+    max_line_length=60;
+    if mod(countTestOutcomes(obj),max_line_length)==0 && verbosity==1
+        % when showing single characters, print a newline every sixty
+        % characters
         postfix=sprintf('\n');
     end
 
