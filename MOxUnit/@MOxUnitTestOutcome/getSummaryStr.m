@@ -36,6 +36,10 @@ function str=obj2text(obj)
         % skipped
         str=sprintf('%s: %s', outcome, content);
 
+    elseif isequal(content,[])
+        % passed
+        str='';
+
     else
         assert(false,'this should not happen');
     end
