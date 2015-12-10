@@ -7,6 +7,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - Runs on both the [Matlab] and [GNU Octave] platforms.
 - Uses object oriented TestCase, TestSuite and TestResult classes, allowing for user-defined extensions.
 - Can be used directly with continuous integration services, such as [Travis-ci].
+- Supports JUnit-like XML output.
 - Provides compatibility with Steve Eddin's [Matlab xUnit test framework].
 - Distributed under the MIT license, a permissive free software license.
 
@@ -29,9 +30,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     + On the Matlab or GNU Octave prompt, `cd` to the `MOxUnit` root directory, then run:
     
         ```matlab
-        cd MOxUnit      % cd to MOxUnit subdirectory
-        addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
-        savepath        % save the path
+        cd MOxUnit          % cd to MOxUnit subdirectory
+        moxunit_set_path()  % add the current directory to the Matlab/GNU Octave path
+        savepath            % save the path
         ```
 
 ### Running MOxUnit tests
@@ -54,6 +55,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
   - `directory`: run unit tests in directory `directory`.
   - `file.m`: run unit tests in file `file.m`.
   - `-logfile logfile.txt`: store the output in file `logfile.txt`.
+  - `-junit_xml xmlfile`: store JUnit-like XML output in file `xmlfile`.
 
 - To test MOxUnit itself using a shell, run:
     ```
