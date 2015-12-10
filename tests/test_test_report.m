@@ -27,6 +27,9 @@ function test_test_report_output
             all_passed=true;
 
             outcome_str_cell=cell(test_count,1);
+            test_stats=struct();
+            assertEqual(test_stats,getTestOutputStatistics(rep));
+
             for k=1:test_count
                 test_idx=test_idxs(k);
 
@@ -42,7 +45,7 @@ function test_test_report_output
                 test_outcome=outcome_constructor(test_,duration,...
                                     outcome_args{:});
 
-                is_success=~isempty(strmatch(class(test_outcome),...
+                is_non_failure=~isempty(strmatch(class(test_outcome),...
                                     {'MOxUnitPassedTestOutcome',...
                                     'MOxUnitSkippedTestOutcome'}));
 
@@ -56,7 +59,7 @@ function test_test_report_output
 
                 % verify number of tests
                 assert(countTestOutcomes(rep)==k);
-                all_passed=all_passed && is_success;
+                all_passed=all_passed && is_non_failure;
 
                 % very that wasSuccessful works properly
                 assertEqual(all_passed,wasSuccessful(rep));
@@ -71,6 +74,17 @@ function test_test_report_output
                 else
                     outcome_str='';
                 end
+
+                % check getTestOutputStatistics
+                label=getOutcomeStr(test_outcome,2);
+
+                if ~strcmp(label,'passed')
+                    if ~isfield(test_stats,label)
+                        test_stats.(label)=0;
+                    end
+                    test_stats.(label)=test_stats.(label)+1;
+                end
+                assertEqual(test_stats,getTestOutputStatistics(rep));
 
                 outcome_str_cell{k}=outcome_str;
             end

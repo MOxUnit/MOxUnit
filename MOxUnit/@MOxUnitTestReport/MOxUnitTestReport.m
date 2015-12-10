@@ -1,4 +1,4 @@
-function obj=MOxUnitTestReport(verbosity,stream)
+function obj=MOxUnitTestReport(verbosity,stream,name)
 % Initialize empty MOxUnitTestReport instance
 %
 % obj=MOxUnitTestReport([verbosity[,stream]])
@@ -26,9 +26,15 @@ function obj=MOxUnitTestReport(verbosity,stream)
         stream=1;
     end
 
+    class_name='MOxUnitTestReport';
+    if nargin<3
+        name=class_name;
+    end
+
     s=struct();
     s.verbosity=verbosity;
     s.stream=stream;
+    s.name=name;
     s.test_outcomes=cell(0);
-    obj=class(s,'MOxUnitTestReport');
+    obj=class(s,class_name);
 

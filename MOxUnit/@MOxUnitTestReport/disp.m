@@ -12,17 +12,5 @@ function disp(obj)
 % NNO 2015
 
 
-    horizontal_line=sprintf('\n\n%s\n\n',repmat('-',1,50));
-
     output_format='text';
-
-    if obj.verbosity>0
-        fprintf(obj.stream,horizontal_line);
-
-        if ~wasSuccessful(obj)
-            writeNonSuccesses(obj, output_format, obj.stream);
-            fprintf(obj.stream, horizontal_line);
-        end
-
-        fprintf(obj.stream,'%s\n',getStatisticsStr(obj,output_format));
-    end
+    fprintf(obj.stream,'%s',getSummaryStr(obj,output_format));
