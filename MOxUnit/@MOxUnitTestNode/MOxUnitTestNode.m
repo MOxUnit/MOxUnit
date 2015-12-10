@@ -1,10 +1,13 @@
-function obj=MOxUnitTestNode()
+function obj=MOxUnitTestNode(name)
 % Initialize MOxUnitTestNode instance
 %
 % obj=MOxUnitTestNode()
 %
+% Input:
+%   name            name of this TestNode
+%
 % Output:
-%   obj             empty MOxUnitTestNode instance
+%   obj             MOxUnitTestNode instance
 %
 % Notes:
 %   - This class is intended as an 'abstract' superclass, and should not
@@ -13,4 +16,6 @@ function obj=MOxUnitTestNode()
 %
 % NNO 2015
 
-    obj=class(struct,'MOxUnitTestNode');
+    s=struct();
+    s.name=name;
+    obj=class(s,'MOxUnitTestNode');

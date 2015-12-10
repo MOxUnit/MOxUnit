@@ -12,4 +12,4 @@ function s=str(obj)
 %
 % NNO 2015-2015
 
-    s=sprintf('%s:  %s', obj.name, obj.location);
+    s=sprintf('%s:  %s', getName(obj), getLocation(obj));

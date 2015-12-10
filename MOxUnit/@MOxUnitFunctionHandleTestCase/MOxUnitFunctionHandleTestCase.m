@@ -19,10 +19,9 @@ function obj=MOxUnitFunctionHandleTestCase(name,location,function_handle)
 % NNO 2015
 
     s=struct();
-    s.name=name;
-    s.location=location;
     s.function_handle=function_handle;
 
-    obj=class(s,'MOxUnitFunctionHandleTestCase',MOxUnitTestCase);
+    obj=class(s,'MOxUnitFunctionHandleTestCase',...
+                    MOxUnitTestCase(name,location));
 
 
