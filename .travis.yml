@@ -3,10 +3,11 @@
 # which is based on PyMVPA, which is based on nipype configuration, 
 # which in turn was based on nipy)
 #
-# We pretend to be erlang because we need GNU Octave which is not 
+# We pretend to be java because we need GNU Octave which is not
 # available (as of April 2015)
 
-language: erlang
+language: java
+
 cache:
   - apt
 env:
@@ -21,6 +22,11 @@ before_install:
     - travis_retry sudo apt-get -y -qq update
     # get Octave 4,0
     - travis_retry sudo apt-get -y -qq install octave
+    # generate .xml file when running on shippable.com
+    - if [[  "$SHIPPABLE" == "true"  ]];  then
+          TEST_ARGS=JUNIT_XML=shippable/testresults/testresults.xml;
+      fi
+
 script:
-    - make test
+    - make test ${TEST_ARGS}
 
