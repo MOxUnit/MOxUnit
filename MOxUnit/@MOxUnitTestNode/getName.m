@@ -4,7 +4,7 @@ function s=getName(obj)
 % s=str(obj)
 %
 % Input:
-%   obj             empty MOxUnitTestNode instance.
+%   obj             MOxUnitTestNode instance.
 %
 % Output:
 %   s               name of obj.

@@ -20,10 +20,10 @@ function result=moxunit_runtests(varargin)
 %   '-junit_xml', xml    store junit XML output in file xml
 %
 % Output:
-%   result                  true if no test failed or raised an error, in
-%                           words, if all tests either passed or were
-%                           skipped.
-%                           (result is true if no tests were run)
+%   result                  true if no test failed or raised an error. In
+%                           other words, true if all tests were either
+%                           successful or skipped. Result is true if
+%                           no tests were run.
 %
 % Notes:
 %   - This function can be run without the function syntax. For example,
