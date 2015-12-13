@@ -85,9 +85,8 @@ function str=stack2str(stack)
 
 function s=get_classname(test_)
     location=getLocation(test_);
-    test_name=getName(test_);
     [pth,file_name]=fileparts(location);
 
-    s=sprintf('%s.%s',file_name,test_name);
+    s=sprintf('%s',file_name);
 
 
