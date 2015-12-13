@@ -60,7 +60,9 @@ function str=obj2xml(obj)
             % XXX currently the entire error message is shown, together
             % with the stack trace. It may be more convenient to show a
             % summary of this information
-            message=moxunit_util_escape_xml(content.message);
+            raw_message=content.message;
+            message=moxunit_util_remove_matlab_anchor_tag(raw_message);
+            message=moxunit_util_escape_xml(message);
             stack_trace=moxunit_util_escape_xml(stack2str(content.stack));
             infix=sprintf('>\n  <%s message="%s">%s</%s>',...
                         outcome,message,stack_trace,outcome);
