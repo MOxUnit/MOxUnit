@@ -6,8 +6,8 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - Runs on both the [Matlab] and [GNU Octave] platforms.
 - Uses object oriented TestCase, TestSuite and TestResult classes, allowing for user-defined extensions.
-- Can be used directly with continuous integration services, such as [Travis-ci].
-- Supports JUnit-like XML output.
+- Can be used directly with continuous integration services, such as [Travis-ci] and [Shippable].
+- Supports JUnit-like XML output for use with Shippable and other test results visualization approaches.
 - Provides compatibility with Steve Eddin's [Matlab xUnit test framework].
 - Distributed under the MIT license, a permissive free software license.
 
@@ -62,8 +62,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     make test
     ```
 
-### Use with travis-ci
-MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). As a result, the test suite is run automatically every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
+### Use with travis-ci and Shippable
+MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). This file is also used by [Shippable].
+As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
 
 ### Defining MOxUnit tests
 
