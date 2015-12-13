@@ -69,7 +69,7 @@ function [c,n_tests]=get_outcome_summary_cell(obj, format)
                     'UniformOutput',false);
 
 function str=statistics_xml(obj)
-% return xm; string indicating number of tests, and how many were failures,
+% return xml string indicating number of tests, and how many were failures,
 % skips and errors
 %
 % Example outputs:
