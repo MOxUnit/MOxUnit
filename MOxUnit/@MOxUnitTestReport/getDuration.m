@@ -10,9 +10,9 @@ function duration=getDuration(obj)
 %   duration            total time in seconds that it took to run all tests
 %                       in the obj instance
 
-    duration=0;
+    get_outcome_duration=@(i)getDuration(getTestOutcome(obj,i));
 
-    for i=1:countTestOutcomes(obj)
-        test_outcome=getTestOutcome(obj,i);
-        duration=duration+getDuration(test_outcome);
-    end
+    all_durations=arrayfun(get_outcome_duration,...
+                            1:countTestOutcomes(obj));
+
+    duration=sum(all_durations);

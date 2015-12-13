@@ -1,21 +1,21 @@
-function label2count=getTestOutputStatistics(obj)
+function label_counts=getTestOutputStatistics(obj)
 % get number of failures, skipped and errored tests
 %
-% label2count=getTestOutputStatistics(obj)
+% label_counts=getTestOutputStatistics(obj)
 %
 % Input:
 %   obj             MOxUnitTestReport instance containg tests that have
 %                   been run.
 %
 % Output:
-%   label2count     struct that may contain the fields 'failure', 'error',
+%   label_counts    struct that may contain the fields 'failure', 'error',
 %                   'skipped', with the value the number of times a text
 %                   failed, raised an error or was skipped. If a field is
 %                   absent, the number of times is zero.
-%                   A success is not part of label2count
+%                   A success is not part of label_counts
 
     label_verbosity=2;
-    label2count=struct();
+    label_counts=struct();
 
     for i=1:countTestOutcomes(obj)
         test_outcome=getTestOutcome(obj,i);
@@ -27,9 +27,9 @@ function label2count=getTestOutputStatistics(obj)
 
         test_label=getOutcomeStr(test_outcome,label_verbosity);
 
-        if ~isfield(label2count,test_label);
-            label2count.(test_label)=0;
+        if ~isfield(label_counts,test_label);
+            label_counts.(test_label)=0;
         end
 
-        label2count.(test_label)=label2count.(test_label)+1;
+        label_counts.(test_label)=label_counts.(test_label)+1;
     end

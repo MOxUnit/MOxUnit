@@ -117,13 +117,13 @@ function str=statistics_text(obj)
         str='FAILED';
     end
 
-    label2count=getTestOutputStatistics(obj);
-    labels=fieldnames(label2count);
+    label_counts=getTestOutputStatistics(obj);
+    labels=fieldnames(label_counts);
 
     n_labels=numel(labels);
     if n_labels>0
-        cell_stats=cellfun(@(x) sprintf('%s=%d',x, label2count.(x)),...
-                                    fieldnames(label2count),...
+        cell_stats=cellfun(@(x) sprintf('%s=%d',x, label_counts.(x)),...
+                                    fieldnames(label_counts),...
                                     'UniformOutput',false);
         str=sprintf('%s (%s)',str,strjoin(cell_stats,', '));
     end
