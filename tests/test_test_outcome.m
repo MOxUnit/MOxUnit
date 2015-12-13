@@ -48,7 +48,7 @@ function test_test_failure_outcome
                             false,false,...
                             {'','F','failure'});
 
-function [error_,msg_text]=rand_error_struct_and_msg()
+function [error_,msg_text, msg_xml_cell]=rand_error_struct_and_msg()
     error_=struct();
     error_.message=rand_str();
     error_.identifier=rand_str();
@@ -59,7 +59,7 @@ function [error_,msg_text]=rand_error_struct_and_msg()
     stack.file=rand_str();
     error_.stack=stack;
 
-    msg_text=sprintf('%s\n  %s:%d (%s)\n',...
+    msg_text=sprintf('%s\n  %s:%d (%s)',...
                         error_.message,...
                         stack.name, stack.line, stack.file);
 
@@ -69,11 +69,25 @@ function helper_test_outcome(class_,args,...
                                 is_success,is_non_failure,...
                                 outcome_cell)
 
-    test_=rand(3);
+    name=rand_str();
+    test_=MOxUnitFunctionHandleTestCase(name,rand_str,@abs);
     duration=rand(1);
     c=class_(test_,duration,args{:});
     assertEqual(getSummaryContent(c),content);
     assertEqual(getSummaryStr(c,'text'),summary_text);
+
+    str_xml=getSummaryStr(c,'xml');
+    xml_sub_str=sprintf('name="%s"',name);
+    assert_contains(str_xml, xml_sub_str);
+    if ~is_non_failure
+        % must have failed
+        xml_sub_str=sprintf('<%s message=',outcome_cell{3});
+        assert_contains(str_xml,xml_sub_str);
+    elseif ~is_success
+        xml_sub_str=sprintf('<%s',outcome_cell{3});
+        assert_contains(str_xml,xml_sub_str);
+    end
+
     assertEqual(isSuccess(c),is_success);
     assertEqual(isNonFailure(c),is_non_failure);
 
@@ -84,5 +98,6 @@ function helper_test_outcome(class_,args,...
 function s=rand_str()
     s=char(20*rand(1,10)+65);
 
-
+function assert_contains(a,b)
+    assert(~isempty(findstr(a,b)))
 

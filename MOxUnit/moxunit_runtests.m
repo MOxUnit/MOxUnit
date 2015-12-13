@@ -4,22 +4,26 @@ function result=moxunit_runtests(varargin)
 % result=moxunit_runtests(...)
 %
 % Inputs:
-%   '-verbose'          show verbose output. If not provided, non-verbose
-%                       output is shown.
-%   '-quiet'            do not show output
-%   filename            } test the unit tests in filename
-%   directory           } (which must initialize a test suite through
-%                       } initTestSuite) or in directory. Multiple filename
-%                       or directory arguments can be provided. If there
-%                       are no filename or directory arguments, then tests
-%                       in the current directory are run.
-%   '-logfile', output  store the output in file output. If not provided,
-%                       output id directed to the terminal window
+%   '-verbose'              show verbose output. If not provided,
+%                           non-verbose output is shown.
+%   '-quiet'                do not show output
+%   filename                } test the unit tests in filename
+%   directory               } (which must initialize a test suite through
+%                           } initTestSuite) or in directory. Multiple
+%                           filename or directory arguments can be
+%                           provided. If there are no filename or directory
+%                           arguments, then all tests in the current
+%                           directory are run.
+%   '-logfile', output      store the output in file output. If not
+%                           provided, then output is directed to the
+%                           command window
+%   '-junit_xml', xml    store junit XML output in file xml
 %
 % Output:
-%   result              true if no test failed or raised an error, in other
-%                       words, if all tests either passed or were skipped.
-%                       (therefore, result is true if no tests were run)
+%   result                  true if no test failed or raised an error. In
+%                           other words, true if all tests were either
+%                           successful or skipped. Result is true if
+%                           no tests were run.
 %
 % Notes:
 %   - This function can be run without the function syntax. For example,
@@ -43,7 +47,7 @@ function result=moxunit_runtests(varargin)
 % NNO Jan 2014
 
 
-    [verbosity, filenames, fid]=get_params(varargin{:});
+    [verbosity, filenames, fid, junit_xml]=get_params(varargin{:});
     if fid>2
         % not standard or error output; file most be closed
         % afterwards
@@ -67,25 +71,48 @@ function result=moxunit_runtests(varargin)
     end
 
     % initialize test results
-    test_init=MOxUnitTestReport(verbosity, fid);
+    suite_name=class(suite);
+    test_report=MOxUnitTestReport(verbosity, fid, suite_name);
 
     % run all tests
-    test_result=run(suite, test_init);
+    test_report=run(suite, test_report);
 
     % show summary of test result
-    disp(test_result);
+    disp(test_report);
+
+    % if xml output was requested, store it in a file
+    if ~isempty(junit_xml)
+        write_junit_xml(junit_xml, test_report);
+    end
 
     % return true if no errors or failures
-    result=wasSuccessful(test_result);
+    result=wasSuccessful(test_report);
 
 
-function [verbosity,filenames,fid]=get_params(varargin)
+function write_junit_xml(fn, test_report)
+    fid=fopen(fn,'w');
+    file_closer=onCleanup(@()fclose(fid));
+
+    xml_preamble='<?xml version="1.0" encoding="utf-8"?>';
+    xml_header='<testsuites>';
+    xml_body=getSummaryStr(test_report,'xml');
+    xml_footer='</testsuites>';
+
+    fprintf(fid,'%s\n%s\n%s\n%s',...
+                xml_preamble,...
+                xml_header,...
+                xml_body,...
+                xml_footer);
+
+
+function [verbosity,filenames,fid,junit_xml]=get_params(varargin)
     n=numel(varargin);
 
     % set defaults
     verbosity=1;
     filenames=cell(n,1);
     fid=1;
+    junit_xml=[];
 
     k=0;
     while k<n
@@ -115,6 +142,15 @@ function [verbosity,filenames,fid]=get_params(varargin)
                 if fid==-1
                     error('Could not open file %s for writing', fn);
                 end
+
+             case '-junit_xml'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                junit_xml=varargin{k};
+
 
             otherwise
 

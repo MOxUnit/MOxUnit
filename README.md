@@ -6,7 +6,8 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - Runs on both the [Matlab] and [GNU Octave] platforms.
 - Uses object oriented TestCase, TestSuite and TestResult classes, allowing for user-defined extensions.
-- Can be used directly with continuous integration services, such as [Travis-ci].
+- Can be used directly with continuous integration services, such as [Travis-ci] and [Shippable].
+- Supports JUnit-like XML output for use with Shippable and other test results visualization approaches.
 - Provides compatibility with Steve Eddin's [Matlab xUnit test framework].
 - Distributed under the MIT license, a permissive free software license.
 
@@ -29,9 +30,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     + On the Matlab or GNU Octave prompt, `cd` to the `MOxUnit` root directory, then run:
     
         ```matlab
-        cd MOxUnit      % cd to MOxUnit subdirectory
-        addpath(pwd())  % add the current directory to the Matlab/GNU Octave path
-        savepath        % save the path
+        cd MOxUnit          % cd to MOxUnit subdirectory
+        moxunit_set_path()  % add the current directory to the Matlab/GNU Octave path
+        savepath            % save the path
         ```
 
 ### Running MOxUnit tests
@@ -39,31 +40,31 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - `cd` to the directory where the unit tests reside. For MOxUnit itself, the unit tests are in the directory `tests`.
 - run the tests using `moxunit_runtests`. For example, running `moxunit_runtests` from MOxUnit's `tests` directory should give the following output:
   ```
-  moxunit_runtests
-  suite: 13 tests
-  .............
-
+  suite: 27 tests
+  ...........................
   --------------------------------------------------
 
   OK
-
   ans =
 
        1
   ```
+
 - `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
   - `-verbose`: show verbose output.
   - `directory`: run unit tests in directory `directory`.
   - `file.m`: run unit tests in file `file.m`.
   - `-logfile logfile.txt`: store the output in file `logfile.txt`.
+  - `-junit_xml xmlfile`: store JUnit-like XML output in file `xmlfile`.
 
 - To test MOxUnit itself using a shell, run:
     ```
     make test
     ```
 
-### Use with travis-ci
-MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). As a result, the test suite is run automatically every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
+### Use with travis-ci and Shippable
+MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). This file is also used by [Shippable].
+As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
 
 ### Defining MOxUnit tests
 

@@ -1,6 +1,8 @@
-function obj=MOxUnitTestSuite()
+function obj=MOxUnitTestSuite(name)
 % Initialize empty test suite
 %
+% Input:
+%   name            Optional name of the test suite
 % Output:
 %   obj             MoxUnitTestSuite instance with no tests.
 %
@@ -11,8 +13,13 @@ function obj=MOxUnitTestSuite()
 %
 % NNO 2015
 
+    class_name='MOxUnitTestSuite';
+    if nargin<1
+        name=class_name;
+    end
+
     s=struct();
     s.tests=cell(0);
-    obj=class(s,'MOxUnitTestSuite',MOxUnitTestNode());
+    obj=class(s,class_name,MOxUnitTestNode(name));
 
 

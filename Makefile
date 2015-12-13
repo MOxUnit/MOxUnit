@@ -9,14 +9,12 @@ OCTAVE?=octave
 TESTDIR=$(CURDIR)/tests
 ROOTDIR=$(CURDIR)/MOxUnit
 
-ADDPATH="cd('$(ROOTDIR)');moxunit_set_path();"
-RMPATH="rmpath('$(ROOTDIR)');"
-SAVEPATH="savepath();exit(0)"
+ADDPATH=orig_dir=pwd();cd('$(ROOTDIR)');moxunit_set_path();cd(orig_dir)
+RMPATH=rmpath('$(ROOTDIR)');
+SAVEPATH=savepath();exit(0)
 
-INSTALL=$(ADDPATH)";"$(SAVEPATH)
-UNINSTALL=$(RMPATH)";"$(SAVEPATH)
-
-TEST=$(ADDPATH)";success=moxunit_runtests('${TESTDIR}');exit(~success);"
+INSTALL=$(ADDPATH);$(SAVEPATH)
+UNINSTALL=$(RMPATH);$(SAVEPATH)
 
 help:
 	@echo "Usage: make <target>, where <target> is one of:"
@@ -38,7 +36,13 @@ help:
 	@echo "  test-octave        to run tests using GNU Octave"
 	@echo ""
 
+RUNTESTS_ARGS='${TESTDIR}'
+ifdef JUNIT_XML
+	RUNTESTS_ARGS +=,'-junit_xml','$(JUNIT_XML)'
+endif
+export RUNTESTS_ARGS
 
+TEST=$(ADDPATH);success=moxunit_runtests($(RUNTESTS_ARGS));exit(~success);
 
 MATLAB_BIN=$(shell which $(MATLAB))
 OCTAVE_BIN=$(shell which $(OCTAVE))
@@ -53,14 +57,14 @@ OCTAVE_RUN=$(OCTAVE_BIN) --no-gui --quiet --eval
 
 install-matlab:
 	@if [ -n "$(MATLAB_BIN)" ]; then \
-		$(MATLAB_RUN) $(INSTALL); \
+		$(MATLAB_RUN) "$(INSTALL)"; \
 	else \
 		echo "matlab binary could not be found, skipping"; \
 	fi;
 
 install-octave:
 	@if [ -n "$(OCTAVE_BIN)" ]; then \
-		$(OCTAVE_RUN) $(INSTALL); \
+		$(OCTAVE_RUN) "$(INSTALL)"; \
 	else \
 		echo "octave binary could not be found, skipping"; \
 	fi;
@@ -76,14 +80,14 @@ install:
 
 uninstall-matlab:
 	@if [ -n "$(MATLAB_BIN)" ]; then \
-		$(MATLAB_RUN) $(UNINSTALL); \
+		$(MATLAB_RUN) "$(UNINSTALL)"; \
 	else \
 		echo "matlab binary could not be found, skipping"; \
 	fi;
 	
 uninstall-octave:
 	@if [ -n "$(OCTAVE_BIN)" ]; then \
-		$(OCTAVE_RUN) $(UNINSTALL); \
+		$(OCTAVE_RUN) "$(UNINSTALL)"; \
 	else \
 		echo "octave binary could not be found, skipping"; \
 	fi;
@@ -99,14 +103,14 @@ uninstall:
 
 test-matlab:
 	@if [ -n "$(MATLAB_BIN)" ]; then \
-		$(MATLAB_RUN) $(TEST); \
+		$(MATLAB_RUN) "$(TEST)"; \
 	else \
 		echo "matlab binary could not be found, skipping"; \
 	fi;
 
 test-octave:
 	@if [ -n "$(OCTAVE_BIN)" ]; then \
-		$(OCTAVE_RUN) $(TEST); \
+		$(OCTAVE_RUN) "$(TEST)"; \
 	else \
 		echo "octave binary could not be found, skipping"; \
 	fi;
