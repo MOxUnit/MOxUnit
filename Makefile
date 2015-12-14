@@ -34,6 +34,10 @@ help:
 	@echo "                     path"
 	@echo "  test-matlab        to run tests using Matlab"
 	@echo "  test-octave        to run tests using GNU Octave"
+	@echo "------------------------------------------------------------------"
+	@echo ""
+	@echo "The variable JUNIT_XML, if set, defines the filename where "
+	@echo "JUnit-like XML output is written to."
 	@echo ""
 
 RUNTESTS_ARGS='${TESTDIR}'
