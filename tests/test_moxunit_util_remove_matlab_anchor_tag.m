@@ -28,8 +28,8 @@ function test_moxunit_util_remove_matlab_anchor_tag_basics
                     file_path,line_number,line_number),...
             sprintf('line %d',line_number)};
 
-    in_out3={strjoin([in_out1(1),in_out2(1)],''),...
-             strjoin([in_out1(2),in_out2(2)],'')};
+    in_out3={moxunit_util_strjoin([in_out1(1),in_out2(1)],''),...
+             moxunit_util_strjoin([in_out1(2),in_out2(2)],'')};
 
     in_out_cell=cat(1,in_out1,in_out2,in_out3);
     for k=3:size(in_out_cell,1)

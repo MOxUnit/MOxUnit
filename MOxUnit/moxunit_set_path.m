@@ -10,7 +10,13 @@ function moxunit_set_path()
 
     sub_dirs={'','util'};
 
-    full_dirs=cellfun(@(sd)fullfile(root_dir,sd),sub_dirs,...
+    % Cannot use moxunit_util_strjoin because it may not be in the path.
+    % Instead construct the path to be added by adding the pathsep() after
+    % each subdirectory
+    make_full_path_with_sep=@(sub_dir)[fullfile(root_dir,sub_dir) ...
+                                        pathsep()];
+
+    full_dirs=cellfun(make_full_path_with_sep,sub_dirs,...
                         'UniformOutput',false);
-    addpath(strjoin(full_dirs,pathsep()));
+    addpath(cat(2,full_dirs{:}));
 

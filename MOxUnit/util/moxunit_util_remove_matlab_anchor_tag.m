@@ -18,7 +18,6 @@ function result_str=moxunit_util_remove_matlab_anchor_tag(str)
 %   - this function is used to remove the anchor
 
 pos=0;
-n_str=numel(str);
 
 anchor_start_open='<a';
 anchor_start_close='>';
@@ -44,7 +43,6 @@ while true
             % find closing '"'
             pos=find_str_pos_after(pos, str, ignore_inside);
         elseif strcmp(cur_char,anchor_start_close)
-            pos=pos;
             content_pos=find_str_pos(pos, str, anchor_close);
             result_str_cell{end+1}=str((pos+1):content_pos);
 
@@ -59,7 +57,7 @@ while true
 end
 
 
-result_str=strjoin(result_str_cell,'');
+result_str=moxunit_util_strjoin(result_str_cell,'');
 
 function i=find_str_pos(pos, str, needle)
 % find the position before the first occurence of needle in str,

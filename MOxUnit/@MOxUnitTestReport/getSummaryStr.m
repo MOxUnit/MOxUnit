@@ -27,7 +27,7 @@ function str=report2summary_xml(obj)
                     statistics_xml(obj));
 
     summary_text_cell=get_outcome_summary_cell(obj,'xml');
-    body=strjoin(summary_text_cell,'\n');
+    body=moxunit_util_strjoin(summary_text_cell,'\n');
 
     footer='</testsuite>';
     str=sprintf('%s\n%s\n%s',header,body,footer);
@@ -45,7 +45,8 @@ function str=report2summary_text(obj)
         non_empty_msk=~cellfun(@isempty,summary_text_cell);
         if any(non_empty_msk)
             summary_text_cell_nonempty=summary_text_cell(non_empty_msk);
-            body_non_pass=strjoin(summary_text_cell_nonempty,'\n\n');
+            body_non_pass=moxunit_util_strjoin(...
+                                summary_text_cell_nonempty,'\n\n');
             body=sprintf('%s\n\n%s\n%s\n\n',hor_line,body_non_pass);
         end
     end
@@ -98,7 +99,8 @@ function str=statistics_xml(obj)
         non_success_tests_cell{k}=sprintf('%s="%d"',plural,count);
     end
 
-    str=sprintf('%s %s',total_tests,strjoin(non_success_tests_cell,' '));
+    str=sprintf('%s %s',total_tests,...
+                    moxunit_util_strjoin(non_success_tests_cell,' '));
 
 
 
@@ -125,7 +127,7 @@ function str=statistics_text(obj)
         cell_stats=cellfun(@(x) sprintf('%s=%d',x, label_counts.(x)),...
                                     fieldnames(label_counts),...
                                     'UniformOutput',false);
-        str=sprintf('%s (%s)',str,strjoin(cell_stats,', '));
+        str=sprintf('%s (%s)',str,moxunit_util_strjoin(cell_stats,', '));
     end
 
 

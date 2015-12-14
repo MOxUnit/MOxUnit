@@ -100,15 +100,18 @@ function test_test_report_output
 
             % test that all elements are present
             assert_equal_modulo_whitespace(data, ...
-                                            strjoin(outcome_str_cell,''))
+                                            moxunit_util_strjoin(...
+                                                    outcome_str_cell,''));
         end
     end
 
 function assert_equal_modulo_whitespace(a,b)
     % In GNU Octave, strings may both be empty but of different size
     % (such as [1,0] and [0,0]). Such cases should not fail the test.
-    if ~(isempty(a)  && isempty(b))
-        assertEqual(strsplit(a),strsplit(b));
+    both_empty=isempty(a)  && isempty(b);
+    strsplit_by_whitespace=@(x)regexp(x,'\s+','split');
+    if ~both_empty
+        assertEqual(strsplit_by_whitespace(a),strsplit_by_whitespace(b));
     end
 
 

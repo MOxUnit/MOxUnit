@@ -81,7 +81,7 @@ function str=stack2str(stack)
         lines{k}=sprintf('  %s:%d (%s)', ...
                         s.name, s.line, s.file);
     end
-    str=strjoin(lines,'\n');
+    str=moxunit_util_strjoin(lines,'\n');
 
 function s=get_classname(test_)
     location=getLocation(test_);

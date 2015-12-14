@@ -47,5 +47,5 @@ function status=obj2stat_str_text(obj)
             parts{k}=sprintf('%s=%d',label,label2count.(label));
         end
 
-        status=sprintf('%s (%s)',status,strjoin(parts,', '));
+        status=sprintf('%s (%s)',status,moxunit_util_strjoin(parts,', '));
     end

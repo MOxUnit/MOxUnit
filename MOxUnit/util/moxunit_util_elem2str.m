@@ -99,7 +99,7 @@ function elem_str=elem2str_size_and_class(elem)
 % return string representation of elem with size and class
     siz_cell = arrayfun(@num2str, size(elem), ...
                         'UniformOutput', false);
-    siz_str = strjoin(siz_cell, 'x');
+    siz_str = moxunit_util_strjoin(siz_cell, 'x');
     elem_str = sprintf('%s(%s)', siz_str, class(elem));
 
 
