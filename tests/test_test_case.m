@@ -12,3 +12,7 @@ function test_test_case_basics
     assertEqual(name,getName(case_));
 
     assert(~isempty(strfind(str(case_),'MOxUnitTestCase')));
+
+function test_test_case_run
+    case_=MOxUnitTestCase('foo','bar');
+    assertExceptionThrown(@()run(case_),'moxunit:notImplemented');
