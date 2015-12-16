@@ -105,6 +105,20 @@ function test_test_report_output
         end
     end
 
+function test_test_report_duration
+    rep=MOxUnitTestReport(0,1);
+
+    assertEqual(getDuration(rep),0);
+
+    duration=rand();
+    outcome=MOxUnitPassedTestOutcome(1,duration);
+
+    for k=1:3
+        rep=addTestOutcome(rep,outcome);
+        assertElementsAlmostEqual(getDuration(rep),k*duration);
+    end
+
+
 function assert_equal_modulo_whitespace(a,b)
     % In GNU Octave, strings may both be empty but of different size
     % (such as [1,0] and [0,0]). Such cases should not fail the test.
