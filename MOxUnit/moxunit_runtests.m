@@ -14,6 +14,10 @@ function result=moxunit_runtests(varargin)
 %                           provided. If there are no filename or directory
 %                           arguments, then all tests in the current
 %                           directory are run.
+%   '-recursive'            If this option is present, then files are added
+%                           recursively from any directory. If absent, then
+%                           only files from each directory (but not their
+%                           subdirectories) are added.
 %   '-logfile', output      store the output in file output. If not
 %                           provided, then output is directed to the
 %                           command window
