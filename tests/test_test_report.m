@@ -105,6 +105,93 @@ function test_test_report_output
         end
     end
 
+function test_test_report_duration
+    rep=MOxUnitTestReport(0,1);
+
+    assertEqual(getDuration(rep),0);
+
+    duration=rand();
+    outcome=MOxUnitPassedTestOutcome(1,duration);
+
+    for k=1:3
+        rep=addTestOutcome(rep,outcome);
+        assertElementsAlmostEqual(getDuration(rep),k*duration);
+    end
+
+
+function test_test_report_name
+    % default name
+    rep=MOxUnitTestReport(0,1);
+    assertEqual('MOxUnitTestReport',getName(rep));
+
+    rand_str=@()char(20*rand(1,10)+65);
+    name=rand_str();
+    rep=MOxUnitTestReport(0,1,name);
+    assertEqual(name,getName(rep));
+
+function test_test_report_get_statistics_str_xml
+    helper_test_get_statistics_str('xml');
+
+function test_test_report_get_statistics_str_text
+    helper_test_get_statistics_str('text');
+
+function helper_test_get_statistics_str(format)
+
+    a_test='foo';
+    outcomes.passed=MOxUnitPassedTestOutcome(a_test,rand());
+    outcomes.skipped=MOxUnitSkippedTestOutcome(a_test,rand(),'foo');
+    outcomes.failure=MOxUnitFailedTestOutcome(a_test,rand(),struct());
+    outcomes.error=MOxUnitErroredTestOutcome(a_test,rand(),struct());
+
+    skip_pos=2;
+    failure_pos=3;
+
+    keys=fieldnames(outcomes);
+    n_keys=numel(keys);
+
+
+    for repeat=1:5
+        rep=MOxUnitTestReport(0,1);
+        counts=zeros(n_keys,1);
+
+        for k=1:6
+            idx=ceil(rand()*n_keys);
+            key=keys{idx};
+
+            outcome=outcomes.(key);
+            rep=addTestOutcome(rep,outcome);
+            counts(idx)=counts(idx)+1;
+
+            s=getStatisticsStr(rep,format);
+
+            switch format
+                case 'xml'
+                    assertEqual('',s);
+
+                case 'text';
+                    has_ok=all(counts(failure_pos:n_keys)==0);
+
+                    assertEqual(has_ok,contains(s,'OK'));
+                    assertEqual(~has_ok,contains(s,'FAILED'));
+
+                    for j=skip_pos:n_keys
+                        infix=sprintf('%s=%d',keys{j},counts(j));
+                        assertEqual(contains(s,infix),counts(j)>0);
+                    end
+
+                otherwise
+                    assert(false);
+            end
+        end
+    end
+
+
+function tf=contains(haystack,needle)
+    tf=~isempty(strfind(haystack,needle));
+
+
+
+
 function assert_equal_modulo_whitespace(a,b)
     % In GNU Octave, strings may both be empty but of different size
     % (such as [1,0] and [0,0]). Such cases should not fail the test.
