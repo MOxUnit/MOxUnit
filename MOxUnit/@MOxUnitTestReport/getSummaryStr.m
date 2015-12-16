@@ -40,14 +40,14 @@ function str=report2summary_text(obj)
     hor_line=repmat('-',1,50);
 
     body='';
-    if verbosity>=2
+    if verbosity>=2 || ~wasSuccessful(obj)
         summary_text_cell=get_outcome_summary_cell(obj,'text');
         non_empty_msk=~cellfun(@isempty,summary_text_cell);
         if any(non_empty_msk)
             summary_text_cell_nonempty=summary_text_cell(non_empty_msk);
             body_non_pass=moxunit_util_strjoin(...
                                 summary_text_cell_nonempty,'\n\n');
-            body=sprintf('%s\n\n%s\n%s\n\n',hor_line,body_non_pass);
+            body=sprintf('\n%s\n\n%s\n%s\n\n',hor_line,body_non_pass);
         end
     end
 

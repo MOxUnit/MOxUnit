@@ -47,32 +47,33 @@ function result=moxunit_runtests(varargin)
 % NNO Jan 2014
 
 
-    [verbosity, filenames, fid, junit_xml]=get_params(varargin{:});
-    if fid>2
+    params=get_params(varargin{:});
+
+    if params.fid>2
         % not standard or error output; file most be closed
         % afterwards
-        cleaner=onCleanup(@()fclose(fid));
+        cleaner=onCleanup(@()fclose(params.fid));
     end
 
     suite=MOxUnitTestSuite();
-    for k=1:numel(filenames)
+    for k=1:numel(params.filenames)
         % add files to the test suite
-        filename=filenames{k};
+        filename=params.filenames{k};
         if isdir(filename)
-            suite=addFromDirectory(suite,filename);
+            suite=addFromDirectory(suite,filename,[],params.add_recursive);
         else
             suite=addFromFile(suite,filename);
         end
     end
 
     % show summary of test suite
-    if verbosity>0
-        fprintf(fid,'%s\n',str(suite));
+    if params.verbosity>0
+        fprintf(params.fid,'%s\n',str(suite));
     end
 
     % initialize test results
     suite_name=class(suite);
-    test_report=MOxUnitTestReport(verbosity, fid, suite_name);
+    test_report=MOxUnitTestReport(params.verbosity,params.fid,suite_name);
 
     % run all tests
     test_report=run(suite, test_report);
@@ -81,8 +82,8 @@ function result=moxunit_runtests(varargin)
     disp(test_report);
 
     % if xml output was requested, store it in a file
-    if ~isempty(junit_xml)
-        write_junit_xml(junit_xml, test_report);
+    if ~isempty(params.junit_xml)
+        write_junit_xml(params.junit_xml, test_report);
     end
 
     % return true if no errors or failures
@@ -105,14 +106,16 @@ function write_junit_xml(fn, test_report)
                 xml_footer);
 
 
-function [verbosity,filenames,fid,junit_xml]=get_params(varargin)
-    n=numel(varargin);
-
+function params=get_params(varargin)
     % set defaults
-    verbosity=1;
+    params.verbosity=1;
+    params.fid=1;
+    params.junit_xml=[];
+    params.add_recursive=false;
+
+    % allocate space for filenames
+    n=numel(varargin);
     filenames=cell(n,1);
-    fid=1;
-    junit_xml=[];
 
     k=0;
     while k<n
@@ -124,10 +127,10 @@ function [verbosity,filenames,fid,junit_xml]=get_params(varargin)
         end
         switch arg
             case '-verbose'
-                verbosity=verbosity+1;
+                params.verbosity=params.verbosity+1;
 
             case '-quiet'
-                verbosity=verbosity-1;
+                params.verbosity=params.verbosity-1;
 
 
             case '-logfile'
@@ -138,8 +141,8 @@ function [verbosity,filenames,fid,junit_xml]=get_params(varargin)
                 k=k+1;
                 fn=varargin{k};
 
-                fid=fopen(fn,'w');
-                if fid==-1
+                params.fid=fopen(fn,'w');
+                if params.fid==-1
                     error('Could not open file %s for writing', fn);
                 end
 
@@ -149,7 +152,11 @@ function [verbosity,filenames,fid,junit_xml]=get_params(varargin)
                            'Missing parameter after option ''%s''',arg);
                 end
                 k=k+1;
-                junit_xml=varargin{k};
+                params.junit_xml=varargin{k};
+
+            case '-recursive'
+                k=k+1;
+                params.add_recursive=true;
 
 
             otherwise
@@ -178,3 +185,4 @@ function [verbosity,filenames,fid,junit_xml]=get_params(varargin)
         filenames={pwd()};
     end
 
+    params.filenames=filenames;
