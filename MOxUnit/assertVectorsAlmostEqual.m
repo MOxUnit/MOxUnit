@@ -50,10 +50,9 @@ function assertVectorsAlmostEqual(a,b,varargin)
         if ~isvector(a)
             whatswrong='first input is not a vector';
             error_id='assertVectorsAlmostEqual:notVector';
-        elseif ~isvector(b)
-            whatswrong='second input is not a vector';
-            error_id='assertVectorsAlmostEqual:notVector';
         else
+            % if a is a vector but b is not, then we cannot get here
+            % because the size of a and b must be different
             return;
         end
     end
