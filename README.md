@@ -170,7 +170,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [MOxUnit]: https://github.com/MOxUnit/MOxUnit
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
-
+[Shippable]: https://app.shippable.com/
 
 
 
