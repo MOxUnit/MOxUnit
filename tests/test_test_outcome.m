@@ -16,6 +16,7 @@ function test_test_outcome_abstract_class
     end
 
     assertExceptionThrown(@()getSummaryStr(outcome,'text'),undef_err_id);
+    assertExceptionThrown(@()getSummaryStr(outcome,'xml'),undef_err_id);
     assertExceptionThrown(@()getProgressStr(outcome,'text'),undef_err_id);
 
 function test_test_passed_outcome
