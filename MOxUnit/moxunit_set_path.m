@@ -6,7 +6,7 @@ function moxunit_set_path()
 % This adds the current directory and the 'util' test directory to the
 % search path
 
-    root_dir=fileparts(which(mfilename()));
+    root_dir=fileparts(mfilename('fullpath'));
 
     sub_dirs={'','util'};
 
@@ -18,5 +18,6 @@ function moxunit_set_path()
 
     full_dirs=cellfun(make_full_path_with_sep,sub_dirs,...
                         'UniformOutput',false);
+
     addpath(cat(2,full_dirs{:}));
 
