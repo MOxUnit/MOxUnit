@@ -13,4 +13,4 @@ function disp(obj)
 
 
     output_format='text';
-    fprintf(obj.stream,'%s',getSummaryStr(obj,output_format));
+    fprintf(obj.stream,'%s\n',getSummaryStr(obj,output_format));

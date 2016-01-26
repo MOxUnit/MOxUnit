@@ -13,6 +13,9 @@ cache:
 env:
  global:
     - OCTAVE=octave
+ matrix:
+    - WITH_COVERAGE=
+    - WITH_COVERAGE=true
 before_install:
     # to prevent IPv6 being used for APT
     - sudo bash -c "echo 'Acquire::ForceIPv4 \"true\";' > /etc/apt/apt.conf.d/99force-ipv4"
@@ -22,11 +25,32 @@ before_install:
     - travis_retry sudo apt-get -y -qq update
     # get Octave 4,0
     - travis_retry sudo apt-get -y -qq install octave
-    # generate .xml file when running on shippable.com
-    - if [[  "$SHIPPABLE" == "true"  ]];  then
-          TEST_ARGS=JUNIT_XML=shippable/testresults/testresults.xml;
+    # install MOcov
+    - cd ..
+    - git clone https://github.com/MOcov/MOcov.git
+    - make -C MOcov install
+    # go back to original directory
+    - cd MOxUnit
+    # prevent shippable from re-using old test results
+    - if [[  "$SHIPPABLE" == "true"  ]]; then
+          rm -f shippable/testresults/*.xml;
       fi
 
 script:
-    - make test ${TEST_ARGS}
+    - if [[  "$WITH_COVERAGE" == "true" ]]; then
+          TEST_ARGS=WITH_COVERAGE=true;
+          COVER_ARGS=COVER=`pwd`/MOxUnit;
+
+          if [[  "$SHIPPABLE" == "true"  ]]; then
+              OUTPUT_ARGS=COVER_XML_FILE=shippable/codecoverage/coverage.xml;
+          elif [[  "$TRAVIS" == "true"  ]]; then
+              OUTPUT_ARGS=COVER_JSON_FILE=`pwd`/coveralls.json;
+              AFTER_SCRIPT="curl --verbose -F json_file=@`pwd`/coveralls.json https://coveralls.io/api/v1/jobs";
+          fi;
+      elif [[  "$SHIPPABLE" == "true"  ]]; then
+          RESULT_ARGS=JUNIT_XML_FILE=shippable/testresults/test_results.xml;
+      fi
+    - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
+    - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
+    - $AFTER_SCRIPT
 

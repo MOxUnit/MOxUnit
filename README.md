@@ -8,6 +8,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - Uses object oriented TestCase, TestSuite and TestResult classes, allowing for user-defined extensions.
 - Can be used directly with continuous integration services, such as [Travis-ci] and [Shippable].
 - Supports JUnit-like XML output for use with Shippable and other test results visualization approaches.
+- Supports the generation of code coverage reports using [MOCov]
 - Provides compatibility with Steve Eddin's [Matlab xUnit test framework].
 - Distributed under the MIT license, a permissive free software license.
 
@@ -168,6 +169,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [Matlab]: http://www.mathworks.com/products/matlab/
 [Matlab xUnit test framework]: http://it.mathworks.com/matlabcentral/fileexchange/22846-matlab-xunit-test-framework
 [MOxUnit]: https://github.com/MOxUnit/MOxUnit
+[MOcov]: https://github.com/MOcov/MOcov
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
 

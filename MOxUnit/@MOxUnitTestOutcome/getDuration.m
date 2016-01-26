@@ -9,4 +9,5 @@ function duration=getDuration(obj)
 % Output:
 %   duration            time in seconds that it took to run the test
 
+
     duration=obj.duration;

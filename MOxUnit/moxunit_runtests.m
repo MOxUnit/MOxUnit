@@ -21,7 +21,13 @@ function result=moxunit_runtests(varargin)
 %   '-logfile', output      store the output in file output. If not
 %                           provided, then output is directed to the
 %                           command window
-%   '-junit_xml', xml    store junit XML output in file xml
+%   '-with_coverage'        record coverage using MOCov
+%   '-cover', cd            record code coverage in directory cd
+%   '-cover_json_file', cj  store coverage report in json file cj for
+%                           processing by coveralls.io
+%   '-cover_xml_file', cx   store coverage XML output in file cx
+%   '-cover_html_dir, ch    store coverage HTML output in directory ch
+%   '-junit_xml_file', jx   store test results in junit XML file jx
 %
 % Output:
 %   result                  true if no test failed or raised an error. In
@@ -46,7 +52,7 @@ function result=moxunit_runtests(varargin)
 %                           22846-matlab-xunit-test-framework
 %   - To define tests, functions can be written that use initTestSuite.
 %
-% See also: initTestSuite
+% See also: initTestSuite, mocov
 %
 % NNO Jan 2014
 
@@ -79,19 +85,55 @@ function result=moxunit_runtests(varargin)
     suite_name=class(suite);
     test_report=MOxUnitTestReport(params.verbosity,params.fid,suite_name);
 
-    % run all tests
-    test_report=run(suite, test_report);
+    % run all tests with helper
+    test_report=run_all_tests(suite, test_report, params);
 
     % show summary of test result
     disp(test_report);
 
-    % if xml output was requested, store it in a file
-    if ~isempty(params.junit_xml)
-        write_junit_xml(params.junit_xml, test_report);
+    if ~isempty(params.junit_xml_file)
+        write_junit_xml(params.junit_xml_file, test_report);
     end
+
 
     % return true if no errors or failures
     result=wasSuccessful(test_report);
+
+
+function test_report=run_all_tests(suite, test_report, params)
+    f_handle=@()run(suite, test_report);
+
+    with_coverage=params.with_coverage;
+
+    if with_coverage
+        pkg='mocov';
+        if isempty(which(pkg))
+            error(['command ''%s'' not found, '...
+                    'coverage is not supported'],pkg);
+        end
+
+        mocov_expr_param={'-expression',f_handle};
+
+        all_keys=fieldnames(params);
+        msk=cellfun(@(x)~isempty(regexp(x,'^cover','once')),all_keys);
+        keys=all_keys(msk);
+        n_keys=numel(keys);
+
+        mocov_params=cell(1,2*n_keys);
+        for k=1:n_keys
+            key=keys{k};
+            mocov_params{k*2-1}=['-' key];
+            mocov_params{k*2}=params.(key);
+        end
+
+        all_params=[mocov_expr_param, mocov_params];
+
+        test_report=mocov(all_params{:});
+    else
+        test_report=f_handle();
+    end
+
+
 
 
 function write_junit_xml(fn, test_report)
@@ -116,6 +158,13 @@ function params=get_params(varargin)
     params.fid=1;
     params.junit_xml=[];
     params.add_recursive=false;
+    params.cover=[];
+    params.cover_xml_file=[];
+    params.junit_xml_file=[];
+    params.cover_json_file=[];
+    params.cover_html_dir=[];
+    params.cover_method=[];
+    params.with_coverage=false;
 
     % allocate space for filenames
     n=numel(varargin);
@@ -150,18 +199,60 @@ function params=get_params(varargin)
                     error('Could not open file %s for writing', fn);
                 end
 
-             case '-junit_xml'
+             case '-cover'
+                 if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.cover=varargin{k};
+
+             case '-cover_xml_file'
                 if k==n
                     error('moxunit:missingParameter',...
                            'Missing parameter after option ''%s''',arg);
                 end
                 k=k+1;
-                params.junit_xml=varargin{k};
+                params.cover_xml_file=varargin{k};
+
+            case '-junit_xml_file'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.junit_xml_file=varargin{k};
+
+            case '-cover_json_file'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.cover_json_file=varargin{k};
+
+            case '-cover_html_dir'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.cover_html_dir=varargin{k};
+
+            case '-cover_method'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.cover_method=varargin{k};
 
             case '-recursive'
-                k=k+1;
                 params.add_recursive=true;
 
+
+            case '-with_coverage'
+                params.with_coverage=true;
 
             otherwise
 
@@ -190,3 +281,33 @@ function params=get_params(varargin)
     end
 
     params.filenames=filenames;
+
+    check_cover_consistency(params)
+
+function check_cover_consistency(params)
+    keys=fieldnames(params);
+
+    n=numel(keys);
+
+    with_coverage=params.with_coverage;
+    for k=1:n
+        key=keys{k};
+
+        if ~isempty(regexp(key,'^cover','once'))
+            value=params.(key);
+            if ~isempty(value) && ~with_coverage
+                error('Option ''%s'' requires -with_coverage');
+            end
+        end
+    end
+
+    if with_coverage && isempty(params.cover)
+        error('Option ''-with_coverage'' requires ''-cover''');
+    end
+
+
+
+
+
+
+

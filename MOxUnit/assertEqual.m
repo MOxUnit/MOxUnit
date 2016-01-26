@@ -64,8 +64,13 @@ function assertEqual(a, b, message)
 
 function tf=isequaln_wrapper(a,b)
 % wrapper to support old versions of Matlab
-    if isempty(which('isequaln'))
+    persistent has_equaln;
+
+    if isequal(has_equaln,true)
+        tf=isequaln(a,b);
+    elseif isequal(has_equaln,false)
         tf=isequalwithequalnans(a,b);
     else
-        tf=isequaln(a,b);
+        has_equaln=~isempty(which('isequaln'));
+        tf=isequaln_wrapper(a,b);
     end
