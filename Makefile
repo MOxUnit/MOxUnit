@@ -8,12 +8,9 @@ OCTAVE?=octave
 
 TESTDIR=$(CURDIR)/tests
 ROOTDIR=$(CURDIR)/MOxUnit
-MOCOVROOTDIR=$(CURDIR)/MOcov
-MOCOVDIR=$(MOCOVROOTDIR)/MOcov
-MOCOVTESTDIR=$(MOCOVROOTDIR)/tests
 
-ADDPATH=orig_dir=pwd();addpath('$(MOCOVDIR)');cd('$(ROOTDIR)');moxunit_set_path();cd(orig_dir)
-RMPATH=rmpath('$(ROOTDIR)');rmpath('$(MOCOVDIR)');
+ADDPATH=orig_dir=pwd();cd('$(ROOTDIR)');moxunit_set_path();cd(orig_dir)
+RMPATH=rmpath('$(ROOTDIR)');
 SAVEPATH=savepath();exit(0)
 
 INSTALL=$(ADDPATH);$(SAVEPATH)
@@ -82,7 +79,7 @@ ifdef WITH_COVERAGE
 endif
 		
 
-TEST=$(ADDPATH);success=moxunit_runtests($(RUNTESTS_ARGS))&&moxunit_runtests('$(MOCOVTESTDIR)');exit(~success);
+TEST=$(ADDPATH);success=moxunit_runtests($(RUNTESTS_ARGS));exit(~success);
 
 MATLAB_BIN=$(shell which $(MATLAB))
 OCTAVE_BIN=$(shell which $(OCTAVE))
