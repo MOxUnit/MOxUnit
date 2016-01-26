@@ -172,7 +172,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [MOcov]: https://github.com/MOcov/MOcov
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
-
+[Shippable]: https://app.shippable.com/
 
 
 
