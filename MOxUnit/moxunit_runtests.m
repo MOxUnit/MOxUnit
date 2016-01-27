@@ -260,7 +260,7 @@ function params=get_params(varargin)
                     filenames{k}=arg;
                 else
                     error('moxunit:illegalParameter',...
-                    'File not found: %s', arg);
+                    'Parameter not recognised or file missing: %s', arg);
                 end
         end
     end
