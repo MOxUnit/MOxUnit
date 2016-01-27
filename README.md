@@ -57,7 +57,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
   - `file.m`: run unit tests in file `file.m`.
   - `-recursive`: add files from directories recursively.
   - `-logfile logfile.txt`: store the output in file `logfile.txt`.
-  - `-junit_xml xmlfile`: store JUnit-like XML output in file `xmlfile`.
+  - `-junit_xml_file xmlfile`: store JUnit-like XML output in file `xmlfile`.
 
 - To test MOxUnit itself using a shell, run:
     ```
