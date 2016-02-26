@@ -115,8 +115,9 @@ function test_report=run_all_tests(suite, test_report, params)
         mocov_expr_param={'-expression',f_handle};
 
         all_keys=fieldnames(params);
-        msk=cellfun(@(x)~isempty(regexp(x,'^cover','once')),all_keys);
-        keys=all_keys(msk);
+        msk_iscov=cellfun(@(x)~isempty(regexp(x,'^cover','once')),all_keys);
+        msk_isempty=structfun(@isempty, params);
+        keys=all_keys(msk_iscov & ~msk_isempty);
         n_keys=numel(keys);
 
         mocov_params_cell=cell(size(keys));
