@@ -119,12 +119,29 @@ function test_report=run_all_tests(suite, test_report, params)
         keys=all_keys(msk);
         n_keys=numel(keys);
 
-        mocov_params=cell(1,2*n_keys);
+        mocov_params_cell=cell(size(keys));
         for k=1:n_keys
             key=keys{k};
-            mocov_params{k*2-1}=['-' key];
-            mocov_params{k*2}=params.(key);
+            value=params.(key);
+            key_arg=['-' key];
+            if ischar(value)
+                param_elem={key_arg,value};
+            elseif iscell(value)
+                n_values=numel(value);
+                param_elem_matrix=[repmat({key_arg},1,n_values);...
+                                           value(:)];
+                param_elem=param_elem_matrix(:)';
+            else
+                error('moxunit:illegalParameterValue',...
+                        ['Expected char or cell input.' ...
+                        ' Was given a %s instead.'], ...
+                        class(value));
+            end
+
+            mocov_params_cell{k}=param_elem;
         end
+
+        mocov_params=cat(2,mocov_params_cell{:});
 
         all_params=[mocov_expr_param, mocov_params];
 
