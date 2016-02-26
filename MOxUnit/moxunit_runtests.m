@@ -156,14 +156,14 @@ function params=get_params(varargin)
     % set defaults
     params.verbosity=1;
     params.fid=1;
-    params.junit_xml=[];
+    params.junit_xml='';
     params.add_recursive=false;
-    params.cover=[];
-    params.cover_xml_file=[];
-    params.junit_xml_file=[];
-    params.cover_json_file=[];
-    params.cover_html_dir=[];
-    params.cover_method=[];
+    params.cover='';
+    params.cover_xml_file='';
+    params.junit_xml_file='';
+    params.cover_json_file='';
+    params.cover_html_dir='';
+    params.cover_method='';
     params.with_coverage=false;
 
     % allocate space for filenames
