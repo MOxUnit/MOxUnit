@@ -176,6 +176,7 @@ function params=get_params(varargin)
     params.junit_xml='';
     params.add_recursive=false;
     params.cover='';
+    params.cover_exclude={};
     params.cover_xml_file='';
     params.junit_xml_file='';
     params.cover_json_file='';
@@ -263,6 +264,14 @@ function params=get_params(varargin)
                 end
                 k=k+1;
                 params.cover_method=varargin{k};
+
+             case '-cover_exclude'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.cover_exclude(end+1)=varargin(k);
 
             case '-recursive'
                 params.add_recursive=true;
