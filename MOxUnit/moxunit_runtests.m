@@ -115,16 +115,34 @@ function test_report=run_all_tests(suite, test_report, params)
         mocov_expr_param={'-expression',f_handle};
 
         all_keys=fieldnames(params);
-        msk=cellfun(@(x)~isempty(regexp(x,'^cover','once')),all_keys);
-        keys=all_keys(msk);
+        msk_iscov=cellfun(@(x)~isempty(regexp(x,'^cover','once')),all_keys);
+        msk_isempty=structfun(@isempty, params);
+        keys=all_keys(msk_iscov & ~msk_isempty);
         n_keys=numel(keys);
 
-        mocov_params=cell(1,2*n_keys);
+        mocov_params_cell=cell(size(keys));
         for k=1:n_keys
             key=keys{k};
-            mocov_params{k*2-1}=['-' key];
-            mocov_params{k*2}=params.(key);
+            value=params.(key);
+            key_arg=['-' key];
+            if ischar(value)
+                param_elem={key_arg,value};
+            elseif iscell(value)
+                n_values=numel(value);
+                param_elem_matrix=[repmat({key_arg},1,n_values);...
+                                           value(:)];
+                param_elem=param_elem_matrix(:)';
+            else
+                error('moxunit:illegalParameterValue',...
+                        ['Expected char or cell input.' ...
+                        ' Was given a %s instead.'], ...
+                        class(value));
+            end
+
+            mocov_params_cell{k}=param_elem;
         end
+
+        mocov_params=cat(2,mocov_params_cell{:});
 
         all_params=[mocov_expr_param, mocov_params];
 
@@ -156,14 +174,15 @@ function params=get_params(varargin)
     % set defaults
     params.verbosity=1;
     params.fid=1;
-    params.junit_xml=[];
+    params.junit_xml='';
     params.add_recursive=false;
-    params.cover=[];
-    params.cover_xml_file=[];
-    params.junit_xml_file=[];
-    params.cover_json_file=[];
-    params.cover_html_dir=[];
-    params.cover_method=[];
+    params.cover='';
+    params.cover_exclude={};
+    params.cover_xml_file='';
+    params.junit_xml_file='';
+    params.cover_json_file='';
+    params.cover_html_dir='';
+    params.cover_method='';
     params.with_coverage=false;
 
     % allocate space for filenames
@@ -246,6 +265,14 @@ function params=get_params(varargin)
                 end
                 k=k+1;
                 params.cover_method=varargin{k};
+
+             case '-cover_exclude'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                params.cover_exclude(end+1)=varargin(k);
 
             case '-recursive'
                 params.add_recursive=true;
