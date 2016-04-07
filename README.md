@@ -29,7 +29,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     + Download the zip archive from the [MOxUnit] website.
     + Start Matlab or GNU Octave.
     + On the Matlab or GNU Octave prompt, `cd` to the `MOxUnit` root directory, then run:
-    
+
         ```matlab
         cd MOxUnit          % cd to MOxUnit subdirectory
         moxunit_set_path()  % add the current directory to the Matlab/GNU Octave path
@@ -40,6 +40,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - `cd` to the directory where the unit tests reside. For MOxUnit itself, the unit tests are in the directory `tests`.
 - run the tests using `moxunit_runtests`. For example, running `moxunit_runtests` from MOxUnit's `tests` directory should give the following output:
+
   ```
   suite: 31 tests
   ...............................
@@ -60,6 +61,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
   - `-junit_xml_file xmlfile`: store JUnit-like XML output in file `xmlfile`.
 
 - To test MOxUnit itself using a shell, run:
+
     ```
     make test
     ```
@@ -71,6 +73,7 @@ As a result, the test suite is run automatically on both [Travis-ci] and [Shippa
 ### Defining MOxUnit tests
 
 To define unit tests, write a function with the following header:
+
 ```matlab
 function test_suite=my_test_of_abs
     initTestSuite;
