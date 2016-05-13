@@ -55,13 +55,12 @@ function names=moxunit_util_mfile_subfunctions(fn)
         names=all_names(2:end);
     end
 
-function s=read_file(fn)
-    fid=fopen(fn);
+function s = read_file(fn)
+    fid = fopen(fn);
 
     if fid==-1
         error('Error reading from file %s\n', fn);
     end
 
-    cleaner=onCleanup(@()fclose(fid));
-    s_column=fread(fid,inf,'char=>char');
-    s=s_column';
+    cleaner = onCleanup(@()fclose(fid));
+    s = fread(fid,[1 inf],'char=>char');
