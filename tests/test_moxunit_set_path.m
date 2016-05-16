@@ -23,9 +23,15 @@ function helper_test_with_subdir(subdir)
     assert(~is_elem(path(),relative_dir,pathsep()));
 
     % must be now in path
-    func();
-    assert(is_elem(path(),relative_dir,pathsep()));
+    directories_added_cell=func();
+    new_path=path();
+    assert(is_elem(new_path(),relative_dir,pathsep()));
 
+    % directory must have been added and part of the output
+    assert(numel(directories_added_cell)>0)
+    directories_added_str=sprintf(['%s' pathsep()],...
+                            directories_added_cell{:});
+    assert(is_elem(directories_added_str,relative_dir,pathsep()));
 
 
 function tf=is_elem(haystack, needle, sep)
