@@ -9,37 +9,56 @@ function names=moxunit_util_mfile_subfunctions(fn)
 % Output:
 %   names               1xP cell with the names of subfunctions in fn.
 %
+% Example:
+%    Running this function on itself returns two subfunctions,
+%    'read_file' and 'apply_text_replacements'
+%
 % Notes:
 %   - this function uses a simple pattern matching algorithm which may
 %     not work correctly if some weird unexpected syntax is used
 %   - nested subfunctions are returned by this funtion as well
-%   - in matlab, which('-subfun',fn) can be used as an alternative to
-%     this function; Octave does not support this usage of which
+%   - in matlab, "which('-subfun',fn)" can be used as an alternative to
+%     this function; Octave does not support this usage of "which"
 %
 % NNO Jan 2014
 
-    text_with_line_continuation=read_file(fn);
+    raw_text=read_file(fn);
 
-    % remove line continuation
     newline=sprintf('\n');
-    line_continuation=['...' newline];
+    dos_newline=sprintf('\r\n');
 
-    % prepend with newline
-    text=[newline ...
-          strrep(text_with_line_continuation,line_continuation,' ')];
+    % simplify the contents of the file
+    % - convert DOS-style newlines to Unix-style newlines
+    % - remove line continuations
+    % - replace newlines by double newlines, so that the end of a function
+    %   name can be detected through the presence of whitespace
+    replacements={dos_newline, newline;...
+                  ['...' newline],'';...
+                  newline,[newline newline]};
+    text=apply_text_replacements(replacements, raw_text);
 
-    % sequence of patterns of a function definition:
-    % - newline
-    % - optionally: some whitespace
-    % - optionally: the input arguments and an '=' sign
-    % - optionally: some whitespace
-    % - the function name (which we want to capture)
-    % - optionally: the output arguments
+    % function outputs can be specifed in three ways, namely with zero,
+    % one, or more than one output
+    single_argout_pat='\s+[\w~]+';                      % ' aa'
+    argument_argout_pat='\s*\[[\w~,\s]*\]';             % '[aa, bb]'
+    with_argout_pat=sprintf('((%s)|(%s))\\s*=\\s*',...  % '<argin> = '
+                                    single_argout_pat,...
+                                    argument_argout_pat);
+    without_argout_pat='\s+';                          % '  ' (whitespace)
+    argout_pat=sprintf('(%s|%s)',with_argout_pat,without_argout_pat);
 
-    pat=[newline '\s*function([\[\]\w ,~]*=)?[ ]*'...
-                 '(?<name>[a-zA-Z]\w*)(\([^\)]*\))?'];
+    % function name that we are after
+    func_name_pat='(?<name>\w*)';
 
-    match=regexp([' ' text ' '],pat,'names');
+    % input arguments and function name
+    prefix=[newline '\s*'];
+    postfix='([\W$])';
+
+    % complete pattern of a function (excluding input arguments)
+    pat=sprintf('%sfunction%s%s%s',...
+                        prefix,argout_pat,func_name_pat,postfix);
+
+    match=regexp([newline text newline],pat,'names');
 
     if isempty(match)
         names=cell(0);
@@ -64,3 +83,10 @@ function s = read_file(fn)
 
     cleaner = onCleanup(@()fclose(fid));
     s = fread(fid,[1 inf],'char=>char');
+
+function text=apply_text_replacements(replacements, text)
+    for k=1:size(replacements,1)
+        row=replacements(k,:);
+        text = strrep(text, row{1}, row{2});
+    end
+
