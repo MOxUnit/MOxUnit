@@ -70,5 +70,8 @@
     % display its result
     if ~nargout
         disp(run(test_suite));
+
+        % Avoid showing "ans = MOxUnitTestSuite object: 1-by-1"
+        % when run without explicitly assigning output to a variable
         clear test_suite;
     end
