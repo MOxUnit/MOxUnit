@@ -1,7 +1,7 @@
 function assertExceptionThrown(func, expected_id, message)
 % assert that an exception is thrown
 %
-% assertExceptionThrown(func,expected_id[,msg])
+% assertExceptionThrown(func,[expected_id[,msg]])
 %
 % Inputs:
 %   func            function handle that should take no inputs and should
@@ -19,7 +19,13 @@ function assertExceptionThrown(func, expected_id, message)
 %
 % Raises:
 %
-    exception_was_raised=false;
+
+    % Default Values
+    exception_was_raised = false;
+    expected_id_passed = nargin>1;
+    
+    
+    % Check func for an exception and capture it
     if moxunit_util_platform_is_octave()
         try
             func();
@@ -36,15 +42,21 @@ function assertExceptionThrown(func, expected_id, message)
         end
     end
 
+    % Check for that exception meeting an id requirement
     if ~exception_was_raised
-        whatswrong=sprintf('expected exception ''%s'' was not raised',...
-                                expected_id);
-        error_id='assertExceptionThrown:noException';
-    elseif ~isequal(expected_id, found_id)
-        whatswrong=sprintf(['exception ''%s'' was raised, '...
-                                'expected ''%s'''],...
-                                found_id, expected_id);
-        error_id='assertExceptionThrown:wrongException';
+        error_id = 'assertExceptionThrown:noException';
+        if expected_id_passed
+            whatswrong = sprintf('expected exception ''%s'' was not raised',...
+                expected_id);
+        else
+            whatswrong = 'exception was not raised';
+        end
+    
+    elseif expected_id_passed && ~isequal(expected_id, found_id)
+        whatswrong = sprintf(...
+            'exception ''%s'' was raised, expected ''%s''',...
+            found_id, expected_id);
+        error_id = 'assertExceptionThrown:wrongException';
     else
         return;
     end
