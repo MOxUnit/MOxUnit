@@ -65,3 +65,10 @@
             end
         end
     end
+
+    % If the user didn't request an output, immediately execute the test and
+    % display its result
+    if ~nargout
+        disp(run(test_suite));
+        clear test_suite;
+    end
