@@ -65,7 +65,7 @@ function test_different_args_subfunction
                 func_name=rand_str();
                 parts={'function',arg_out,func_name,arg_in};
                 line=moxunit_util_strjoin(parts,whitespace);
-                helper_test_with_lines({func_name},line);
+                helper_test_with_lines({func_name},{line});
             end
         end
     end
@@ -88,6 +88,8 @@ function helper_test_with_lines(func_names, lines)
 % func_names is expected cell output from
 % moxunit_util_mfile_subfunctions
 % when applied to a file containing the 'lines' data
+    assert(iscell(func_names));
+    assert(iscell(lines));
 
     tmp_fn=tempname();
     file_deleter=onCleanup(@()delete(tmp_fn));
