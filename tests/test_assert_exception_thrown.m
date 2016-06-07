@@ -1,7 +1,18 @@
 function test_suite=test_assert_exception_thrown()
     initTestSuite;
 
+% Test cases where exceptions are thrown and that is OK
+function test_assert_exception_thrown_passes
+    assertExceptionThrown(@()error('Throw w/o ID'));
+    assertExceptionThrown(@()error('moxunit:error','msg'),...
+        'moxunit:error');
+    assertExceptionThrown(@()error('moxunit:error','msg'),...
+        'moxunit:error','message');
+    
+% Test cases where func throws exceptions and we need to throw as well
 function test_assert_exception_thrown_exceptions
+    % Verify that when func throws but the wrong exception comes out, we respond
+    % with the correct exception (assertExceptionThrown:wrongException)
     try
         assertExceptionThrown(@()error('moxunit:error','msg'),...
                                     'moxunit:failed','msg');
@@ -21,7 +32,9 @@ function test_assert_exception_thrown_exceptions
         error('assertExceptionThrown:noException',...
                 'Expected exception ''moxunit:error'' but not thrown');
     end
-
+    
+    
+% Test cases where func does not throw but was expected to do so
 function test_assert_exception_thrown_exceptions_not_thrown
 
     try
@@ -42,13 +55,7 @@ function test_assert_exception_thrown_exceptions_not_thrown
         error('assertExceptionThrown:noException',...
                 'Expected exception ''moxunit:error'' but not thrown');
     end
-
-
-function test_assert_exception_thrown_passes
-    assertExceptionThrown(@()error('moxunit:error','msg'),...
-                                            'moxunit:error');
-    assertExceptionThrown(@()error('moxunit:error','msg'),...
-                                            'moxunit:error','message');
+    
 
 function do_nothing
     % do nothing
