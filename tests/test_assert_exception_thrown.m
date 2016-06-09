@@ -8,6 +8,8 @@ function test_assert_exception_thrown_passes
         'moxunit:error');
     assertExceptionThrown(@()error('moxunit:error','msg'),...
         'moxunit:error','message');
+    assertExceptionThrown(@()error('moxunit:error','msg'),...
+        'message');
     
 % Test cases where func throws exceptions and we need to throw as well
 function test_assert_exception_thrown_exceptions
@@ -23,14 +25,14 @@ function test_assert_exception_thrown_exceptions
     end
 
     if did_throw
-        if ~strcmp(caught_error.identifier,'assertExceptionThrown:wrongException')
-            error('assertExceptionThrown:wrongException',...
-                    'Expected exception moxunit: error but got ''%s''',...
-                        caught_error.identifier);
+        if ~strcmp(caught_error.identifier,'moxunit:wrongExceptionRaised')
+            error('moxunit:wrongExceptionRaised',...
+                    ['Expected exception ''moxunit:wrongExceptionRaised'', ',...
+                     'but got ''%s'''], caught_error.identifier);
         end
     else
-        error('assertExceptionThrown:noException',...
-                'Expected exception ''moxunit:error'' but not thrown');
+        error('moxunit:exceptionNotRaised',...
+                'Expected exception, ''moxunit:error'', not thrown');
     end
     
     
@@ -46,14 +48,14 @@ function test_assert_exception_thrown_exceptions_not_thrown
     end
 
     if did_throw
-        if ~strcmp(caught_error.identifier,'assertExceptionThrown:noException')
-            error('assertExceptionThrown:wrongException',...
-                    'Expected exception ''moxunit:error'' but got %s',...
-                        caught_error.identifier);
+        if ~strcmp(caught_error.identifier,'moxunit:exceptionNotRaised')
+            error('moxunit:exceptionNotRaised',...
+                   ['Expected exception ''moxunit:exceptionNotRaised'' ',...
+                    'but got ''%s'''], caught_error.identifier);
         end
     else
-        error('assertExceptionThrown:noException',...
-                'Expected exception ''moxunit:error'' but not thrown');
+        error('moxunit:exceptionNotRaised',...
+                'Expected exception, ''moxunit:error'', not thrown');
     end
     
 

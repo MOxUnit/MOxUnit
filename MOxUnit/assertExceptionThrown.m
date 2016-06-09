@@ -1,7 +1,7 @@
 function assertExceptionThrown(func, expected_id, message)
 % assert that an exception is thrown
 %
-% assertExceptionThrown(func,[expected_id[,msg]])
+% assertExceptionThrown(func,[expected_id],[msg])
 %
 % Inputs:
 %   func            function handle that should take no inputs and should
@@ -15,10 +15,6 @@ function assertExceptionThrown(func, expected_id, message)
 %   'moxunit:wrongExceptionRaised'  func() does raise an exception but with
 %                                       an identifier different from
 %                                       expected_id
-%
-%
-% Raises:
-%
 
     % Default Values
     exception_was_raised = false;
@@ -44,7 +40,7 @@ function assertExceptionThrown(func, expected_id, message)
 
     % Check for that exception meeting an id requirement
     if ~exception_was_raised
-        error_id = 'assertExceptionThrown:noException';
+        error_id = 'moxunit:exceptionNotRaised';
         if expected_id_passed
             whatswrong = sprintf('expected exception ''%s'' was not raised',...
                 expected_id);
@@ -56,7 +52,7 @@ function assertExceptionThrown(func, expected_id, message)
         whatswrong = sprintf(...
             'exception ''%s'' was raised, expected ''%s''',...
             found_id, expected_id);
-        error_id = 'assertExceptionThrown:wrongException';
+        error_id = 'moxunit:wrongExceptionRaised';
     else
         return;
     end
