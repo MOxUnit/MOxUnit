@@ -28,6 +28,16 @@ function result=moxunit_runtests(varargin)
 %   '-cover_xml_file', cx   store coverage XML output in file cx
 %   '-cover_html_dir, ch    store coverage HTML output in directory ch
 %   '-junit_xml_file', jx   store test results in junit XML file jx
+%   '-partition_index', pi  } Either both or neither of these arguments
+%   '-partition_count', pc  } must be passed to this function. It causes
+%                             a subset of all tests to be run, namely the
+%                             ones indexed by:
+%                                pi+pc*K
+%                             for all values of K. Default values are
+%                             pi=1 and pc=1, meaning that all tests are
+%                             run. A use case is parallelization of test
+%                             cases over multiple processes.
+%
 %
 % Output:
 %   result                  true if no test failed or raised an error. In
@@ -101,7 +111,8 @@ function result=moxunit_runtests(varargin)
 
 
 function test_report=run_all_tests(suite, test_report, params)
-    f_handle=@()run(suite, test_report);
+    f_handle=@()run(suite, test_report,...
+                        params.partition_index,params.partition_count);
 
     with_coverage=params.with_coverage;
 
@@ -184,6 +195,8 @@ function params=get_params(varargin)
     params.cover_html_dir='';
     params.cover_method='';
     params.with_coverage=false;
+    params.partition_index=1;
+    params.partition_count=1;
 
     % allocate space for filenames
     n=numel(varargin);
@@ -280,6 +293,30 @@ function params=get_params(varargin)
 
             case '-with_coverage'
                 params.with_coverage=true;
+
+            case '-partition_index'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                value=varargin{k};
+                if ischar(value)
+                    value=str2double(value);
+                end
+                params.partition_index=value;
+
+            case '-partition_count'
+                if k==n
+                    error('moxunit:missingParameter',...
+                           'Missing parameter after option ''%s''',arg);
+                end
+                k=k+1;
+                value=varargin{k};
+                if ischar(value)
+                    value=str2double(value);
+                end
+                params.partition_count=value;
 
             otherwise
 
