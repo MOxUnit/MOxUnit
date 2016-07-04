@@ -75,13 +75,66 @@ function test_moxunit_runtests_basics
         cleaner=[];
     end
 
+function test_moxunit_runtests_partitions
+
+    cleaner=onCleanup(@()cleanup_helper('cleanup'));
+    dir_to_test=tempname();
+    mkdir(dir_to_test);
+    cleanup_helper('add_directory',dir_to_test);
+    log_fn=tempname();
+    cleanup_helper('add_file',log_fn);
+
+    test_partition_count=3+ceil(rand()*5);
+    ntests_per_partitions=3+ceil(rand()*5);
+
+    ntests=test_partition_count*ntests_per_partitions;
+
+    test_str_cell=cell(ntests,1);
+    passes=false(ntests,1);
+    for k=1:ntests
+        p=rand()>.5;
+        passes(k)=p;
+
+        if p
+            test_str='abs(2);';
+        else
+            test_str='error(''foo'')';
+        end
+
+        test_str_cell{k}=test_str;
+    end
+
+    add_tests(dir_to_test,true,test_str_cell);
+
+
+    test_labels={'.','F'};
+    for test_partition_index=1:test_partition_count
+        args={dir_to_test,'-logfile',log_fn,...
+                            '-partition_index',test_partition_index,...
+                            '-partition_count',test_partition_count};
+
+        result=moxunit_runtests(args{:});
+        idx=test_partition_index:test_partition_count:ntests;
+        use_passes=passes(idx);
+        assertEqual(result,all(use_passes));
+
+        test_stats=[sum(use_passes), sum(~use_passes), 0];
+        assert_logfile_matches(log_fn,false,...
+                                    test_stats,test_labels)
+    end
+
+
+
+
+
+
 function count=add_tests(test_dir,do_add,cell_with_tests)
     count=0;
     if do_add
         for k=1:numel(cell_with_tests)
             idx=cleanup_helper('count');
 
-            name=sprintf('test_%d',idx);
+            name=sprintf('test_%03d',idx);
             fn=fullfile(test_dir,sprintf('%s.m',name));
             cleanup_helper('add_file',fn);
             write_test_mfile(fn,name,cell_with_tests{k});
@@ -160,7 +213,9 @@ function mkdir_recursively(dir_name)
 
 
 function c=cleanup_helper(task,varargin)
-% cleanup_helper('add','foo') adds the file or directory 'foo' to the list
+%   cleanup_helper('add_file','foo')
+%   cleanup_helper('add_directory','bar')
+% add the file or directory 'foo' or 'bar' to the list
 %   of files and directories stored internally
 % cleanup_helper('cleanup') removes all internally stores files and
 %   directory
@@ -201,9 +256,12 @@ function c=cleanup_helper(task,varargin)
 
             if iscell(directories)
                 if moxunit_util_platform_is_octave()
-                    % GNU Octave requires, by defaualt, confirmation when using rmdir.
-                    % The state of confirm_recursive_rmdir is stored, and set back
-                    % to its original value when leaving this function.
+                    % GNU Octave requires, by defaualt, confirmation when
+                    % using rmdir - unless confirm_recursive_rmdir is set
+                    % explicityly
+                    % Here the state of confirm_recursive_rmdir is stored,
+                    % and set back to its original value when leaving this
+                    % function.
                     confirm_val=confirm_recursive_rmdir(false);
                     cleaner=onCleanup(@()confirm_recursive_rmdir(confirm_val));
                 end
