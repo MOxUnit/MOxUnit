@@ -30,7 +30,7 @@ function assertExceptionThrown(func, expected_id, message)
     else
         try
             func();
-        catch mexception
+        catch mexception;
             exception_was_raised=true;
             found_id=mexception.identifier;
         end

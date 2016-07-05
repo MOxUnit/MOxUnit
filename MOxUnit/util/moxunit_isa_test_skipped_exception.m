@@ -31,7 +31,7 @@ function tf=moxunit_isa_test_skipped_exception(exception)
         else
             try
                 moxunit_throw_test_skipped_exception('error');
-            catch last_caught_error
+            catch last_caught_error;
             end
         end
 
