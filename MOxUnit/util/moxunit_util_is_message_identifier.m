@@ -1,7 +1,7 @@
-function tf=moxunit_util_is_message_identifier(id)
+function tf = moxunit_util_is_message_identifier(id)
 % returns whether the input string is a message identifier
 %
-% tf=moxunit_util_is_message_identifier(string)
+% tf = moxunit_util_is_message_identifier(string)
 %
 % Input:
 %   id              input string
@@ -21,10 +21,10 @@ function tf=moxunit_util_is_message_identifier(id)
         error('illegal input: first argument must be char');
     end
 
-    alpha_pat='[a-zA-Z]';
-    word_pat='\w';
+    alpha_pat = '[a-zA-Z]';
+    word_pat = '\w';
 
-    id_pat=sprintf('(%s(%s*))',alpha_pat,word_pat);
-    pat=sprintf('^%s(:%s)+$',id_pat,id_pat);
+    id_pat = sprintf('(%s(%s*))',alpha_pat,word_pat);
+    pat = sprintf('^%s(:%s)+$',id_pat,id_pat);
 
-    tf=~isempty(regexp(id, pat, 'once'));
+    tf = ~isempty(regexp(id, pat, 'once'));
