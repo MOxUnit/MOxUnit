@@ -18,14 +18,12 @@
 % INPUT:
 %   func        - Function handle that is expected to throw, with the prototype
 %                   [varargout{:}] = func()
-%   expectedID  - Idenitifier of the expected exception.  If expectedID is
-%                 empty, then any exception (identifier) is allowed.  When 
-%                 exactly two inputs are passed an ambiguity arises between
-%                 expectedID and message because these inputs share a common
-%                 type.  By default, we resolve this ambiguity using
+%   expectedID  - Idenitifier of the expected exception.  When exactly two 
+%                 inputs are passed an ambiguity arises between expectedID and
+%                 message because these inputs share a common type.  By default,
+%                 we resolve this ambiguity using
 %                 moxunit_util_is_message_identifier().  If any exception is
-%                 permitted, we recommend explicitly defining expectedID to be
-%                 empty.
+%                 permitted, expectedID should be omitted or be set to '*'.
 %                   Default: ''
 %   message     - Custom message to be included when func fails to throw
 %   
@@ -47,18 +45,28 @@ function assertExceptionThrown(func, expectedID, message)
 % Parse Inputs
 switch nargin
     case 1
-        expectedID = '';
+        expectedIDPassed = false;
         message = '';
         
     case 2
-        if moxunit_util_is_message_identifier(expectedID)
+        if isequal(expectedID,'*')          % Any exception is permitted
+            expectedIDPassed = false;
+            message = '';
+            
+        elseif moxunit_util_is_message_identifier(expectedID)
+            expectedIDPassed = true;
             message = '';
         else
+            expectedIDPassed = false;
             message = expectedID;
-            expectedID = '';
         end
         
     case 3
+        if isequal(expectedID,'*')
+            expectedIDPassed = false;
+        else
+            expectedIDPassed = true;
+        end
         % Do nothing
         
     otherwise
@@ -67,35 +75,28 @@ switch nargin
 end
 
 
-% Check func for an exception and capture it
-funcException = false;
-if moxunit_util_platform_is_octave()
-    try
-        func();
-    catch
-        funcException = true;
-        [~,foundID] = lasterr();
-    end
-else
-    try
-        func();
-    catch mexception
-        funcException=true;
-        foundID=mexception.identifier;
-    end
+% Check func for an exception and capture it.  The Matlab style exception offers
+% no real benefits as of now.
+try
+    func();
+    funcException = false;
+catch
+    funcException = true;
+    [foundMsg,foundID] = lasterr();     % Avoiding '~' for compatibility
 end
+
 
 % Check for that exception meeting an id requirement
 if ~funcException
     error_id = 'moxunit:exceptionNotRaised';
-    if isempty(expectedID)
-        whatswrong = 'exception was not raised';
-    else
+    if expectedIDPassed
         whatswrong = sprintf('expected exception ''%s'' was not raised',...
             expectedID);
+    else
+        whatswrong = 'exception was not raised';
     end
     
-elseif ~isempty(expectedID) && ~isequal(expectedID, foundID)
+elseif expectedIDPassed && ~isequal(expectedID, foundID)
     whatswrong = sprintf(...
         'exception ''%s'' was raised, expected ''%s''',...
         foundID, expectedID);
