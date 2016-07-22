@@ -1,121 +1,122 @@
-% assertExceptionThrown - Assert that an exception is thrown
-%{ 
-%-------------------------------------------------------------------------------
-% SYNTAX:
-%   assertExceptionThrown(func, <expectedID>, <message>)
+function assertExceptionThrown(func, expected_id, message)
+% Assert that an exception is thrown
 %
-% PURPOSE:
-%   This function allows one to test for exceptions being thrown, and
-%   optionally, pass a custome message in response to a failure.
+% assertExceptionThrown(func, [expected_id,[message]])
 %
-%   e.g.
-%   % Assert that sin will throw when its argument is a struct
+% Inputs:
+%   func            Function handle that is expected to throw, with the
+%                   prototype
+%                       [varargout{:}] = func()
+%   expected_id     Identifier of the expected exception (optional). If
+%                   not provided, then func can raise any exception.
+%                   To allow for any exception to be raised, use '*'
+%   message         Custom message to be included when func fails to throw
+%
+% Throws:
+%   'moxunit:exceptionNotRaised'    func() does not raise an exception but
+%                                   was expected to do so.
+%   'moxunit:wrongExceptionRaised'  func() does raise an exception but with
+%                                   an identifier different from
+%                                   expected_id
+%
+%
+% Examples:
+%   % Assert that sin will throw an exception when its argument is a struct
 %   >> assertExceptionThrown( @()sin( struct([]) ) )
 %
 %   % Assert that sin throws AND that the ID is 'MATLAB:UndefinedFunction'
-%   >> assertExceptionThrown( @()sin( struct([]) ), 'MATLAB:UndefinedFunction')
-%  
-% INPUT:
-%   func        - Function handle that is expected to throw, with the prototype
-%                   [varargout{:}] = func()
-%   expectedID  - Idenitifier of the expected exception.  When exactly two 
-%                 inputs are passed an ambiguity arises between expectedID and
-%                 message because these inputs share a common type.  By default,
-%                 we resolve this ambiguity using
-%                 moxunit_util_is_message_identifier().  If any exception is
-%                 permitted, expectedID should be omitted or be set to '*'.
-%                   Default: ''
-%   message     - Custom message to be included when func fails to throw
-%   
-% THROWS:
-%   'moxunit:exceptionNotRaised'    - func() does not raise an exception but was
-%                                     expected to do so.
-%   'moxunit:wrongExceptionRaised'  - func() does raise an exception but with
-%                                     an identifier different from expected_id
+%   >> assertExceptionThrown( @()sin( struct([]) ), ...
+%                                   'MATLAB:UndefinedFunction')
 %
-% ASSUMPTIONS: 
-%   All input variables are of the correct type, valid (if applicable), and 
-%   given in the correct order. 
+% Notes:
+% - This function allows one to test for exceptions being thrown, and
+%   optionally, pass a custome message in response to a failure.
+% - It is assumed that all input variables are of the correct type, valid
+%   (if applicable), and given in the correct order.
 %
-% See also moxunit_util_is_message_identifier
-%-------------------------------------------------------------------------------
-%}
-function assertExceptionThrown(func, expectedID, message)
+% See also: moxunit_util_is_message_identifier
 
-% Parse Inputs
-switch nargin
-    case 1
-        expectedIDPassed = false;
-        message = '';
-        
-    case 2
-        if isequal(expectedID,'*')          % Any exception is permitted
-            expectedIDPassed = false;
-            message = '';
-            
-        elseif moxunit_util_is_message_identifier(expectedID)
-            expectedIDPassed = true;
-            message = '';
-        else
-            expectedIDPassed = false;
-            message = expectedID;
-        end
-        
-    case 3
-        if isequal(expectedID,'*')
-            expectedIDPassed = false;
-        else
-            expectedIDPassed = true;
-        end
-        % Do nothing
-        
-    otherwise
-        error('assertExceptionThrown:unexpectedInput',...
-            'Unexpected number of inputs');
-end
-
-
-% Check func for an exception and capture it.  The Matlab style exception offers
-% no real benefits as of now.
-try
-    func();
-    funcException = false;
-catch
-    funcException = true;
-    [foundMsg,foundID] = lasterr();     % Avoiding '~' for compatibility
-end
-
-
-% Check for that exception meeting an id requirement
-if ~funcException
-    error_id = 'moxunit:exceptionNotRaised';
-    if expectedIDPassed
-        whatswrong = sprintf('expected exception ''%s'' was not raised',...
-            expectedID);
-    else
-        whatswrong = 'exception was not raised';
+    if nargin<3
+        message='';
     end
-    
-elseif expectedIDPassed && ~isequal(expectedID, foundID)
+
+    if nargin<2
+        expected_id='*';
+    end
+
+    verify_inputs(func, expected_id, message);
+
+    try
+        func();
+
+        [id,whats_wrong]=exception_not_raised(expected_id);
+    catch
+        % (Avoiding '~' for Octave compatibility)
+        [unused,found_id] = lasterr();
+
+        if exception_id_matches(expected_id,found_id)
+            % the expected exception was raised, we're done
+            return;
+        end
+
+        [id,whats_wrong]=wrong_exception_raised(found_id, expected_id);
+    end
+
+    full_message=moxunit_util_input2str(message,whats_wrong);
+
+    if moxunit_util_platform_is_octave()
+        error(id,full_message);
+    else
+        throwAsCaller(MException(id, full_message));
+    end
+
+
+function [id,whats_wrong]=exception_not_raised(expected_id)
+    id = 'moxunit:exceptionNotRaised';
+    whats_wrong='No exception was raised';
+
+    if ~strcmp(expected_id,'*')
+        % add suffix with expected id
+        whats_wrong=sprintf('%s, expected exception ''%s''',expected_id);
+    end
+
+
+function [id,whatswrong]=wrong_exception_raised(found_id, expected_id)
+    id='moxunit:wrongExceptionRaised';
     whatswrong = sprintf(...
         'exception ''%s'' was raised, expected ''%s''',...
-        foundID, expectedID);
-    error_id = 'moxunit:wrongExceptionRaised';
-else
-    return;
-end
+        found_id, expected_id);
 
-if nargin<3
-    message='';
-end
 
-full_message=moxunit_util_input2str(message,whatswrong);
+function verify_inputs(varargin)
+    expected_types={'function_handle','char','char'};
+    for k=1:numel(expected_types)
+        expected_type=expected_types{k};
+        if ~isa(varargin{k},expected_type)
+            error('moxunit:illegalParameter',...
+                        ['Argument at position %d must be '...
+                        'of type ''%s'', found ''%s'''],...
+                        k,expected_type,class(varargin{k}));
+        end
+    end
 
-if moxunit_util_platform_is_octave()
-    error(error_id,full_message);
-else
-    throwAsCaller(MException(error_id, full_message));
-end
+    expected_id=varargin{2};
+    if ~(strcmp(expected_id,'') || ...
+                strcmp(expected_id,'*') || ...
+                moxunit_util_is_message_identifier(expected_id))
+        error('moxunit:illegalParameter',...
+                        ['Argument at position 2, ''expected_id'', '...
+                        'must be empty, an asterisk (''*''), or '...
+                        'a valid message identifier, found ''%s'''],...
+                        expected_id);
+    end
 
-end
+
+
+
+function tf=is_wildcard_id(id)
+    tf=strcmp(id,'*');
+
+function tf=exception_id_matches(expected_id,found_id)
+    tf=is_wildcard_id(expected_id) || isequal(expected_id,found_id);
 
