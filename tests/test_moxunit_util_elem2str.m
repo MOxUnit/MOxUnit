@@ -2,7 +2,7 @@ function test_suite=test_moxunit_util_elem2str
     initTestSuite;
 
 function test_moxunit_util_elem2str_tiny
-    aeq=get_comparator(false);
+    aeq=@assert_expected_output;
     % empty string
     aeq('''''','');
 
@@ -15,19 +15,19 @@ function test_moxunit_util_elem2str_tiny
     aeq(mat2str(x),x);
 
 function test_moxunit_util_elem2str_big_matrix
-    aeq=get_comparator(false);
+    aeq=@assert_expected_output;
     aeq(sprintf(['[0.99999999 -1e-08 -1e-08 -1e-08;-1e-08 0.99999999\n'...
                  '...\n'...
                  '0.99999999 -1e-08;-1e-08 -1e-08 -1e-08 0.99999999]']),...
                  eye(4)-1e-8);
 
 function test_moxunit_util_elem2str_big_cell
-    aeq=get_comparator(false);
+    aeq=@assert_expected_output;
 
     aeq('100x2(cell)',cell(100,2))
 
 function test_moxunit_util_elem2str_tiny_with_evalc
-    aeq=get_comparator(true);
+    aeq=@assert_expected_output_evalc_if_present;
 
     % string with non-row vector form
     aeq(sprintf('abc\ndef'),...
@@ -78,7 +78,7 @@ function test_moxunit_util_elem2str_custom_class
     % make object instance
     obj=constructor();
 
-    aeq=get_comparator(false);
+    aeq=@assert_expected_output;
     aeq(sprintf('(%s)',classname),obj);
 
 function write_contents(dirname,fname,pat,varargin)
@@ -104,28 +104,19 @@ function remove_path_directory(dir_name)
 
     rmdir(dir_name,'s');
 
-function f=get_comparator(is_evalc_dependent)
-% return a comparator function
-%
-% if is_evalc_dependent, then:
-%       return a function f, so that f(a,b,x) will compare the output of
-%       moxunit_util_elem2str(x) with a if evalc is present; and with
-%       b otherwise
-%
-% if ~is_evalc_dependent, then:
-%       return a function f, so that f(a,x) will compare the output of
-%       moxunit_util_elem2str(x) with a
 
-    if is_evalc_dependent
-        f=@(a,b,varargin) assertEqual(inline_if(exist('evalc','builtin')...
-                            ,a,b),moxunit_util_elem2str(varargin{:}));
+function assert_expected_output_evalc_if_present(a,b,varargin)
+    result=moxunit_util_elem2str(varargin{:});
+
+    if exist('evalc','builtin')
+        assertEqual(result,a);
     else
-        f=@(a,varargin) assertEqual(a,moxunit_util_elem2str(varargin{:}));
+        assertEqual(result,b);
     end
 
-function r=inline_if(condition,if_true,if_false)
-    if condition
-        r=if_true;
-    else
-        r=if_false;
-    end
+
+function assert_expected_output(to_compare,varargin)
+    result=moxunit_util_elem2str(varargin{:});
+
+    assertEqual(result,to_compare);
+
