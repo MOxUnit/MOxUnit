@@ -77,7 +77,8 @@ function [id,whats_wrong]=exception_not_raised(expected_id)
 
     if ~strcmp(expected_id,'*')
         % add suffix with expected id
-        whats_wrong=sprintf('%s, expected exception ''%s''',expected_id);
+        whats_wrong=sprintf('%s, expected exception ''%s''',...
+                                        whats_wrong,expected_id);
     end
 
 
