@@ -33,11 +33,10 @@ function check_input(stack)
         error('Input must be a struct');
     end
 
-
     required_keys={'file','name','line'};
+    missing_keys=setdiff(required_keys,fieldnames(stack));
 
-    if ~isequal(sort(fieldnames(stack)),sort(required_keys(:)))
-        error('Keys in stack must be identical to: ''%s''',...
-                    moxunit_util_strjoin(required_keys,''', '''));
+    if ~isempty(missing_keys)
+        error('Missing key in stack: ''%s''',missing_keys{1});
     end
 
