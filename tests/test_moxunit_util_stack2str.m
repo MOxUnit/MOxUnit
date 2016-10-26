@@ -31,10 +31,7 @@ function test_moxunit_util_stack2str_basics
 
         result=moxunit_util_stack2str(stack,prefix_arg{:});
         lines=regexp(result,sprintf('\n'),'split');
-        assertEqual(numel(lines),n_elem+1);
-
-        % last line is empty
-        assertTrue(isempty(lines{end}));
+        assertEqual(numel(lines),n_elem);
 
         % compare other lines
         show_stack_elem=@(i)sprintf('%s%s:%d (%s)', ...
@@ -42,7 +39,7 @@ function test_moxunit_util_stack2str_basics
                             stack(i).line, stack(i).file);
         expected_lines=arrayfun(show_stack_elem,1:n_elem,...
                             'UniformOutput',false);
-        assertEqual(lines(1:n_elem),expected_lines);
+        assertEqual(lines,expected_lines);
 
     end
 

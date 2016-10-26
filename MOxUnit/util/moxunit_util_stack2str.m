@@ -10,7 +10,7 @@ function s=moxunit_util_stack2str(stack,prefix)
 %
 % Output:
 %   s                       String representation of the stack, showing one
-%                           element per line. The represention is with a
+%                           element per line. The represention is without a
 %                           trailing newline
 %
     if nargin<2
@@ -20,12 +20,12 @@ function s=moxunit_util_stack2str(stack,prefix)
     check_input(stack);
     n=numel(stack);
 
-    line_pat='%s:%d (%s)\n';
+    line_pat='%s:%d (%s)';
     elem2str=@(x) [prefix, sprintf(line_pat,x.name,x.line,x.file)];
 
     lines=arrayfun(@(i) elem2str(stack(i)),1:n,...
                     'UniformOutput',false);
-    s=sprintf('%s',lines{:});
+    s=moxunit_util_strjoin(lines,sprintf('\n'));
 
 
 function check_input(stack)
