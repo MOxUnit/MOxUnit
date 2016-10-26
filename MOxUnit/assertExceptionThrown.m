@@ -83,10 +83,20 @@ function [id,whats_wrong]=exception_not_raised(expected_id)
 
 
 function [id,whatswrong]=wrong_exception_raised(found_id, expected_id)
+    last_err=lasterror();
+    stack=last_err.stack;
+
+    stack_indent_length=8;
+    stack_indent=repmat(' ',1,stack_indent_length);
+    %stack_indent='    | '
+    stack_trace_str=moxunit_util_stack2str(stack,stack_indent);
+
     id='moxunit:wrongExceptionRaised';
+
     whatswrong = sprintf(...
-        'exception ''%s'' was raised, expected ''%s''',...
-        found_id, expected_id);
+        ['exception ''%s'' was raised, expected ''%s''. '...
+        'Stack trace:\n\n%s'],...
+        found_id, expected_id, stack_trace_str);
 
 
 function verify_inputs(varargin)
