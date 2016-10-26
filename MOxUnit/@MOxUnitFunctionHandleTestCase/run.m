@@ -39,7 +39,11 @@ function report=run(obj,report)
                 test_outcome_args={reason};
             else
                 test_outcome_constructor=@MOxUnitFailedTestOutcome;
-                test_outcome_args={e};
+
+                % trim the stack so that all test case machinery is
+                % removed from the stack
+                e_trimmed=trim_stack(e);
+                test_outcome_args={e_trimmed};
             end
         end
 
@@ -57,3 +61,28 @@ function report=run(obj,report)
                             test_outcome_args{:});
 
     report = reportTestOutcome(report, test_outcome);
+
+
+function e_trimmed=trim_stack(e)
+% trim the stack from e.stack, so that everything up to and including the
+% first (nearest to the calling root) entry is removed
+    stack=e.stack;
+
+    n_stack=numel(stack);
+
+    this_file=sprintf('%s.m',mfilename('fullpath'));
+
+    for pos=n_stack:-1:1
+        if strcmp(stack(pos).file,this_file)
+            % found first match with this filename, now trim this function
+            % and their callig functions
+            trimmed_stack=stack(1:(pos-1));
+
+            e_trimmed=e;
+            e_trimmed.stack=trimmed_stack;
+            return;
+        end
+    end
+
+    assert(false,'This should not happen');
+

@@ -67,13 +67,15 @@ function test_moxunit_util_stack2str_exceptions
     s_missing_field.file='foo';
     aet(s_missing_field);
 
-    s_illegal_field=struct();
-    s_illegal_field.file='foo';
-    s_illegal_field.name='bar';
-    s_illegal_field.line=23;
-    s_illegal_field.(randstr())=23;
-    aet(s_illegal_field);
-
+    % should be ok
+    s_octave=struct();
+    s_octave.file='foo';
+    s_octave.name='bar';
+    s_octave.line=23;
+    s_octave.column=2;
+    s_octave.scope=3;
+    s_octave.context=[];
+    moxunit_util_stack2str(s_octave);
 
 
 

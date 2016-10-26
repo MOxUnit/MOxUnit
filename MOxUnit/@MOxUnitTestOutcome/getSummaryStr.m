@@ -18,7 +18,8 @@ function str=obj2text(obj)
 
     if isstruct(content)
         % error or failure
-        stack_str=moxunit_util_stack2str(content.stack);
+        stack_prefix='  ';
+        stack_str=moxunit_util_stack2str(content.stack, stack_prefix);
         str=sprintf('%s: %s\n%s',...
                 outcome,content.message,stack_str);
 
