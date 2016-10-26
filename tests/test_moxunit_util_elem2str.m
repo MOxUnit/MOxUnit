@@ -4,46 +4,51 @@ function test_suite=test_moxunit_util_elem2str
 function test_moxunit_util_elem2str_tiny
     aeq=@assert_expected_output;
     % empty string
-    aeq('''''','');
+    aeq('0x0 char (empty)\n''''','');
 
     % string in row vector form
-    aeq('''abc''','abc');
+    aeq('1x3 char\n''abc''','abc');
 
     % matrix
-    aeq('[4 3 2;3 4 1]',[4 3 2; 3 4 1]);
+    aeq('2x3 double\n[4 3 2;3 4 1]',[4 3 2; 3 4 1]);
+
+    % random data
     x=randn(2);
-    aeq(mat2str(x),x);
+    aeq(['2x2 double\n' mat2str(x)],x);
 
 function test_moxunit_util_elem2str_big_matrix
     aeq=@assert_expected_output;
-    aeq(sprintf(['[0.99999999 -1e-08 -1e-08 -1e-08;-1e-08 0.99999999\n'...
+    aeq(        ['4x4 double\n'...
+                 '[0.99999999 -1e-08 -1e-08 -1e-08;-1e-08 0.99999999\n'...
                  '...\n'...
-                 '0.99999999 -1e-08;-1e-08 -1e-08 -1e-08 0.99999999]']),...
+                 '0.99999999 -1e-08;-1e-08 -1e-08 -1e-08 0.99999999]'],...
                  eye(4)-1e-8);
 
 function test_moxunit_util_elem2str_big_cell
     aeq=@assert_expected_output;
 
-    aeq('100x2(cell)',cell(100,2))
+    aeq('100x2 cell',cell(100,2))
 
 function test_moxunit_util_elem2str_tiny_with_evalc
     aeq=@assert_expected_output_evalc_if_present;
 
     % string with non-row vector form
-    aeq(sprintf('abc\ndef'),...
-            '2x3(char)',...
+    aeq('2x3 char\nabc\ndef',...
+        '2x3 charXX',...
             ['abc';'def']);
 
     % 3D string array
-    aeq(sprintf('\n(:,:,1) =\n\nabc\ncde\n\n(:,:,2) =\n\nefg\nghi'),...
-                '2x3x2(char)',...
+    aeq('2x3x2 char\n\n(:,:,1) =\n\nabc\ncde\n\n(:,:,2) =\n\nefg\nghi',...
+                '2x3x2 char',...
                 cat(3,['abc';'cde'],['efg';'ghi']))
 
     % logical array
-    aeq('     0     1','1x2(logical)',[false true]);
+    aeq('1x2 logical\n     0     1','1x2 logical',[false true]);
 
     % cell array
-    aeq('    ''foo''    [1]','1x2(cell)',{'foo',1});
+    aeq({'1x2 cell\n    ''foo''    [1]',...
+        '1x2 cell\n\n{\n[1,1] = foo\n[1,2] =  1\n}'},...
+        '1x2(cell)',{'foo',1});
 
 
 function test_moxunit_util_elem2str_custom_class
@@ -79,7 +84,7 @@ function test_moxunit_util_elem2str_custom_class
     obj=constructor();
 
     aeq=@assert_expected_output;
-    aeq(sprintf('(%s)',classname),obj);
+    aeq(sprintf('%s',classname),obj);
 
 function write_contents(dirname,fname,pat,varargin)
 % helper function to write .m file
@@ -106,17 +111,49 @@ function remove_path_directory(dir_name)
 
 
 function assert_expected_output_evalc_if_present(a,b,varargin)
-    result=moxunit_util_elem2str(varargin{:});
-
-    if exist('evalc','builtin')
-        assertEqual(result,a);
+    mex_file_code=3;
+    if exist('evalc','builtin') || ...
+            exist('evalc')==mex_file_code
+        to_compare=a;
     else
-        assertEqual(result,b);
+        to_compare=b;
     end
+
+    assert_expected_output(to_compare,varargin{:});
 
 
 function assert_expected_output(to_compare,varargin)
     result=moxunit_util_elem2str(varargin{:});
 
-    assertEqual(result,to_compare);
+    if islogical(varargin{1})
+        assert(ischar(to_compare));
+        expected=sprintf(to_compare);
+        if ~is_equal_modulo_whitespace(result,expected);
+            assertEqual(to_compare,expected,'Not equal modulo whitespace');
+        end
+    else
+        if ~iscell(to_compare)
+            to_compare={to_compare};
+        end
+
+        expected_cell=cellfun(@sprintf,to_compare,'UniformOutput',false);
+
+        for k=1:numel(expected_cell)
+            if is_equal_modulo_whitespace(expected_cell{k},result)
+                return;
+            end
+        end
+
+        msg=sprintf(['Output ''%s'' is not equal modulo whitespace '...
+                    'to any of: ''%s'''],...
+                     result,...
+                     moxunit_util_strjoin(expected_cell,''', '''));
+        error(msg);
+    end
+
+
+function tf=is_equal_modulo_whitespace(a,b)
+    simplify_whitespace=@(x)regexprep(x,'\s+',' ');
+    tf=isequal(simplify_whitespace(a),simplify_whitespace(b));
+
 
