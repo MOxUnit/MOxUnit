@@ -14,7 +14,8 @@ function test_moxunit_util_input2str_basics
 
     aeq({'%s\n%s\n',w,x},w,x);
     aeq({'%s\n%s\n\nInput: %s\n',w,x,ys},w,x,y);
-    aeq({'%s\n%s\n\nFirst input: %s\n\nSecond input: %s\n',w,x,ys,zs},w,x,y,z);
+    aeq({'%s\n%s\n\nFirst input: %s\n\nSecond input: %s\n',...
+                                        w,x,ys,zs},w,x,y,z);
 
 
 function s=randstr()
