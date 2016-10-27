@@ -65,9 +65,9 @@ function assertExceptionThrown(func, expected_id, message)
     full_message=moxunit_util_input2str(message,whats_wrong);
 
     if moxunit_util_platform_is_octave()
-        error(id,full_message);
+        error(id,'%s',full_message);
     else
-        throwAsCaller(MException(id, full_message));
+        throwAsCaller(MException(id,'%s',full_message));
     end
 
 
