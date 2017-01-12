@@ -72,7 +72,8 @@ function elem_str=tiny_elem2str(elem)
 
     elseif isnumeric(elem)
         % If the element is numeric, we can use mat2str
-        elem_str=mat2str(elem);
+        precision=5;
+        elem_str=mat2str(elem,precision);
 
     elseif can_use_evalc()
         % If we have `evalc`, we can just trust the `display` function
