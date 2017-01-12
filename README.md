@@ -26,14 +26,23 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - Manual installation:
 
-    + Download the zip archive from the [MOxUnit] website.
+    + Download the [[MOxUnit zip archive] from the [MOxUnit] website, and extract it. This should
+      result in a directory called ``MOxUnit-master``.
     + Start Matlab or GNU Octave.
-    + On the Matlab or GNU Octave prompt, `cd` to the `MOxUnit` root directory, then run:
+    + On the Matlab or GNU Octave prompt, go to the directory that contains the new ``MOxUnit-master`` directory, then run:
 
         ```matlab
-        cd MOxUnit          % cd to MOxUnit subdirectory
-        moxunit_set_path()  % add the current directory to the Matlab/GNU Octave path
-        savepath            % save the path
+        % change to the MOxUnit subdirectory
+        %
+        % Note: if MOxUnit was retrieved using 'git', then the name of
+        %       top-level directory is 'MOxUnit', not 'MOxUnit-master'
+        cd MOxUnit-master/MoxUnit
+
+        % add the current directory to the Matlab/GNU Octave path
+        moxunit_set_path()
+
+        % save the path
+        savepath
         ```
 
 ### Running MOxUnit tests
@@ -172,6 +181,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [Matlab]: http://www.mathworks.com/products/matlab/
 [Matlab xUnit test framework]: http://it.mathworks.com/matlabcentral/fileexchange/22846-matlab-xunit-test-framework
 [MOxUnit]: https://github.com/MOxUnit/MOxUnit
+[MOxUnit zip archive]: https://github.com/MOxUnit/MOxUnit/archive/master.zip
 [MOcov]: https://github.com/MOcov/MOcov
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
