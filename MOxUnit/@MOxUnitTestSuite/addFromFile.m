@@ -24,6 +24,11 @@ function obj=addFromFile(obj,fn)
     cleaner=onCleanup(@()cd(orig_pwd));
 
     [fn_dir,name]=fileparts(fn);
+
+    if ~moxunit_util_is_test_name(name)
+      return
+    end
+
     if ~isempty(fn_dir)
         cd(fn_dir);
     end
@@ -40,6 +45,6 @@ function obj=addFromFile(obj,fn)
             obj=addTest(obj,test_case);
         end
     catch
-        % ignore silently, assuming that the file was not a test case
+        moxunit_util_report_error(name, lasterr, dbstack(1));
     end
 
