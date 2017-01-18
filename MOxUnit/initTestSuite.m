@@ -69,7 +69,7 @@
 
     for k=1:n
         subfunction_name=subfunction_names{k};
-        if moxunit_util_is_test_function_name(subfunction_name)
+        if moxunit_util_is_test_name(subfunction_name)
             try
                 func=str2func(subfunction_name);
                 if nargout(func)==0
@@ -79,6 +79,8 @@
                     test_suite=addTest(test_suite, test_case);
                 end
             catch
+                moxunit_util_report_error( ...
+                  subfunction_name, lasterr, dbstack(1));
             end
         end
     end
