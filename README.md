@@ -85,12 +85,18 @@ To define unit tests, write a function with the following header:
 
 ```matlab
 function test_suite=my_test_of_abs
+    try % use of "localfunctions" is necessary in Matlab 2016b and later
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can access local functions
+    end
     initTestSuite;
 ```
 
-*Important*: it is crucial that the output of the main function is called `test_suite`.
+*Important*:
+- it is crucial that the output of the main function is a variable named `test_suite`, and that the output of `localfunctions` is assigned to a variable named `test_functions`
+- as of Matlab 2016b, Matlab scripts (such as `initTestSuite.m`) do not have access to subfunctions in a function if called from that function. Therefore it requires using localfunctions to obtain function handles to local functions. The "try-catch-end" statements are necessary for compatibility with older versions of GNU Octave, which do not provide the `localfunctions` function.
 
-Then, define subfunctions whose name start with `test_` or end with `_test`. These functions can use the following `assert*` functions:
+Then, define subfunctions whose name start with `test` or end with `test` (case-insensitive). These functions can use the following `assert*` functions:
 - `assertTrue(a)`: assert that `a` is true.
 - `assertFalse(a)`: assert that `a` is false.
 - `assertEqual(a,b)`: assert that `a` and `b` are equal.
@@ -103,7 +109,11 @@ As a special case, `moxunit_throw_test_skipped_exception('reason')` throws an ex
 For example, the following function defines three unit tests that tests some possible inputs from the builtin `abs` function:
 ```matlab
 function test_suite=my_test_of_abs
-    initTestSuite
+    try % use of "localfunctions" is necessary in Matlab 2016b and later
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can access local functions
+    end
+    initTestSuite;
 
 function test_abs_scalar
     assertTrue(abs(-1)==1)
@@ -129,6 +139,7 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
 
 ### Compatibility notes
 - Because GNU Octave 3.8 does not support `classdef` syntax, 'old-style' object-oriented syntax is used for the class definitions. For similar reasons, MOxUnit uses the `lasterror` function, even though its use in Matlab is discouraged.
+- Recent versions of Matlab (2016 and later) do not support tests defined just using "initTestSuite", that is without the use of `localfunctions` (see above). To ease the transition, consider using the Python script `tools/fix_mfile_test_init.py`, which can rewrite existing .m files that do not use `localfunctions`
 
 
 ### Acknowledgements
@@ -143,11 +154,11 @@ Currently MOxUnit does not support:
 
 
 ### Contact
-Nikolaas N. Oosterhof, nikolaas dot oosterhof at unitn dot it
+Nikolaas N. Oosterhof, n dot n dot oosterhof at googlemail dot com.
 
 
 ### Contributions
-- Thanks to Scott Lowe, Thomas Feher and Joel LeBlanc for contributions.
+- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc and Anderson Bravalheri for contributions.
 
 
 ### License
