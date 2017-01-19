@@ -12,9 +12,7 @@ function obj=addFromFile(obj,fn)
 %
 % Output:
 %   obj             MoxUnitTestSuite instance with the MOxUnitTestNode test
-%                   added, if present. If calling the function defined in
-%                   fn raises an exception, or does not return a
-%                   MOxUnitTestNode instance, then obj remains unchanged.
+%                   added, if present.
 %
 % See also: initTestSuite
 %
@@ -25,26 +23,17 @@ function obj=addFromFile(obj,fn)
 
     [fn_dir,name]=fileparts(fn);
 
-    if ~moxunit_util_is_test_name(name)
-      return
-    end
-
     if ~isempty(fn_dir)
         cd(fn_dir);
     end
 
-    try
-        func=str2func(name);
+    func=str2func(name);
 
-        if nargout(func)~=1
-            return;
-        end
-
-        test_case=func();
-        if isa(test_case,'MOxUnitTestNode')
-            obj=addTest(obj,test_case);
-        end
-    catch
-        moxunit_util_report_error(name, lasterr, dbstack(1));
+    if nargout(func)~=1
+        return;
     end
 
+    test_case=func();
+    if isa(test_case,'MOxUnitTestNode')
+        obj=addTest(obj,test_case);
+    end
