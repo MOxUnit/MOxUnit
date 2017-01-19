@@ -1,4 +1,8 @@
 function test_suite=test_assert_equal()
+    try % assignment of "localfunctions" is necessary in Matlab >=2016a
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
     initTestSuite;
 
 function test_assert_equal_exceptions
@@ -19,4 +23,3 @@ function test_assert_equal_passes
     assertEqual(1,1);
     assertEqual(struct(),struct());
     assertEqual({1,'a'},{1,'a'});
-

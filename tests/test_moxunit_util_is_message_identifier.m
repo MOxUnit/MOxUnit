@@ -1,4 +1,8 @@
 function test_suite=test_moxunit_util_is_message_identifier
+    try % assignment of "localfunctions" is necessary in Matlab >=2016a
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
     initTestSuite;
 
 function test_moxunit_util_is_message_identifier_non_char

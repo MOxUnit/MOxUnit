@@ -1,4 +1,9 @@
 function test_suite=test_function_handle_test_case
+% tests for MOxUnitFunctionHandleTestCase
+    try % assignment of "localfunctions" is necessary in Matlab >=2016a
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
     initTestSuite;
 
 function test_function_handle_test_case_basics

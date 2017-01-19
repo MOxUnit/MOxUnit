@@ -1,7 +1,7 @@
-function test_moxunit_util_platform_supports
-    try % use of "localfunctions "is necessary in Matlab 2016a and later
+function test_suite=test_moxunit_util_platform_supports
+    try % assignment of "localfunctions" is necessary in Matlab >=2016a
         test_functions=localfunctions();
-    catch % no problem; early Matlab versions can access local functions
+    catch % no problem; early Matlab versions can use initTestSuite fine
     end
     initTestSuite;
 

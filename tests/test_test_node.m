@@ -1,4 +1,8 @@
 function test_suite=test_test_node
+    try % assignment of "localfunctions" is necessary in Matlab >=2016a
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
     initTestSuite;
 
 function test_test_node_basics
