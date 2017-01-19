@@ -80,8 +80,8 @@ def get_fix_test_diff(tks):
 
     localfunction_lines = \
         [
-            '    try % assignment of "localfunctions" is necessary in '
-                                                        'Matlab >=2016a',
+            '    try % assignment of \'localfunctions\' is necessary in '
+                                                        'Matlab >= 2016',
             '        test_functions=localfunctions();',
             '    catch % no problem; early Matlab versions can use '
                                                         'initTestSuite fine',

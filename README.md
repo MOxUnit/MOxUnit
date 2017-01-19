@@ -85,9 +85,9 @@ To define unit tests, write a function with the following header:
 
 ```matlab
 function test_suite=my_test_of_abs
-    try % use of "localfunctions" is necessary in Matlab 2016b and later
+    try % use of 'localfunctions' is necessary in Matlab >= 2016
         test_functions=localfunctions();
-    catch % no problem; early Matlab versions can access local functions
+    catch % no problem; early Matlab versions can use initTestSuite fine
     end
     initTestSuite;
 ```
