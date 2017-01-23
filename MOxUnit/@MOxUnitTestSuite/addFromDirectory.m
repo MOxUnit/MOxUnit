@@ -18,9 +18,6 @@ function obj=addFromDirectory(obj,directory,pat,add_recursive)
 %   obj             MoxUnitTestSuite instance with MOxUnitTestNode
 %                   instances  added, if present in the files in directory.
 %
-% Notes:
-%   - this function does not add files recursively.
-%
 % See also: initTestSuite, addFromFile
 %
 % NNO 2015
@@ -29,33 +26,16 @@ function obj=addFromDirectory(obj,directory,pat,add_recursive)
         add_recursive=false;
     end
 
-    if nargin<3 || isempty(pat)
-        pat='*.m';
-    end
-
-    pat_regexp=['^' regexptranslate('wildcard',pat) '$'];
-
-    if isdir(directory)
-        d=dir(directory);
-        n=numel(d);
-
-        for k=1:n
-            fn=d(k).name;
-            path_fn=fullfile(directory,fn);
-
-            if isdir(path_fn)
-                if add_recursive && is_sub_directory(fn)
-                    obj=addFromDirectory(obj,path_fn,pat,add_recursive);
-                end
-            elseif ~isempty(regexp(fn,pat_regexp,'once'))
-                obj=addFromFile(obj,path_fn);
-            end
-        end
-    else
+    if ~isdir(directory)
         error('moxunit:illegalParameter','Input is not a directory');
     end
 
+    % find the files
+    filenames=moxunit_util_find_files(directory,pat,add_recursive);
 
+    n_filenames=numel(filenames);
 
-function tf=is_sub_directory(fn)
-    tf=~any(strcmp(fn,{'.','..'}));
+    for k=1:n_filenames
+        filename=filenames{k};
+        obj=addFromFile(obj,filename);
+    end

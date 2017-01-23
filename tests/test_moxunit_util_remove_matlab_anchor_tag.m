@@ -1,4 +1,8 @@
 function test_suite=test_moxunit_util_remove_matlab_anchor_tag
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
     initTestSuite;
 
 function test_moxunit_util_remove_matlab_anchor_tag_basics

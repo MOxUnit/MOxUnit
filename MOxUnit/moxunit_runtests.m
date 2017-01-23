@@ -76,15 +76,16 @@ function result=moxunit_runtests(varargin)
     end
 
     suite=MOxUnitTestSuite();
-    for k=1:numel(params.filenames)
-        % add files to the test suite
-        filename=params.filenames{k};
-        if isdir(filename)
-            suite=addFromDirectory(suite,filename,[],params.add_recursive);
-        else
-            suite=addFromFile(suite,filename);
-        end
-    end
+
+    % build pattern for filenames by combining the test name pattern with
+    % extension.
+    mfile_ext_pattern='.m$';
+    mfile_test_filename_pattern=get_test_file_pattern(mfile_ext_pattern);
+
+    suite=add_tests_from_filenames(suite, ...
+                                        params.filenames,...
+                                        mfile_test_filename_pattern,...
+                                        params.add_recursive);
 
     % show summary of test suite
     if params.verbosity>0
@@ -108,6 +109,36 @@ function result=moxunit_runtests(varargin)
 
     % return true if no errors or failures
     result=wasSuccessful(test_report);
+
+
+function mfile_test_filename_pattern=get_test_file_pattern(...
+                                                mfile_ext_pattern)
+    test_name_pattern=moxunit_util_get_test_name_regexp();
+    assert(sum(test_name_pattern=='$')==1,'unexpected pattern');
+    assert(test_name_pattern(end)=='$','unexpected pattern');
+
+    mfile_test_filename_pattern=regexprep(test_name_pattern,...
+                                            '\$',...
+                                            mfile_ext_pattern);
+
+
+function suite=add_tests_from_filenames(suite, ...
+                                        filenames, ...
+                                        mfile_test_filename_pattern,...
+                                        add_recursive)
+    for k=1:numel(filenames)
+        % add files to the test suite
+        filename=filenames{k};
+        if isdir(filename)
+            suite=addFromDirectory(suite,...
+                                    filename,...
+                                    mfile_test_filename_pattern,...
+                                    add_recursive);
+        else
+            suite=addFromFile(suite,filename);
+        end
+    end
+
 
 
 function test_report=run_all_tests(suite, test_report, params)
