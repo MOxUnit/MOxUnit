@@ -20,7 +20,7 @@ function test_test_suite_tests()
 
     assertEqual(0,countTestNodes(suite));
 
-    n_nodes=ceil(rand()*5+5);
+    n_nodes=ceil(rand()*5+20);
     for k=1:n_nodes
         nd=MOxUnitTestNode(rand_str());
 
@@ -32,6 +32,37 @@ function test_test_suite_tests()
 
     s_double=addFromSuite(suite,suite);
     assertEqual(2*n_nodes,countTestNodes(s_double));
+
+
+function test_test_suite_set_test()
+    suite=MOxUnitTestSuite();
+    nd=MOxUnitTestNode(rand_str());
+    suite=addTest(suite,nd);
+
+    assertEqual(1,countTestNodes(suite))
+
+    replacements={MOxUnitTestNode(['b' rand_str()]),...
+                  MOxUnitTestNode(['c' rand_str()]),...
+                  MOxUnitTestSuite(rand_str())};
+
+    for k=1:numel(replacements)
+        prev_nd=getTestNode(suite,1);
+        replacement_nd=replacements{k};
+        suite=setTestNode(suite,1,replacement_nd);
+        assertFalse(isequal(prev_nd,getTestNode(suite,1)));
+        assertEqual(getTestNode(suite,1),replacement_nd);
+    end
+
+function test_test_suite_set_test_exceptions()
+    suite=MOxUnitTestSuite();
+    nd=MOxUnitTestNode(rand_str());
+    suite=addTest(suite,nd);
+
+    bad_idxs={[1 1],.5,-1,2};
+    for k=1:numel(bad_idxs)
+        assertExceptionThrown(@()setTestNode(suite,bad_idxs{k},nd),'');
+    end
+
 
 function test_test_suite_run_partition_exceptions
     aet_run=@(varargin)assertExceptionThrown(@()...
