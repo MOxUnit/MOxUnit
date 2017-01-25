@@ -19,7 +19,7 @@ function obj=setTestNode(obj, i, t)
         error('index must be scalar integer');
     end
 
-    max_i=numel(obj.tests);
+    max_i=countTestNodes(obj);
     if i>max_i
         error('index %d exceeds the number of tests %d',i,max_i);
     end
