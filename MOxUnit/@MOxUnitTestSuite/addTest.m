@@ -16,7 +16,6 @@ function obj=addTest(obj, t)
 % NNO 2015
     n_tests=numel(obj.tests);
 
-    if true
     obj_tests_too_small=n_tests+1 < obj.test_count;
 
     if obj_tests_too_small
@@ -29,7 +28,7 @@ function obj=addTest(obj, t)
         % allocate more space
         obj.tests{empty_idx}=[];
     end
-    end
+
     % store the test
     obj.test_count=obj.test_count+1;
     obj.tests{obj.test_count}=t;

@@ -20,7 +20,7 @@ function test_test_suite_tests()
 
     assertEqual(0,countTestNodes(suite));
 
-    n_nodes=ceil(rand()*5+5);
+    n_nodes=ceil(rand()*5+20);
     for k=1:n_nodes
         nd=MOxUnitTestNode(rand_str());
 
