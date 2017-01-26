@@ -83,12 +83,11 @@ function test_test_report_output
                 % check getTestOutputStatistics
                 label=getOutcomeStr(test_outcome,2);
 
-                if ~strcmp(label,'passed')
-                    if ~isfield(test_stats,label)
-                        test_stats.(label)=0;
-                    end
-                    test_stats.(label)=test_stats.(label)+1;
+                if ~isfield(test_stats,label)
+                    test_stats.(label)=0;
                 end
+                test_stats.(label)=test_stats.(label)+1;
+
                 assertEqual(test_stats,getTestOutputStatistics(rep));
 
                 outcome_str_cell{k}=outcome_str;
