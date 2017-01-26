@@ -45,7 +45,7 @@ function test_test_report_output
                 name=rand_str();
                 location=rand_str();
                 test_=MOxUnitFunctionHandleTestCase(name,location,'foo');
-                duration=rand();
+                duration=rand()*1e3;
                 test_outcome=outcome_constructor(test_,duration,...
                                     outcome_args{:});
 
@@ -72,8 +72,9 @@ function test_test_report_output
                 if report_test
                     outcome_str=getOutcomeStr(test_outcome,verbosity);
                     if verbosity==2
-                        outcome_str=sprintf(' %s: %s:  %s ',...
-                                    outcome_str,name,location);
+                        outcome_str=sprintf(' %s in %4ds: %s:  %s ',...
+                                    outcome_str,ceil(duration),...
+                                    name,location);
                     end
                 else
                     outcome_str='';
@@ -103,9 +104,8 @@ function test_test_report_output
             clear file_closer;
 
             % test that all elements are present
-            assert_equal_modulo_whitespace(data, ...
-                                            moxunit_util_strjoin(...
-                                                    outcome_str_cell,''));
+            expected_data=moxunit_util_strjoin(outcome_str_cell,'');
+            assert_equal_modulo_whitespace(data, expected_data);
         end
     end
 
