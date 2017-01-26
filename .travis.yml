@@ -56,5 +56,5 @@ script:
       fi
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
-    - $AFTER_SCRIPT
+    - eval $AFTER_SCRIPT
 
