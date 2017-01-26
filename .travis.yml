@@ -46,7 +46,7 @@ script:
 
           if [[  "$SHIPPABLE" == "true"  ]]; then
               OUTPUT_ARGS=COVER_XML_FILE=${SHIPPABLE_BUILD_DIR}/shippable/codecoverage/coverage.xml;
-              AFTER_SCRIPT="find ${SHIPPABLE_BUILD_DIR}/shippable/;cat ${SHIPPABLE_BUILD_DIR}/shippable/codecoverage/coverage.xml;reports --destination /shippableci/coverageresults coverage --source ${SHIPPABLE_BUILD_DIR}/shippable/codecoverage";
+              AFTER_SCRIPT="find ${SHIPPABLE_BUILD_DIR}/shippable/;cat ${SHIPPABLE_BUILD_DIR}/shippable/codecoverage/coverage.xml;which reports; reports --destination /shippableci/coverageresults coverage --source ${SHIPPABLE_BUILD_DIR}/shippable/codecoverage";
           elif [[  "$TRAVIS" == "true"  ]]; then
               OUTPUT_ARGS=COVER_JSON_FILE=`pwd`/coveralls.json;
               AFTER_SCRIPT="curl --verbose -F json_file=@`pwd`/coveralls.json https://coveralls.io/api/v1/jobs";
