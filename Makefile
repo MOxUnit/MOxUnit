@@ -38,6 +38,7 @@ help:
 	@echo ""
 	@echo "Environmental variables:"
 	@echo "  WITH_COVERAGE      Enable line coverage registration"
+	@echo "  JUNIT_XML_FILE     Rest results XML output"
 	@echo "  COVER              Directory to compute line coverage for"
 	@echo "  COVER_XML_FILE    	Coverage XML output filename	"
 	@echo "  COVER_JSON_FILE    Coverage JSON output filename"
@@ -46,8 +47,8 @@ help:
 	@echo ""
 
 RUNTESTS_ARGS='${TESTDIR}'
-ifdef JUNIT_XML
-	RUNTESTS_ARGS +=,'-junit_xml','$(JUNIT_XML)'
+ifdef JUNIT_XML_FILE
+	RUNTESTS_ARGS +=,'-junit_xml_file','$(JUNIT_XML_FILE)'
 endif
 
 ifdef WITH_COVERAGE
