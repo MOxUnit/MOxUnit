@@ -188,12 +188,27 @@ function test_report=run_all_tests(suite, test_report, params)
 
         all_params=[mocov_expr_param, mocov_params];
 
+        if params.verbosity>=1
+            params_as_strings=cellfun(@param2str,all_params,...
+                                    'UniformOutput',false);
+            params_joined=sprintf('%s ',params_as_strings{:});
+
+            fprintf('running coverage with parameters: %s\n',...
+                                params_joined);
+        end
+
+
         test_report=mocov(all_params{:});
     else
         test_report=f_handle();
     end
 
-
+function s=param2str(p)
+    if ischar(p)
+        s=p;
+    else
+        s=sprintf('<%s>',class(p));
+    end
 
 
 function write_junit_xml(fn, test_report)
