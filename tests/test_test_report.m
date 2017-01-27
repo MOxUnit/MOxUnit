@@ -122,15 +122,32 @@ function test_test_report_duration
     end
 
 
+function s=randstr()
+    s=char(20*rand(1,10)+65);
+
 function test_test_report_name
     % default name
     rep=MOxUnitTestReport(0,1);
     assertEqual('MOxUnitTestReport',getName(rep));
 
-    rand_str=@()char(20*rand(1,10)+65);
-    name=rand_str();
+    name=randstr();
     rep=MOxUnitTestReport(0,1,name);
     assertEqual(name,getName(rep));
+
+function test_test_report_verbosity()
+    stream=1;
+    for verbosity=0:2
+        rep=MOxUnitTestReport(verbosity,stream);
+        assertEqual(getVerbosity(rep),verbosity);
+    end
+
+function test_test_report_stream()
+    verbosity=1;
+    for stream=[1 2]
+        rep=MOxUnitTestReport(verbosity,stream);
+        assertEqual(getStream(rep),stream);
+    end
+
 
 function test_test_report_get_statistics_str_xml
     helper_test_get_statistics_str('xml');
