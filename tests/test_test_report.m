@@ -72,7 +72,7 @@ function test_test_report_output
                 if report_test
                     outcome_str=getOutcomeStr(test_outcome,verbosity);
                     if verbosity==2
-                        outcome_str=sprintf(' %s in %4ds: %s:  %s ',...
+                        outcome_str=sprintf(' %s in %4d s: %s:  %s ',...
                                     outcome_str,ceil(duration),...
                                     name,location);
                     end
@@ -188,7 +188,7 @@ function helper_test_get_statistics_str(format)
                 case 'xml'
                     assertEqual('',s);
 
-                case 'text';
+                case 'text'
                     has_ok=all(counts(failure_pos:n_keys)==0);
 
                     assertEqual(has_ok,contains(s,'OK'));
