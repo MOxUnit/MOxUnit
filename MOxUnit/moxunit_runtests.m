@@ -103,7 +103,7 @@ function result=moxunit_runtests(varargin)
     disp(test_report);
 
     if ~isempty(params.junit_xml_file)
-        write_junit_xml(params.junit_xml_file, test_report);
+        writeXML(test_report,params.junit_xml_file);
     end
 
 

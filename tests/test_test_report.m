@@ -5,13 +5,14 @@ function test_suite=test_test_report
     end
     initTestSuite;
 
-function test_test_report_output
-    rand_str=@()char(20*rand(1,10)+65);
+function s=randstr()
+    s=char(20*rand(1,10)+65);
 
+function test_test_report_output
     test_outcomes={{ @MOxUnitPassedTestOutcome},...
-                    {@MOxUnitSkippedTestOutcome,rand_str()},...
-                    {@MOxUnitFailedTestOutcome,rand_str()},...
-                    {@MOxUnitErroredTestOutcome,rand_str()}};
+                    {@MOxUnitSkippedTestOutcome,randstr()},...
+                    {@MOxUnitFailedTestOutcome,randstr()},...
+                    {@MOxUnitErroredTestOutcome,randstr()}};
 
     for verbosity=0:2
         for report_test=[false,true];
@@ -42,8 +43,8 @@ function test_test_report_output
                 outcome_constructor=outcome_cell{1};
                 outcome_args=outcome_cell(2:end);
 
-                name=rand_str();
-                location=rand_str();
+                name=randstr();
+                location=randstr();
                 test_=MOxUnitFunctionHandleTestCase(name,location,'foo');
                 duration=rand()*1e3;
                 test_outcome=outcome_constructor(test_,duration,...
@@ -122,8 +123,6 @@ function test_test_report_duration
     end
 
 
-function s=randstr()
-    s=char(20*rand(1,10)+65);
 
 function test_test_report_name
     % default name
@@ -157,7 +156,7 @@ function test_test_report_get_statistics_str_text
 
 function helper_test_get_statistics_str(format)
 
-    a_test='foo';
+    a_test=MOxUnitFunctionHandleTestCase(randstr,randstr,@abs);
     outcomes.passed=MOxUnitPassedTestOutcome(a_test,rand());
     outcomes.skipped=MOxUnitSkippedTestOutcome(a_test,rand(),'foo');
     outcomes.failure=MOxUnitFailedTestOutcome(a_test,rand(),struct());
@@ -209,7 +208,51 @@ function helper_test_get_statistics_str(format)
 function tf=contains(haystack,needle)
     tf=~isempty(strfind(haystack,needle));
 
+function assert_contains(haystack,needle)
+    assertTrue(contains(haystack,needle));
 
+function test_write_xml_report()
+    a_test=MOxUnitFunctionHandleTestCase(randstr,randstr,@abs);
+    err=struct();
+    err.message=randstr();
+    err.stack=struct('file',randstr(),'line',rand(),'name',randstr());
+    outcomes=struct();
+    outcomes.passed=MOxUnitPassedTestOutcome(a_test,rand());
+    outcomes.failure=MOxUnitFailedTestOutcome(a_test,rand(),err);
+
+    keys=fieldnames(outcomes);
+    for k=1:numel(keys)
+        key=keys{k};
+        outcome=outcomes.(key);
+
+        rep=MOxUnitTestReport(0,1);
+        rep=addTestOutcome(rep,outcome);
+
+
+        fn=tempname();
+        writeXML(rep,fn);
+
+        fid=fopen(fn);
+        content=fread(fid,inf,'*char')';
+        file_closer=onCleanup(@()fclose(fid));
+
+
+        assert_contains(content,'tests="1"');
+        passed=wasSuccessful(rep);
+        if passed
+            assert_contains(content,'failures="0"')
+            assert_contains(content,'errors="0"');
+        else
+            assert_contains(content,'failures="1"');
+            assert_contains(content,'errors="0"');
+        end
+
+        assert_contains(content,'<?xml version');
+        assert_contains(content,'<testsuites>');
+        assert_contains(content,'</testsuites>');
+
+        clear file_closer
+    end
 
 
 function assert_equal_modulo_whitespace(a,b)
