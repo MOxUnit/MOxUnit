@@ -66,11 +66,12 @@ function tf=isequaln_wrapper(a,b)
 % wrapper to support old versions of Matlab
     persistent has_equaln;
 
-    if isequal(has_equaln,true)
-        tf=isequaln(a,b);
-    elseif isequal(has_equaln,false)
-        tf=isequalwithequalnans(a,b);
-    else
+    if isempty(has_equaln)
         has_equaln=~isempty(which('isequaln'));
-        tf=isequaln_wrapper(a,b);
+    end
+
+    if has_equaln
+        tf=isequaln(a,b);
+    else
+        tf=isequalwithequalnans(a,b);
     end
