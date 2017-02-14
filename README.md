@@ -51,12 +51,10 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - run the tests using `moxunit_runtests`. For example, running `moxunit_runtests` from MOxUnit's `tests` directory runs tests for MOxUnit itself, and should give the following output:
 
   ```
-suite: 77 tests
 ............................................................
-.................
+.......................
 --------------------------------------------------
-
-OK
+OK (passed=83)
 
 ans =
 
@@ -71,7 +69,7 @@ ans =
   - `-logfile logfile.txt`: store the output in file `logfile.txt`.
   - `-junit_xml_file xmlfile`: store JUnit-like XML output in file `xmlfile`.
 
-- To test MOxUnit itself using a shell, run:
+- To test MOxUnit itself from a terminal, run:
 
     ```
     make test
