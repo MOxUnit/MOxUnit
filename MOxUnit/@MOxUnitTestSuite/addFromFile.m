@@ -36,4 +36,17 @@ function obj=addFromFile(obj,fn)
     test_case=func();
     if isa(test_case,'MOxUnitTestNode')
         obj=addTest(obj,test_case);
+
+    elseif isa(test_case,'matlab.unittest.Test')
+
+        matlab_test_struct=test_case;
+        n_tests=numel(matlab_test_struct);
+
+        for k=1:n_tests
+            test_node=MOxUnitMatlabUnitWrapperTestCase(...
+                                    matlab_test_struct(k));
+            obj=addTest(obj,test_node);
+        end
+    else
+        % unknown class, silent skip
     end

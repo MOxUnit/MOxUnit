@@ -9,7 +9,7 @@ function test_test_case_basics
     rand_str=@()char(20*rand(1,10)+65);
 
     name=rand_str();
-    location=rand_str;
+    location=rand_str();
     case_=MOxUnitTestCase(name,location);
 
     assertEqual(location,getLocation(case_));
