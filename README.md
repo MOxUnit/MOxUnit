@@ -9,7 +9,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - Can be used directly with continuous integration services, such as [Travis-ci] and [Shippable].
 - Supports JUnit-like XML output for use with Shippable and other test results visualization approaches.
 - Supports the generation of code coverage reports using [MOCov]
-- Provides compatibility with Steve Eddin's [Matlab xUnit test framework]
+- Provides compatibility with the (now unsupported) Steve Eddin's [Matlab xUnit test framework], and with recent Matlab.
 - Distributed under the MIT license, a permissive free software license.
 
 
@@ -52,9 +52,9 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
   ```
 ............................................................
-.......................
+.........................
 --------------------------------------------------
-OK (passed=83)
+OK (passed=85)
 
 ans =
 
@@ -71,9 +71,9 @@ ans =
 
 - To test MOxUnit itself from a terminal, run:
 
-    ```
+  ```
     make test
-    ```
+  ```
 
 ### Use with travis-ci and Shippable
 MOxUnit uses the [Travis-ci] service for continuous integration testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). This file is also used by [Shippable].
@@ -152,6 +152,18 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
   ```
     find tests -iname 'test*.m' | xargs -L1 tools/fix_mfile_test_init.py --apply
   ```
+- Recent versions of Matlab define a `matlab.unittest.Test` class for unit tests. An instance `t` can be used with MOxUnit using the `MOxUnitMatlabUnitWrapperTestCase(t)`, which is a `MOxUnitTestCase` instance. Tests that are defined through
+
+    ```
+    function tests=foo()
+        tests=functiontests(localfunctions)
+
+    function test_funcA(param)
+
+    function test_funcA(param)
+    ```
+
+  can be run using MOxUnit as well (and included in an ``MOxUnitTestSuite`` instance using its with ``addFile``) instance, with the exception that currently setup and teardown functions are currently ignored.
 
 ### Acknowledgements
 - The object-oriented class structure was inspired by the [Python unit test] framework.
@@ -227,6 +239,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
 [Shippable]: https://app.shippable.com/
+
+
 
 
 
