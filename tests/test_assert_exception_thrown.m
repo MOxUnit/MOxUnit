@@ -27,6 +27,16 @@ function test_assert_exception_thrown_passes
     assertExceptionThrown(@()error('Throw w/o ID'),...
         '');
 
+    % Allow id to be a cellstr
+    assertExceptionThrown(@()error('moxunit:error','msg'),...
+        {'moxunit:error'},'message');
+    assertExceptionThrown(@()error('Throw w/o ID'),...
+        '*','message');
+    assertExceptionThrown(@()error('moxunit:error','msg'),...
+        {'moxunit:foo','moxunit:error','moxunit:foo'});
+    assertExceptionThrown(@()error('Throw w/o ID'),...
+        {'','moxunit:baz'});
+
 function test_assert_exception_thrown_illegal_arguments
     args_cell={ ...
                 {@()error('foo')},...
@@ -57,7 +67,10 @@ function test_assert_exception_thrown_illegal_arguments
 function test_assert_exception_thrown_wrong_exception
     % Verify that when func throws but the wrong exception comes out, we respond
     % with the correct exception (assertExceptionThrown:wrongException)
-    exception_id_cell = {'moxunit:failed',''};
+    exception_id_cell = {'moxunit:failed',...
+                         '',...
+                         {'','moxunit:failed'},...
+                        };
 
     for k=1:numel(exception_id_cell)
         exception_id=exception_id_cell{k};
@@ -68,8 +81,12 @@ function test_assert_exception_thrown_wrong_exception
             error_exception_not_thrown('moxunit:wrongExceptionRaised');
         catch
             [unused,error_id]=lasterr();
+            try
             error_if_wrong_id_thrown('moxunit:wrongExceptionRaised',...
                                                             error_id);
+            catch
+                                                        2
+            end
         end
     end
 
@@ -83,6 +100,7 @@ function test_assert_exception_thrown_exceptions_not_thrown
                     {@do_nothing,'moxunit:failed'},...  % Identifier only
                     {@do_nothing,'*','message'},...     % Wildcard
                     {@do_nothing,'a:b','msg'},...       % All arguments
+                    {@do_nothing,{'a:b','c:d'},'msg'}   % Cell str
                  };
 
    for k=1:numel(args_cell)
