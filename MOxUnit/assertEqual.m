@@ -29,13 +29,13 @@ function assertEqual(a, b, message)
     % for compatibility reasons the order of tests matches that of the
     % MATLAB xUnit framework
 
-    if ~isequal(size(a), size(b))
-        whatswrong='inputs are not of the same size';
-        error_id='assertEqual:nonEqual';
-
-    elseif ~isequal(class(a), class(b))
+    if ~isequal(class(a), class(b))
         whatswrong='inputs are not of the same class';
         error_id='assertEqual:classNotEqual';
+
+    elseif ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='assertEqual:nonEqual';
 
     elseif issparse(a)~=issparse(b)
         whatswrong='inputs do not have the same sparsity';
