@@ -110,7 +110,7 @@ function expected_str=expected_id2str(expected_id)
         if iscellstr(expected_id)
             expected_id=expected_id{1};
         end
-        expected_str=expected_id;
+        expected_str=sprintf('''%s''',expected_id);
     end
 
 
