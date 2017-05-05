@@ -1,12 +1,12 @@
 function obj=setTestNode(obj, i, t)
-% Add MOxUnitTestNode instance to the suite
+% Set MOxUnitTestNode instance in the suite
 %
 % obj=setTestNode(obj, i, t)
 %
 % Inputs:
 %   obj             MoxUnitTestSuite instance
-%   i               Index of where the test must be added
-%   t               MOxUnitTestNode instance to be added to the suite.
+%   i               Index of where the test must be set
+%   t               MOxUnitTestNode instance to be set in the suite.
 %
 % Output:
 %   obj             MoxUnitTestSuite instance with the MOxUnitTestNode
