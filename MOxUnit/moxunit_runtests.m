@@ -211,22 +211,6 @@ function s=param2str(p)
     end
 
 
-function write_junit_xml(fn, test_report)
-    fid=fopen(fn,'w');
-    file_closer=onCleanup(@()fclose(fid));
-
-    xml_preamble='<?xml version="1.0" encoding="utf-8"?>';
-    xml_header='<testsuites>';
-    xml_body=getSummaryStr(test_report,'xml');
-    xml_footer='</testsuites>';
-
-    fprintf(fid,'%s\n%s\n%s\n%s',...
-                xml_preamble,...
-                xml_header,...
-                xml_body,...
-                xml_footer);
-
-
 function params=get_params(varargin)
     % set defaults
     params.verbosity=1;
