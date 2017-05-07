@@ -10,8 +10,8 @@ function test_moxunit_runtests_basics
     failed_cell={'error(''expected'');','[1,2]+[1,2,3];'};
     skipped_cell={'moxunit_throw_test_skipped_exception(''skip'')'};
 
-    combis=all_binary_combinations(7);
-    for k=1:size(combis,1);
+    combis=all_binary_combinations(8);
+    for k=1:size(combis,1)
         cleaner=onCleanup(@()cleanup_helper('cleanup'));
 
         log_fn=tempname();
@@ -20,7 +20,7 @@ function test_moxunit_runtests_basics
         combi=combis(k,:);
         [has_passed,has_failed,has_skipped,...
                 use_recursion,in_subdirectory,...
-                has_error,verbose_output]=deal(combi{:});
+                has_error,verbose_output,add_suite_instance]=deal(combi{:});
 
 
         dir_to_test=tempname();
@@ -42,13 +42,24 @@ function test_moxunit_runtests_basics
         n_failed=add_tests(dir_with_tests,has_failed,failed_cell);
         n_skipped=add_tests(dir_with_tests,has_skipped,skipped_cell);
 
-        args={dir_to_test,'-logfile',log_fn};
+        args={'-logfile',log_fn};
+        if add_suite_instance
+            suite=MOxUnitTestSuite();
+            suite=addFromDirectory(suite,dir_to_test,...
+                                    '.*\.m',use_recursion);
+            args{end+1}=suite;
+        else
+            args{end+1}=dir_to_test;
+        end
+
         if has_error
             args{end+1}='-foo';
         end
+
         if verbose_output
             args{end+1}='-verbose';
         end
+
         if use_recursion
             args{end+1}='-recursive';
         end
