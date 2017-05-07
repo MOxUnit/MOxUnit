@@ -18,7 +18,7 @@ function result=moxunit_util_find_files(root_dir,re,add_recursive)
 % NNO 2015
 
     if ~isdir(root_dir)
-        error('First input must be a directory');
+        error('Diectory input argument must be a directory');
     end
 
     if ~ischar(re)
@@ -54,7 +54,7 @@ function result=find_files_helper(root_dir,re,add_recursive)
                                                         add_recursive);
                 end
 
-            elseif moxunit_util_regexp_matches(fn,re);
+            elseif moxunit_util_regexp_matches(fn,re)
                 result_cell{k}={path_fn};
             end
         end
