@@ -9,11 +9,13 @@ function result=moxunit_runtests(varargin)
 %   '-quiet'                do not show output
 %   filename                } test the unit tests in filename
 %   directory               } (which must initialize a test suite through
-%                           } initTestSuite) or in directory. Multiple
-%                           filename or directory arguments can be
+%   suite                   } initTestSuite), in the directory, or the
+%                           } MOxUnitTestSuite instance.
+%                           Multiple filename or directory arguments can be
 %                           provided. If there are no filename or directory
 %                           arguments, then all tests in the current
 %                           directory are run.
+%
 %   '-recursive'            If this option is present, then files are added
 %                           recursively from any directory. If absent, then
 %                           only files from each directory (but not their
