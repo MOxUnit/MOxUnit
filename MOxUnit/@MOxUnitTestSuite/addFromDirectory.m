@@ -7,8 +7,8 @@ function obj=addFromDirectory(obj,directory,pat,add_recursive)
 %   obj             MoxUnitTestSuite instance.
 %   directory       name of directory that may contain files with top-level
 %                   function that returns MOxUnitTestNode instances.
-%   pat             File pattern to look for in directory (default: '*.m').
-%                   Matching files are added using addFromFile.
+%   pattern         Regular expression containing file pattern of files to
+%                   add.
 %   add_recursive   If true, then files are added recursively from
 %                   sub-directories. If false (the default) then only files
 %                   are added from directory, but files in subdirectories
@@ -24,10 +24,6 @@ function obj=addFromDirectory(obj,directory,pat,add_recursive)
 
     if nargin<4 || isempty(add_recursive)
         add_recursive=false;
-    end
-
-    if ~isdir(directory)
-        error('moxunit:illegalParameter','Input is not a directory');
     end
 
     % find the files

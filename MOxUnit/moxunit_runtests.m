@@ -9,11 +9,13 @@ function result=moxunit_runtests(varargin)
 %   '-quiet'                do not show output
 %   filename                } test the unit tests in filename
 %   directory               } (which must initialize a test suite through
-%                           } initTestSuite) or in directory. Multiple
-%                           filename or directory arguments can be
+%   suite                   } initTestSuite), in the directory, or the
+%                           } MOxUnitTestSuite instance.
+%                           Multiple filename or directory arguments can be
 %                           provided. If there are no filename or directory
 %                           arguments, then all tests in the current
 %                           directory are run.
+%
 %   '-recursive'            If this option is present, then files are added
 %                           recursively from any directory. If absent, then
 %                           only files from each directory (but not their
@@ -82,8 +84,8 @@ function result=moxunit_runtests(varargin)
     mfile_ext_pattern='.m$';
     mfile_test_filename_pattern=get_test_file_pattern(mfile_ext_pattern);
 
-    suite=add_tests_from_filenames(suite, ...
-                                        params.filenames,...
+    suite=add_from_to_test_spec(suite, ...
+                                        params.to_test_spec,...
                                         mfile_test_filename_pattern,...
                                         params.add_recursive);
 
@@ -122,20 +124,22 @@ function mfile_test_filename_pattern=get_test_file_pattern(...
                                             mfile_ext_pattern);
 
 
-function suite=add_tests_from_filenames(suite, ...
-                                        filenames, ...
+function suite=add_from_to_test_spec(suite, ...
+                                        to_test_spec, ...
                                         mfile_test_filename_pattern,...
                                         add_recursive)
-    for k=1:numel(filenames)
+    for k=1:numel(to_test_spec)
         % add files to the test suite
-        filename=filenames{k};
-        if isdir(filename)
+        to_test=to_test_spec{k};
+        if isa(to_test,'MOxUnitTestSuite')
+            suite=addFromSuite(suite,to_test);
+        elseif isdir(to_test)
             suite=addFromDirectory(suite,...
-                                    filename,...
+                                    to_test,...
                                     mfile_test_filename_pattern,...
                                     add_recursive);
         else
-            suite=addFromFile(suite,filename);
+            suite=addFromFile(suite,to_test);
         end
     end
 
@@ -230,16 +234,21 @@ function params=get_params(varargin)
 
     % allocate space for filenames
     n=numel(varargin);
-    filenames=cell(n,1);
+    to_test_spec=cell(n,1);
 
     k=0;
     while k<n
         k=k+1;
         arg=varargin{k};
-        if ~ischar(arg)
+
+        if isa(arg,'MOxUnitTestSuite')
+            to_test_spec{k}=arg;
+            continue
+        elseif ~ischar(arg)
             error('moxunit:illegalParameter',...
-                    'Illegal argument at position %d', k);
+                    'Illegal argument type at position %d', k);
         end
+
         switch arg
             case '-verbose'
                 params.verbosity=params.verbosity+1;
@@ -351,7 +360,7 @@ function params=get_params(varargin)
             otherwise
 
                 if ~isempty(dir(arg))
-                    filenames{k}=arg;
+                    to_test_spec{k}=arg;
                 else
                     error('moxunit:illegalParameter',...
                     'Parameter not recognised or file missing: %s', arg);
@@ -359,9 +368,9 @@ function params=get_params(varargin)
         end
     end
 
-    filenames=filenames(~cellfun(@isempty,filenames));
+    to_test_spec=to_test_spec(~cellfun(@isempty,to_test_spec));
 
-    if numel(filenames)==0
+    if numel(to_test_spec)==0
         me_name=mfilename();
         if isequal(pwd(), fileparts(which(me_name)))
             error('moxunit:illegalParameter',...
@@ -371,10 +380,10 @@ function params=get_params(varargin)
                             'on MOxUnit itself, use:\n\n'...
                             '  %s ../tests'], me_name, me_name);
         end
-        filenames={pwd()};
+        to_test_spec={pwd()};
     end
 
-    params.filenames=filenames;
+    params.to_test_spec=to_test_spec;
 
     check_cover_consistency(params)
 
