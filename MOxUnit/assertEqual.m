@@ -15,6 +15,16 @@ function assertEqual(a, b, message)
 %                                         vice versa
 %   'moxunit:elementsNotEqual'      values in a and b are not equal
 %
+% Examples:
+%   assertEqual('foo','foo');
+%   %|| % passes without output
+%
+%   assertEqual('foo','bar');
+%   %|| error('elements are not equal');
+%
+%   assertEqual([1 2],[1;2]);
+%   %|| error('inputs are not of the same size');
+%
 % Notes:
 %   - If a custom message is provided, then any error message is prefixed
 %     by this custom message

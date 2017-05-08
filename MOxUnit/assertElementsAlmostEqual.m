@@ -20,6 +20,19 @@ function assertElementsAlmostEqual(a,b,varargin)
 %   'moxunit:floatsDiffer'          values in a and b are not
 %                                       almost equal (see note below)
 %
+% Examples:
+%   assertElementsAlmostEqual([1 2; 3 4],[1 2; 3 4]);
+%   %|| % no error
+%
+%   assertElementsAlmostEqual(1,1.0001);
+%   %|| error('inputs are not equal within relative tolerance 1.49011e-08')
+%
+%   assertElementsAlmostEqual(1,1.0001,'absolute',1e-3);
+%   %|| % no error
+%
+%   assertElementsAlmostEqual('foo','bar')
+%   %|| error('first input is not float');
+%
 % Notes:
 %   - If tol_type is 'relative', a and b are almost equal if
 %

@@ -27,11 +27,22 @@ function assertExceptionThrown(func, expected_id, message)
 %
 % Examples:
 %   % Assert that sin will throw an exception when its argument is a struct
-%   >> assertExceptionThrown( @()sin( struct([]) ) )
+%   assertExceptionThrown( @()sin( struct([]) ));
+%   %|| % ok
 %
-%   % Assert that sin throws AND that the ID is 'MATLAB:UndefinedFunction'
-%   >> assertExceptionThrown( @()sin( struct([]) ), ...
-%                                   'MATLAB:UndefinedFunction')
+%   % Assert that sin throws an exception AND that the ID is
+%   % either '' or 'MATLAB:UndefinedFunction'
+%   allowed_ids={'','MATLAB:UndefinedFunction'};
+%   assertExceptionThrown( @()sin( struct([]) ), allowed_ids);
+%
+%   % No exception raised
+%   assertExceptionThrown(@()disp('hello world'));
+%   %|| error('No exception was raised');
+%
+%   % Wrong exception raised
+%   assertExceptionThrown(@()[1 2]*[1 2 3],'MATLAB:UndefinedFunction')
+%   %|| error(['exception ''MATLAB:innerdim'' was raised, '...
+%   %||               'expected ''MATLAB:UndefinedFunction''.'])
 %
 % Notes:
 % - This function allows one to test for exceptions being thrown, and

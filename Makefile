@@ -8,6 +8,7 @@ OCTAVE?=octave
 
 TESTDIR=$(CURDIR)/tests
 ROOTDIR=$(CURDIR)/MOxUnit
+UTILDIR=$(ROOTDIR)/util
 
 ADDPATH=orig_dir=pwd();cd('$(ROOTDIR)');moxunit_set_path();cd(orig_dir)
 RMPATH=rmpath('$(ROOTDIR)');
@@ -44,43 +45,52 @@ help:
 	@echo "  COVER_JSON_FILE    Coverage JSON output filename"
 	@echo "  COVER_HTML_DIR     Coverage HTML output directory"
 	@echo "  COVER_HTML_DIR     Coverage HTML output directory"
+	@echo "  RUN_DOC_TEST       If set, run documentation tests"
 	@echo ""
 
-RUNTESTS_ARGS='${TESTDIR}'
-ifdef JUNIT_XML_FILE
-	RUNTESTS_ARGS +=,'-junit_xml_file','$(JUNIT_XML_FILE)'
-endif
+RUNTESTS_ARGS?='-verbose'
+TEST_RUNNER?=moxunit_runtests
 
-ifdef WITH_COVERAGE
-	ifndef COVER
-		#$(error COVER variable must be set when using WITH_COVERAGE)
-	endif
-	RUNTESTS_ARGS+=,'-with_coverage','-cover','$(COVER)'
-	export COVER
-
-	ifdef COVER_XML_FILE
-		 RUNTESTS_ARGS+=,'-cover_xml_file','$(COVER_XML_FILE)'
-		 export COVER_XML_FILE
-	endif
-
-	ifdef COVER_HTML_DIR
-		 RUNTESTS_ARGS+=,'-cover_html_dir','$(COVER_HTML_DIR)'
-		 export COVER_HTML_DIR
-	endif
-
-	ifdef COVER_JSON_FILE
-		 RUNTESTS_ARGS+=,'-cover_json_file','$(COVER_JSON_FILE)'
-		 export COVER_JSON_FILE
-	endif
-
+ifdef RUN_DOC_TEST
+	RUNTESTS_ARGS+=,'${ROOTDIR}','${UTILDIR}'
+	TEST_RUNNER=modox_runtests
+else
+	RUNTESTS_ARGS+=,'${TESTDIR}'
 	ifdef JUNIT_XML_FILE
-		 RUNTESTS_ARGS+=,'-junit_xml_file','$(JUNIT_XML_FILE)'
-		 export JUNIT_XML_FILE
+		RUNTESTS_ARGS +=,'-junit_xml_file','$(JUNIT_XML_FILE)'
 	endif
-endif
-		
 
-TEST=$(ADDPATH);success=moxunit_runtests($(RUNTESTS_ARGS));exit(~success);
+	ifdef WITH_COVERAGE
+		ifndef COVER
+			#$(error COVER variable must be set when using WITH_COVERAGE)
+		endif
+		RUNTESTS_ARGS+=,'-with_coverage','-cover','$(COVER)'
+		export COVER
+
+		ifdef COVER_XML_FILE
+			 RUNTESTS_ARGS+=,'-cover_xml_file','$(COVER_XML_FILE)'
+			 export COVER_XML_FILE
+		endif
+
+		ifdef COVER_HTML_DIR
+			 RUNTESTS_ARGS+=,'-cover_html_dir','$(COVER_HTML_DIR)'
+			 export COVER_HTML_DIR
+		endif
+
+		ifdef COVER_JSON_FILE
+			 RUNTESTS_ARGS+=,'-cover_json_file','$(COVER_JSON_FILE)'
+			 export COVER_JSON_FILE
+		endif
+
+		ifdef JUNIT_XML_FILE
+			 RUNTESTS_ARGS+=,'-junit_xml_file','$(JUNIT_XML_FILE)'
+			 export JUNIT_XML_FILE
+		endif
+	endif
+	TEST_RUNNER=moxunit_runtests
+endif
+
+TEST=$(ADDPATH);success=$(TEST_RUNNER)($(RUNTESTS_ARGS));exit(~success);
 
 MATLAB_BIN=$(shell which $(MATLAB))
 OCTAVE_BIN=$(shell which $(OCTAVE))
@@ -147,7 +157,7 @@ test-matlab:
 	fi;
 
 test-octave:
-	@if [ -n "$(OCTAVE_BIN)" ]; then \
+	if [ -n "$(OCTAVE_BIN)" ]; then \
 		$(OCTAVE_RUN) "$(TEST)"; \
 	else \
 		echo "octave binary could not be found, skipping"; \
