@@ -7,7 +7,11 @@
 % use the following layout:
 %
 %     function test_suite=my_test_of_abs
-%         initTestSuite
+%         try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+%             test_functions=localfunctions();
+%         catch % no problem; early Matlab versions can use initTestSuite fine
+%         end
+%         initTestSuite;
 %
 %     function test_abs_scalar
 %         assertTrue(abs(-1)==1)
