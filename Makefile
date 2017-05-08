@@ -48,11 +48,14 @@ help:
 	@echo "  RUN_DOC_TEST       If set, run documentation tests"
 	@echo ""
 
+RUNTESTS_ARGS?='-verbose'
+TEST_RUNNER?=moxunit_runtests
+
 ifdef RUN_DOC_TEST
-	RUNTESTS_ARGS='-verbose','${ROOTDIR}','${UTILDIR}'
+	RUNTESTS_ARGS+=,'${ROOTDIR}','${UTILDIR}'
 	TEST_RUNNER=modox_runtests
 else
-	RUNTESTS_ARGS='-verbose,${TESTDIR}'
+	RUNTESTS_ARGS+=,'${TESTDIR}'
 	ifdef JUNIT_XML_FILE
 		RUNTESTS_ARGS +=,'-junit_xml_file','$(JUNIT_XML_FILE)'
 	endif
@@ -154,7 +157,7 @@ test-matlab:
 	fi;
 
 test-octave:
-	@if [ -n "$(OCTAVE_BIN)" ]; then \
+	if [ -n "$(OCTAVE_BIN)" ]; then \
 		$(OCTAVE_RUN) "$(TEST)"; \
 	else \
 		echo "octave binary could not be found, skipping"; \

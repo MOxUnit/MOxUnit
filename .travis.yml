@@ -58,7 +58,10 @@ script:
           fi;
       elif [[  "$SHIPPABLE" == "true"  ]]; then
           RESULT_ARGS=JUNIT_XML_FILE=${SHIPPABLE_BUILD_DIR}/shippable/testresults/test_results.xml;
-      fi
+      elif [[  "$RUN_DOC_TEST" == "true" ]]; then
+          TEST_ARGS=RUN_DOC_TEST=true;
+      fi;
+
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - eval $AFTER_SCRIPT
