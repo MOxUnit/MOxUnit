@@ -25,7 +25,7 @@ before_install:
     - travis_retry sudo apt-add-repository -y ppa:octave/stable
     - travis_retry sudo apt-get -y -qq update
     # get Octave 4,0
-    - travis_retry sudo apt-get -y -qq install octave
+    - travis_retry sudo apt-get -y -qq install octave liboctave-dev
     # install MOcov
     - cd ..
     - rm -rf MOcov
