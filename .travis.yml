@@ -15,7 +15,8 @@ env:
     - OCTAVE=octave
  matrix:
     - WITH_COVERAGE=
-    - WITH_COVERAGE=true NO_DOC_TEST=true
+    - WITH_COVERAGE=true
+    - RUN_DOC_TEST=true
 before_install:
     # to prevent IPv6 being used for APT
     - sudo bash -c "echo 'Acquire::ForceIPv4 \"true\";' > /etc/apt/apt.conf.d/99force-ipv4"
@@ -30,6 +31,10 @@ before_install:
     - rm -rf MOcov
     - git clone https://github.com/MOcov/MOcov.git
     - make -C MOcov install
+    # retrieve MOdox
+    - rm -rf MOdox
+    - travis_retry git clone -v git://github.com/MOdox/MOdox.git
+    - make -C MOdox install
     # go back to original directory
     - cd MOxUnit
     # prevent shippable from re-using old test results
