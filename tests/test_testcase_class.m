@@ -17,3 +17,5 @@ function test_assert_forwarding(t)
     t.assertGreaterThan(1, 0);
     t.assertTrue(false == false);
     t.assertVectorsAlmostEqual(ones(2,1), ones(2,1)+eps);
+    t.assertWarning(@()warning('moxunit:warning','msg'),...
+                    'moxunit:warning');
