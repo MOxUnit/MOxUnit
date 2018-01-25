@@ -8,6 +8,8 @@ function test_suite=test_testcase_class()
 function test_assert_forwarding(t)
     t.assertElementsAlmostEqual(1, 1+eps);
     t.assertEqual(1, 1);
+    t.assertError(...
+        @()assertEqual([1],'a'), 'assertEqual:classNotEqual');
     t.assertExceptionThrown(...
         @()assertEqual([1],'a'), 'assertEqual:classNotEqual');
     t.assertFalse(true == false);
