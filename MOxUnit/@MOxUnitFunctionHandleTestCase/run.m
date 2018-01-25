@@ -21,7 +21,11 @@ function report=run(obj,report)
     try
         passed=false;
         try
-            obj.function_handle();
+            if nargin(obj.function_handle) > 0
+                obj.function_handle(obj);
+            else
+                obj.function_handle();
+            end
             passed=true;
         catch
             e=lasterror();

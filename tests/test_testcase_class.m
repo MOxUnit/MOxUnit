@@ -1,0 +1,15 @@
+function test_suite=test_testcase_class()
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions=localfunctions();
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+
+function test_assert_forwarding(t)
+    t.assertElementsAlmostEqual(1, 1+eps);
+    t.assertEqual(1, 1);
+    t.assertExceptionThrown(...
+        @()assertEqual([1],'a'), 'assertEqual:classNotEqual');
+    t.assertFalse(true == false);
+    t.assertTrue(false == false);
+    t.assertVectorsAlmostEqual(ones(2,1), ones(2,1)+eps);
