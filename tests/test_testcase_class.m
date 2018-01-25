@@ -11,5 +11,7 @@ function test_assert_forwarding(t)
     t.assertExceptionThrown(...
         @()assertEqual([1],'a'), 'assertEqual:classNotEqual');
     t.assertFalse(true == false);
+    t.assertLessThan(0, 1);
+    t.assertGreaterThan(1, 0);
     t.assertTrue(false == false);
     t.assertVectorsAlmostEqual(ones(2,1), ones(2,1)+eps);
