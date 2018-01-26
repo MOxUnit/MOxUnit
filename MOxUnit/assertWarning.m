@@ -130,7 +130,7 @@ function [id,whats_wrong]=warning_not_raised(expected_id)
     id = 'moxunit:warningNotRaised';
     whats_wrong='No warning was raised';
 
-    if ~strcmp(expected_id,'*')
+    if ~any(strcmp(expected_id,'*'))
         % add suffix with expected id
         whats_wrong=sprintf('%s, expected warning %s',...
                             whats_wrong,expected_id2str(expected_id));
@@ -205,7 +205,7 @@ function tf=is_valid_error_id(expected_id)
 
 
 function tf=is_wildcard_id(id)
-    tf=strcmp(id,'*');
+    tf=any(strcmp(id,'*'));
 
 function tf=warning_id_matches(expected_id,found_id)
     if iscellstr(expected_id)
