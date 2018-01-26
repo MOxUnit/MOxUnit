@@ -19,3 +19,7 @@ function test_assert_forwarding(t)
     t.assertVectorsAlmostEqual(ones(2,1), ones(2,1)+eps);
     t.assertWarning(@()warning('moxunit:warning','msg'),...
                     'moxunit:warning');
+    
+function test_undefined_forward(t)
+    assertExceptionThrown(@()t.assertDoesNotExist(1, 2),...
+                          'moxunit:undefinedMethod');

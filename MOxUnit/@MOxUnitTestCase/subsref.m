@@ -22,5 +22,5 @@ function r = subsref(val, idx)
     end
 
     if isempty(r)
-        error(['Undefined method: ', subs]);
+        error('moxunit:undefinedMethod', ['Undefined method: ', subs]);
     end
