@@ -1,7 +1,7 @@
 function assertWarning(func, expected_id, message)
 % Assert that an warning is thrown
 %
-% assertWarningThrown(func, [expected_id,[message]])
+% assertWarning(func, [expected_id,[message]])
 %
 % Inputs:
 %   func            Function handle that is expected to throw, with the
@@ -27,17 +27,17 @@ function assertWarning(func, expected_id, message)
 %
 % Examples:
 %   % Assert that solving with a singular matrix give  a warning
-%   assertWarningThrown( @() zeros(2) \ ones(2,1) );
+%   assertWarning( @() zeros(2) \ ones(2,1) );
 %   %|| % ok
 %
 %   % Assert that solving with a singular matrix give a warning
 %   % AND that the ID is either 'Octave:singular-matrix' or
 %   % 'MATLAB:singularMatrix'
 %   allowed_ids={'Octave:singular-matrix','MATLAB:singularMatrix'};
-%   assertWarningThrown( @() zeros(2) \ ones(2,1), allowed_ids);
+%   assertWarning( @() zeros(2) \ ones(2,1), allowed_ids);
 %
 %   % No warning raised
-%   assertWarningThrown(@()disp('hello world'));
+%   assertWarning(@()disp('hello world'));
 %   %|| error('No warning was raised');
 %
 % Notes:
