@@ -26,23 +26,19 @@ function assertWarning(func, expected_id, message)
 %
 %
 % Examples:
-%   % Assert that sin will throw an warning when its argument is a struct
-%   assertWarningThrown( @()sin( struct([]) ));
+%   % Assert that solving with a singular matrix give  a warning
+%   assertWarningThrown( @() zeros(2) \ ones(2,1) );
 %   %|| % ok
 %
-%   % Assert that sin throws an warning AND that the ID is
-%   % either '' or 'MATLAB:UndefinedFunction'
-%   allowed_ids={'','MATLAB:UndefinedFunction'};
-%   assertWarningThrown( @()sin( struct([]) ), allowed_ids);
+%   % Assert that solving with a singular matrix give a warning
+%   % AND that the ID is either 'Octave:singular-matrix' or
+%   % 'MATLAB:singularMatrix'
+%   allowed_ids={'Octave:singular-matrix','MATLAB:singularMatrix'};
+%   assertWarningThrown( @() zeros(2) \ ones(2,1), allowed_ids);
 %
 %   % No warning raised
 %   assertWarningThrown(@()disp('hello world'));
 %   %|| error('No warning was raised');
-%
-%   % Wrong warning raised
-%   assertWarningThrown(@()[1 2]*[1 2 3],'MATLAB:UndefinedFunction')
-%   %|| error(['warning ''MATLAB:innerdim'' was raised, '...
-%   %||               'expected ''MATLAB:UndefinedFunction''.'])
 %
 % Notes:
 % - This function allows one to test for warnings being thrown, and

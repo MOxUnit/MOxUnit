@@ -16,11 +16,11 @@ function assertGreaterThan(a, b, message)
 %   'moxunit:elementsNotEqual'      values in a and b are not equal
 %
 % Examples:
-%   assertGreaterThan('foo','foo');
+%   assertGreaterThan(2,1);
 %   %|| % passes without output
 %
-%   assertGreaterThan('foo','bar');
-%   %|| error('elements are not equal');
+%   assertGreaterThan(1,2);
+%   %|| error('first input argument in not larger than the second');
 %
 %   assertGreaterThan([1 2],[1;2]);
 %   %|| error('inputs are not of the same size');
@@ -52,7 +52,7 @@ function assertGreaterThan(a, b, message)
         error_id='assertGreaterThan:sparsityNotEqual';
 
     elseif a <= b
-        whatswrong='first input argument in not smaller than the second';
+        whatswrong='first input argument in not larger than the second';
         error_id='assertGreaterThan:nonEqual';
 
     else

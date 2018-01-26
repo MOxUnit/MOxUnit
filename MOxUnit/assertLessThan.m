@@ -16,11 +16,11 @@ function assertLessThan(a, b, message)
 %   'moxunit:elementsNotEqual'      values in a and b are not equal
 %
 % Examples:
-%   assertLessThan('foo','foo');
+%   assertLessThan(1,2);
 %   %|| % passes without output
 %
-%   assertLessThan('foo','bar');
-%   %|| error('elements are not equal');
+%   assertLessThan(2,1);
+%   %|| error('first input argument in not smaller than the second');
 %
 %   assertLessThan([1 2],[1;2]);
 %   %|| error('inputs are not of the same size');
