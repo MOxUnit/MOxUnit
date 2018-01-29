@@ -9,11 +9,9 @@ function assertLessThan(a, b, message)
 %   msg             optional custom message
 %
 % Raises:
-%   'moxunit:differentSize'         a and b are of different size
-%   'moxunit:differentClass         a and b are of different class
-%   'moxunit:differentSparsity'     a is sparse and b is not, or
-%                                         vice versa
-%   'moxunit:elementsNotEqual'      values in a and b are not equal
+%   'assertLessThan:classNotEqual'        a and b are of different class
+%   'assertLessThan:notLessThan'          values in a must be less
+%                                         than values in b
 %
 % Examples:
 %   assertLessThan(1,2);
@@ -22,38 +20,21 @@ function assertLessThan(a, b, message)
 %   assertLessThan(2,1);
 %   %|| error('first input argument in not smaller than the second');
 %
-%   assertLessThan([1 2],[1;2]);
-%   %|| error('inputs are not of the same size');
-%
-% Notes:
-%   - If a custom message is provided, then any error message is prefixed
-%     by this custom message
-%   - This function attempts to show similar behaviour as in
-%     Steve Eddins' MATLAB xUnit Test Framework (2009-2012)
-%     URL: http://www.mathworks.com/matlabcentral/fileexchange/
-%                           22846-matlab-xunit-test-framework
-%
-% NNO Jan 2014
+%   assertLessThan([0 1],[2;3]);
+%   %|| % passes without output
 
-    % Note: although it may seem more logical to compare class before size,
-    % for compatibility reasons the order of tests matches that of the
-    % MATLAB xUnit framework
-
-    if ~isequal(size(a), size(b))
-        whatswrong='inputs are not of the same size';
-        error_id='assertLessThan:nonEqual';
-
-    elseif ~isequal(class(a), class(b))
+    if ~isequal(class(a), class(b))
         whatswrong='inputs are not of the same class';
         error_id='assertLessThan:classNotEqual';
 
-    elseif issparse(a)~=issparse(b)
-        whatswrong='inputs do not have the same sparsity';
-        error_id='assertLessThan:sparsityNotEqual';
-
-    elseif a >= b
+    elseif length(a) == 1 && length(b) == 1 && a >= b
         whatswrong='first input argument in not smaller than the second';
-        error_id='assertLessThan:nonEqual';
+        error_id='assertLessThan:notLessThan';
+
+    elseif any(a >= b)
+        whatswrong=['each element in the first input must be less than ',...
+                    'the elements in the second input'];
+        error_id='assertLessThan:notLessThan';
 
     else
         % assertion passed
