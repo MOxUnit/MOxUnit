@@ -182,7 +182,7 @@ Nikolaas N. Oosterhof, n dot n dot oosterhof at googlemail dot com.
 
 
 ### Contributions
-- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc and Anderson Bravalheri for contributions.
+- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc, Anderson Bravalheri and Sven Baars for contributions.
 
 
 ### Frequently Asked Questions (FAQ)
