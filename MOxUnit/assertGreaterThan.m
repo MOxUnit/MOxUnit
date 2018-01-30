@@ -27,11 +27,11 @@ function assertGreaterThan(a, b, message)
         whatswrong='inputs are not of the same class';
         error_id='assertGreaterThan:classNotEqual';
 
-    elseif length(a) == 1 && length(b) == 1 && a <= b
+    elseif length(a) == 1 && length(b) == 1 && ~(a > b)
         whatswrong='first input argument in not larger than the second';
         error_id='assertGreaterThan:notGreaterThan';
 
-    elseif any(a <= b)
+    elseif ~all(a > b)
         whatswrong=['each element in the first input must be greater than ',...
                     'the elements in the second input'];
         error_id='assertGreaterThan:notGreaterThan';

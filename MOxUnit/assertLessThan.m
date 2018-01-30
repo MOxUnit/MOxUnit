@@ -27,11 +27,11 @@ function assertLessThan(a, b, message)
         whatswrong='inputs are not of the same class';
         error_id='assertLessThan:classNotEqual';
 
-    elseif length(a) == 1 && length(b) == 1 && a >= b
+    elseif length(a) == 1 && length(b) == 1 && ~(a < b)
         whatswrong='first input argument in not smaller than the second';
         error_id='assertLessThan:notLessThan';
 
-    elseif any(a >= b)
+    elseif ~all(a < b)
         whatswrong=['each element in the first input must be less than ',...
                     'the elements in the second input'];
         error_id='assertLessThan:notLessThan';
