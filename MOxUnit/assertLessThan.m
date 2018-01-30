@@ -9,6 +9,7 @@ function assertLessThan(a, b, message)
 %   msg             optional custom message
 %
 % Raises:
+%   'assertLessThan:sizeNotEqual'         a and b are of different size
 %   'assertLessThan:classNotEqual'        a and b are of different class
 %   'assertLessThan:notLessThan'          values in a must be less
 %                                         than values in b
@@ -21,9 +22,13 @@ function assertLessThan(a, b, message)
 %   %|| error('first input argument in not smaller than the second');
 %
 %   assertLessThan([0 1],[2;3]);
-%   %|| % passes without output
+%   %|| error('inputs are not of the same size');
 
-    if ~isequal(class(a), class(b))
+    if ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='assertLessThan:sizeNotEqual';
+
+    elseif ~isequal(class(a), class(b))
         whatswrong='inputs are not of the same class';
         error_id='assertLessThan:classNotEqual';
 
@@ -33,7 +38,7 @@ function assertLessThan(a, b, message)
 
     elseif ~all(a < b)
         whatswrong=['each element in the first input must be less than ',...
-                    'the elements in the second input'];
+                    'the corresponding element in the second input'];
         error_id='assertLessThan:notLessThan';
 
     else

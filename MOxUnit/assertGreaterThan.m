@@ -9,6 +9,7 @@ function assertGreaterThan(a, b, message)
 %   msg             optional custom message
 %
 % Raises:
+%   'assertGreaterThan:sizeNotEqual'         a and b are of different size
 %   'assertGreaterThan:classNotEqual'        a and b are of different class
 %   'assertGreaterThan:notGreaterThan'       values in a must be greater
 %                                            than values in b
@@ -21,9 +22,13 @@ function assertGreaterThan(a, b, message)
 %   %|| error('first input argument in not larger than the second');
 %
 %   assertGreaterThan([2 3],[0;1]);
-%   %|| % passes without output
+%   %|| error('inputs are not of the same size');
 
-    if ~isequal(class(a), class(b))
+    if ~isequal(size(a), size(b))
+        whatswrong='inputs are not of the same size';
+        error_id='assertGreaterThan:sizeNotEqual';
+
+    elseif ~isequal(class(a), class(b))
         whatswrong='inputs are not of the same class';
         error_id='assertGreaterThan:classNotEqual';
 
@@ -33,7 +38,7 @@ function assertGreaterThan(a, b, message)
 
     elseif ~all(a > b)
         whatswrong=['each element in the first input must be greater than ',...
-                    'the elements in the second input'];
+                    'the corresponding element in the second input'];
         error_id='assertGreaterThan:notGreaterThan';
 
     else

@@ -6,9 +6,12 @@ function test_suite=test_assert_greater_than()
     initTestSuite;
 
 function test_assert_greater_than_exceptions
+    assertExceptionThrown(@()assertGreaterThan([1 2],[1,2,3]),...
+                          'assertGreaterThan:sizeNotEqual');
+    assertExceptionThrown(@()assertGreaterThan([1,1],[0;0]),...
+                          'assertGreaterThan:sizeNotEqual');
     assertExceptionThrown(@()assertGreaterThan([1],'a'), ...
                           'assertGreaterThan:classNotEqual');
-    assertExceptionThrown(@()assertGreaterThan([1 2],[1,2,3]));
     assertExceptionThrown(@()assertGreaterThan(1,1), ...
                           'assertGreaterThan:notGreaterThan');
     assertExceptionThrown(@()assertGreaterThan([2,3,3],[1,2,3]), ...
@@ -32,5 +35,4 @@ function test_assert_greater_than_exceptions
 function test_assert_greater_than_passes
     assertGreaterThan(1,0);
     assertGreaterThan([1,1],[0,0]);
-    assertGreaterThan([1,1],[0;0]);
     assertGreaterThan(ones(2,2,2,2),zeros(2,2,2,2));
