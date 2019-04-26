@@ -176,7 +176,7 @@ function test_report=run_all_tests(suite, test_report, params)
             elseif iscell(value)
                 n_values=numel(value);
                 param_elem_matrix=[repmat({key_arg},1,n_values);...
-                                           value(:)];
+                                           value(:)'];
                 param_elem=param_elem_matrix(:)';
             else
                 error('moxunit:illegalParameterValue',...
