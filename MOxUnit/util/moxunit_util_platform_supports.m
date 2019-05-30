@@ -22,7 +22,8 @@ function flag=moxunit_util_platform_supports(key)
     switch key
         case 'localfunctions_in_script'
             if moxunit_util_platform_is_octave()
-                flag=true;
+                v=moxunit_util_platform_version();
+                flag=v(1)<6; % before 6.0.0
             else
                 v=moxunit_util_platform_version();
                 flag=v(1)<9; % before 2016a
