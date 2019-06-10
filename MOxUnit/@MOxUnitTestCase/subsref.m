@@ -16,7 +16,7 @@ function r = subsref(val, idx)
     subs = idx.subs;
 
     for i=methodList
-        if (strcmp(type, ".") && strcmp(subs, i{:}))
+        if (strcmp(type, '.') && strcmp(subs, i{:}))
             r = eval(['@', subs]);
         end
     end
