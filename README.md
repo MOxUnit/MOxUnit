@@ -9,7 +9,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - Can be used directly with continuous integration services, such as [Travis-ci] and [Shippable].
 - Supports JUnit-like XML output for use with Shippable and other test results visualization approaches.
 - Supports the generation of code coverage reports using [MOCov]
-- Provides compatibility with the (now unsupported) Steve Eddin's [Matlab xUnit test framework], and with recent Matlab.
+- Provides compatibility with the (now unsupported) Steve Eddin's [Matlab xUnit test framework], and with recent Matlab test functionality.
 - Distributed under the MIT license, a permissive free software license.
 
 
@@ -50,7 +50,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - `cd` to the directory where the unit tests reside. For MOxUnit itself, the unit tests are in the directory `tests`.
 - run the tests using `moxunit_runtests`. For example, running `moxunit_runtests` from MOxUnit's `tests` directory runs tests for MOxUnit itself, and should give the following output:
 
-  ```
+```
 ............................................................
 .........................
 --------------------------------------------------
@@ -59,7 +59,7 @@ OK (passed=85)
 ans =
 
      1
-  ```
+```
 
 - `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
   - `-verbose`: show verbose output.
@@ -172,7 +172,7 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
 
 ### Limitations
 Currently MOxUnit does not support:
-- Documentation tests. These would require `evalc`, which is not available in `GNU Octave` as of January 2014.
+- Documentation tests require [MOdox].
 - Support for setup and teardown functions in `TestCase` classes.
 - Subclasses of MOxUnit's classes (`MOxUnitTestCase`, `MOxUnitTestSuite`, `MOxUnitTestReport`) have to be defined using "old-style" object-oriented syntax.
 
@@ -182,7 +182,7 @@ Nikolaas N. Oosterhof, n dot n dot oosterhof at googlemail dot com.
 
 
 ### Contributions
-- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc, Anderson Bravalheri and Sven Baars for contributions.
+- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc, Anderson Bravalheri, Sven Baars and 'jdbancal' for contributions.
 
 
 ### Frequently Asked Questions (FAQ)
@@ -207,7 +207,7 @@ Nikolaas N. Oosterhof, n dot n dot oosterhof at googlemail dot com.
 
 (The MIT License)
 
-Copyright (c) 2015-2018 Nikolaas N. Oosterhof
+Copyright (c) 2015-2019 Nikolaas N. Oosterhof
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -233,14 +233,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [GNU Octave]: http://www.gnu.org/software/octave/
 [Matlab]: http://www.mathworks.com/products/matlab/
 [Matlab xUnit test framework]: http://it.mathworks.com/matlabcentral/fileexchange/22846-matlab-xunit-test-framework
+[MOdox]: https://github.com/MOdox/MOdox
 [MOxUnit]: https://github.com/MOxUnit/MOxUnit
 [MOxUnit zip archive]: https://github.com/MOxUnit/MOxUnit/archive/master.zip
 [MOcov]: https://github.com/MOcov/MOcov
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
 [Shippable]: https://app.shippable.com/
-
-
-
 
 
