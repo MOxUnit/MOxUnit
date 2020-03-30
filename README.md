@@ -1,4 +1,4 @@
-# MOxUnit [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/MOxUnit/MOxUnit) ![Test](https://github.com/MOxUnit/MOxUnit/workflows/CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master)
+# MOxUnit [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/MOxUnit/MOxUnit) ![Test](https://github.com/joergbrech/MOxUnit/workflows/CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master)
 
 MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
