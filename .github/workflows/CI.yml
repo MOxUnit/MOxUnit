@@ -37,8 +37,8 @@ jobs:
         name: coverage_xml_file
         path: coverage.xml
     
-    ## Use a Github Action to publish coverage reports
-    #- name: Publish coverage report to codecov.io
-    #  uses: codecov/codecov-action@v1
-    #    with:
-    #    file: ./coverage.xml
+    # Use a Github Action to publish coverage reports
+    - name: Publish coverage report to codecov.io
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
