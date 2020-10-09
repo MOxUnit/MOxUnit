@@ -50,16 +50,16 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - `cd` to the directory where the unit tests reside. For MOxUnit itself, the unit tests are in the directory `tests`.
 - run the tests using `moxunit_runtests`. For example, running `moxunit_runtests` from MOxUnit's `tests` directory runs tests for MOxUnit itself, and should give the following output:
 
-```
-............................................................
-.........................
---------------------------------------------------
-OK (passed=85)
-
-ans =
-
-     1
-```
+ ```
+  ............................................................
+  .........................
+  --------------------------------------------------
+  OK (passed=85)
+  
+  ans =
+  
+       1
+  ```
 
 - `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
   - `-verbose`: show verbose output.
