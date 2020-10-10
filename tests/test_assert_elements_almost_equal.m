@@ -45,6 +45,7 @@ function test_assert_elements_almost_equal_passes
     assertElementsAlmostEqual(0,1e-10);
     assertElementsAlmostEqual(0,1,'relative',1);
     assertElementsAlmostEqual(0,1,'absolute',1);
+    assertElementsAlmostEqual(0,1,'AbsTol',1);
     assertElementsAlmostEqual(1:6,1e-10+(1:6));
     assertElementsAlmostEqual([1 2;3 4],1e-10+[1 2; 3 4]);
     assertElementsAlmostEqual(NaN,NaN);
