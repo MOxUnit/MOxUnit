@@ -261,13 +261,13 @@ Nikolaas N. Oosterhof, n dot n dot oosterhof at googlemail dot com.
 
 ## Contributions <!-- omit in toc -->
 
-- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc, Anderson Bravalheri, Sven Baars and 'jdbancal' for contributions.
+- Thanks to Scott Lowe, Thomas Feher, Joel LeBlanc, Anderson Bravalheri, Sven Baars, 'jdbancal', Marcin Konowalczyk for contributions.
 
 ## License <!-- omit in toc -->
 
 (The MIT License)
 
-Copyright (c) 2015-2019 Nikolaas N. Oosterhof
+Copyright (c) 2015-2020 Nikolaas N. Oosterhof
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
