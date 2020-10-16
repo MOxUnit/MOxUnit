@@ -72,7 +72,7 @@ function result=moxunit_runtests(varargin)
     params=get_params(varargin{:});
 
     if params.fid>2
-        % not standard or error output; file most be closed
+        % not standard or error output; file must be closed
         % afterwards
         cleaner=onCleanup(@()fclose(params.fid));
     end
@@ -80,7 +80,7 @@ function result=moxunit_runtests(varargin)
     suite=MOxUnitTestSuite();
 
     % build pattern for filenames by combining the test name pattern with
-    % extension.
+    % extension
     mfile_ext_pattern='.m$';
     mfile_test_filename_pattern=get_test_file_pattern(mfile_ext_pattern);
 
@@ -362,6 +362,10 @@ function params=get_params(varargin)
                 if ~isempty(dir(arg))
                     to_test_spec{k}=arg;
                 else
+                    % Close the file if it has been already open before
+                    % throwing an error. This prevents resource leak and,
+                    % eventually 'Too many files open' error.
+                    try fclose(params.fid); end %#ok<TRYNC>
                     error('moxunit:illegalParameter',...
                     'Parameter not recognised or file missing: %s', arg);
                 end
