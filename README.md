@@ -22,7 +22,6 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - Provides compatibility with the (now unsupported) Steve Eddin's [Matlab xUnit test framework], and with recent Matlab test functionality.
 - Distributed under the MIT license, a permissive free software license.
 
-
 ## Installation
 
 - Using the shell (requires a Unix-like operating system such as GNU/Linux or Apple OSX):
@@ -122,18 +121,18 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
 - `cd` to the directory where the unit tests reside. For MOxUnit itself, the unit tests are in the directory `tests`.
 - run the tests using `moxunit_runtests`. For example, running `moxunit_runtests` from MOxUnit's `tests` directory runs tests for MOxUnit itself, and should give the following output:
 
-```matlab
->> moxunit_runtests
-suite: 98 tests
-............................................................
-......................................
---------------------------------------------------
+  ```matlab
+  >> moxunit_runtests
+  suite: 98 tests
+  ............................................................
+  ......................................
+  --------------------------------------------------
 
-OK (passed=98)
-ans =
-  logical
-   1
-```
+  OK (passed=98)
+  ans =
+    logical
+    1
+  ```
 
 - `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
   - `-verbose`: show verbose output.
@@ -147,8 +146,9 @@ ans =
 - To test MOxUnit itself from a terminal, run:
 
   ```
-    make test
+  make test
   ```
+
 ## Use with CI
 
 MOxUnit can be used with the [Travis-ci] service for continuous integration (CI) testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). This file is also used by [Shippable]. As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
@@ -187,13 +187,12 @@ In this case `make test` is used to run the tests. To avoid a Makefile and run t
 
 Note that MOxUnit tests **itself** on travis, with [this](https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml) travis file.
 
-
 ### Matlab
 
-Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/ directly. You can use MOxUnit with it, but its tricky because:
+Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) directly. You can use MOxUnit with it, but its tricky because:
   1) Travis only supports Matlab 2020a and, presumably, higher (at the time of writing 2020a is the newest version).
   2) Makefile installation does not work with Matlab on travis.
-  3) Nor does calling Matlab from the command line in a usuall way - with ` matlab -nodesktop -nosplash ...` . Instead it has to be called with the `-batch` flag.
+  3) Nor does calling Matlab from the command line in a usual way - with ` matlab -nodesktop -nosplash ...` . Instead it has to be called with the `-batch` flag.
   
   Therefore, `.travis.yml` file looks as follows:
   ```yml
@@ -201,7 +200,7 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/ d
   matlab: R2020a
   os: linux
 
-  # Just clone MOxUnit, `dont make install` it (!)
+  # Just clone MOxUnit, `don't make install` it (!)
   before_script:
     - git clone https://github.com/MOxUnit/MOxUnit.git
       
@@ -210,7 +209,7 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/ d
   ```
 
   `exit(double(~ans))` ensures that the build fails if MOxUnit tests fail.
-  
+
 ## Compatibility notes
 
 - Because GNU Octave 3.8 does not support `classdef` syntax, 'old-style' object-oriented syntax is used for the class definitions. For similar reasons, MOxUnit uses the `lasterror` function, even though its use in Matlab is discouraged.
@@ -229,14 +228,14 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/ d
   ```
 - Recent versions of Matlab define a `matlab.unittest.Test` class for unit tests. An instance `t` can be used with MOxUnit using the `MOxUnitMatlabUnitWrapperTestCase(t)`, which is a `MOxUnitTestCase` instance. Tests that are defined through
 
-    ```matlab
-    function tests=foo()
-        tests=functiontests(localfunctions)
+  ```matlab
+  function tests=foo()
+      tests=functiontests(localfunctions)
 
-    function test_funcA(param)
+  function test_funcA(param)
 
-    function test_funcA(param)
-    ```
+  function test_funcA(param)
+  ```
 
   can be run using MOxUnit as well (and included in an ``MOxUnitTestSuite`` instance using its with ``addFile``) instance, with the exception that currently setup and teardown functions are currently ignored.
 
@@ -253,11 +252,9 @@ Currently MOxUnit does not support:
 - The object-oriented class structure was inspired by the [Python unit test] framework.
 - The `assert*` function signatures are aimed to be compatible with Steve Eddin's [Matlab xUnit test framework].
 
-
 ## Contact <!-- omit in toc -->
 
 Nikolaas N. Oosterhof, n dot n dot oosterhof at googlemail dot com.
-
 
 ## Contributions <!-- omit in toc -->
 
@@ -287,7 +284,6 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 
 
 [GNU Octave]: http://www.gnu.org/software/octave/
