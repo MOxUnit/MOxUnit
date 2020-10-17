@@ -10,7 +10,7 @@ function flag=moxunit_util_platform_supports(key)
 %                                         subfunctions in that function
 %                                         (Functionality removed in Matlab
 %                                         2016a)
-%           'diagnostics_recording_plugin' - whether the 
+%           'diagnostics_recording_plugin' - whether the
 %                                         matlab.unittest.plugins
 %                                           .DiagnosticsRecordingPlugin
 %                                         is available
@@ -32,7 +32,7 @@ function flag=moxunit_util_platform_supports(key)
                 v=moxunit_util_platform_version();
                 flag=v(1)<9; % before 2016a
             end
-            
+
         case 'diagnostics_recording_plugin'
             s='matlab.unittest.plugins.DiagnosticsRecordingPlugin';
             flag=~isempty(which(s));
