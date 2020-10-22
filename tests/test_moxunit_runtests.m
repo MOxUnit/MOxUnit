@@ -139,10 +139,6 @@ function test_moxunit_runtests_partitions
     end
 
 
-
-
-
-
 function count=add_tests(test_dir,do_add,cell_with_tests)
     count=0;
     if do_add
@@ -177,8 +173,6 @@ function assert_logfile_matches(log_fn,verbose_output,...
 
     labels=test_labels(labels_row,:);
     n_labels=numel(labels);
-
-
 
     for k=1:n_labels
         pat=regexptranslate('escape',labels{k});
@@ -277,7 +271,7 @@ function c=cleanup_helper(task,varargin)
                 if moxunit_util_platform_is_octave()
                     % GNU Octave requires, by defaualt, confirmation when
                     % using rmdir - unless confirm_recursive_rmdir is set
-                    % explicityly
+                    % explicitly
                     % Here the state of confirm_recursive_rmdir is stored,
                     % and set back to its original value when leaving this
                     % function.
@@ -301,5 +295,3 @@ function c=cleanup_helper(task,varargin)
         otherwise
             assert(false,'illegal task')
     end
-
-
