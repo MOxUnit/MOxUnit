@@ -265,7 +265,7 @@ function c=cleanup_helper(task,varargin)
         case 'cleanup'
             assert(numel(varargin)==0);
             if iscell(files)
-                
+
                 if moxunit_util_platform_is_octave()
                     for k=1:numel(files)
                         file = files{k};
@@ -275,11 +275,11 @@ function c=cleanup_helper(task,varargin)
                             %toc
                         end
                     end
-                    
+
                 else
                     s = warning('error','MATLAB:DELETE:Permission'); %#ok<CTPCT>
                     c = onCleanup(@() warning(s)); % Reset warning state
-                    
+
                     for k=1:numel(files)
                         file = files{k};
                         if exist(file,'file')
@@ -289,7 +289,7 @@ function c=cleanup_helper(task,varargin)
                         end
                     end
                 end
-                
+
                 files=[];
             end
 
