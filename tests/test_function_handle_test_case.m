@@ -6,8 +6,10 @@ function test_suite=test_function_handle_test_case
     end
     initTestSuite;
 
+function s=randstr()
+    s=char(20*rand(1,10)+65);
+
 function test_function_handle_test_case_basics
-    rand_str=@()char(20*rand(1,10)+65);
 
     outcome_class2func=struct();
     outcome_class2func.MOxUnitPassedTestOutcome=@do_nothing;
@@ -20,8 +22,8 @@ function test_function_handle_test_case_basics
         outcome_class=keys{k};
         func=outcome_class2func.(outcome_class);
 
-        name=rand_str();
-        location=rand_str();
+        name=randstr();
+        location=randstr();
 
         f=MOxUnitFunctionHandleTestCase(name, location, func);
         assertEqual(getName(f),name);
@@ -37,9 +39,39 @@ function test_function_handle_test_case_basics
         assertEqual(class(outcome),outcome_class);
     end
 
+function test_function_handle_test_case_reset_warning()
+    s=warning();
+    state_resetter=onCleanup(@()warning(s));
+
+    id=sprintf('%s:%s:%s',randstr(),randstr(),randstr());
+
+    assertEqual(get_warning_state(id),[])
+
+    name=randstr();
+    location=randstr();
+    func=@()warning('off',id);
+    f=MOxUnitFunctionHandleTestCase(name, location, func);
+    rep=MOxUnitTestReport(0,1);
+    run(f,rep);
+
+    assertEqual(get_warning_state(id),[])
+
+function s=get_warning_state(id)
+% return empty array if warning state not present, or 'on' or 'off'
+    w=warning();
+    idx=strmatch(id,{w.identifier},'exact');
+
+    if isempty(idx)
+        s=[];
+        return;
+    end
+
+    assert(numel(idx)==1);
+    s=w(idx).state;
 
 
-
+function disable_warning(id)
+    warning('off',id);
 
 function do_nothing()
     % do nothing
