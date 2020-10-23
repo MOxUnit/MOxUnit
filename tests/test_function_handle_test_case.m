@@ -40,9 +40,17 @@ function test_function_handle_test_case_basics
     end
 
 function test_function_handle_test_case_reset_warning()
-    s=warning();
+    if moxunit_util_platform_is_octave()
+        reason=['resetting the warning state seems not to work ' ...
+                '(TODO: file a bug report?)'];
+        moxunit_throw_test_skipped_exception(reason);
+        return;
+    end
+
+    s=warning('query');
     state_resetter=onCleanup(@()warning(s));
 
+    % generate unique id
     id=sprintf('%s:%s:%s',randstr(),randstr(),randstr());
 
     assertEqual(get_warning_state(id),[])
@@ -58,7 +66,7 @@ function test_function_handle_test_case_reset_warning()
 
 function s=get_warning_state(id)
 % return empty array if warning state not present, or 'on' or 'off'
-    w=warning();
+    w=warning('query');
     idx=strmatch(id,{w.identifier},'exact');
 
     if isempty(idx)
