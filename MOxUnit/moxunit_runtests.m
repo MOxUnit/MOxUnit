@@ -270,53 +270,11 @@ function params=get_params(varargin)
                     error('Could not open file %s for writing', fn);
                 end
 
-             case '-cover'
-                 if k==n
-                    error('moxunit:missingParameter',...
-                           'Missing parameter after option ''%s''',arg);
-                end
+            case {'-cover','-cover_xml_file','-junit_xml_file',...
+                        '-cover_json_file','-cover_html_dir',...
+                        '-cover_method'}
+                params=set_key_value(params,varargin,k);
                 k=k+1;
-                params.cover=varargin{k};
-
-             case '-cover_xml_file'
-                if k==n
-                    error('moxunit:missingParameter',...
-                           'Missing parameter after option ''%s''',arg);
-                end
-                k=k+1;
-                params.cover_xml_file=varargin{k};
-
-            case '-junit_xml_file'
-                if k==n
-                    error('moxunit:missingParameter',...
-                           'Missing parameter after option ''%s''',arg);
-                end
-                k=k+1;
-                params.junit_xml_file=varargin{k};
-
-            case '-cover_json_file'
-                if k==n
-                    error('moxunit:missingParameter',...
-                           'Missing parameter after option ''%s''',arg);
-                end
-                k=k+1;
-                params.cover_json_file=varargin{k};
-
-            case '-cover_html_dir'
-                if k==n
-                    error('moxunit:missingParameter',...
-                           'Missing parameter after option ''%s''',arg);
-                end
-                k=k+1;
-                params.cover_html_dir=varargin{k};
-
-            case '-cover_method'
-                if k==n
-                    error('moxunit:missingParameter',...
-                           'Missing parameter after option ''%s''',arg);
-                end
-                k=k+1;
-                params.cover_method=varargin{k};
 
              case '-cover_exclude'
                 if k==n
@@ -365,7 +323,9 @@ function params=get_params(varargin)
                     % Close the file if it has been already open before
                     % throwing an error. This prevents resource leak and,
                     % eventually 'Too many files open' error.
-                    try fclose(params.fid); end %#ok<TRYNC>
+                    try
+                        fclose(params.fid);
+                    end %#ok<TRYNC>
                     error('moxunit:illegalParameter',...
                     'Parameter not recognised or file missing: %s', arg);
                 end
@@ -390,6 +350,21 @@ function params=get_params(varargin)
     params.to_test_spec=to_test_spec;
 
     check_cover_consistency(params)
+
+
+function params = set_key_value(params,args,k)
+    n=numel(args);
+
+    arg = args{k};
+    assert(arg(1)=='-');
+    key=arg(2:end);
+
+    if k==n
+        error('moxunit:missingParameter',...
+               'Missing parameter after option ''%s''',arg);
+    end
+
+    params.(key)=args{k+1};
 
 function check_cover_consistency(params)
     keys=fieldnames(params);
