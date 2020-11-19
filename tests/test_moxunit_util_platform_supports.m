@@ -19,6 +19,19 @@ function test_moxunit_util_platform_supports_localfunctions_in_script
     assertEqual(flag,expected_flag);
 
 
+function test_moxunit_util_platform_supports_diagnostics_recording_plg
+    flag=moxunit_util_platform_supports('diagnostics_recording_plugin');
+
+    if moxunit_util_platform_is_octave()
+        expected_flag=false;
+    else
+        s='matlab.unittest.plugins.DiagnosticsRecordingPlugin';
+        expected_flag=~isempty(which(s));
+    end
+
+    assertEqual(flag,expected_flag);
+
+
 function test_moxunit_util_platform_supports_exceptions
     aet=@(varargin)assertExceptionThrown(@()...
                         moxunit_util_platform_supports(varargin{:}),'');

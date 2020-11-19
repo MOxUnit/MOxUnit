@@ -16,6 +16,9 @@ function report=run(obj,report)
 %
 % NNO 2015
 
+    original_warning_state=warning('query');
+    warning_state_resetter=onCleanup(@()warning(original_warning_state));
+
     start_tic = tic;
 
     try
