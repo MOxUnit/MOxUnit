@@ -9,7 +9,8 @@ function test_moxunit_util_platform_supports_localfunctions_in_script
     flag=moxunit_util_platform_supports('localfunctions_in_script');
 
     if moxunit_util_platform_is_octave()
-        expected_flag=true;
+        v=moxunit_util_platform_version();
+        expected_flag=version_less_than(v,[6,0]);
     else
         v=moxunit_util_platform_version();
         expected_flag=version_less_than(v,[9,0]);
