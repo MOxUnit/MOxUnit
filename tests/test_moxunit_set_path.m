@@ -38,4 +38,4 @@ function helper_test_with_subdir(subdir)
 
 
 function tf=is_elem(haystack, needle, sep)
-    tf=~isempty(findstr([sep haystack sep], [sep needle sep]));
+    tf=~isempty(strfind([sep haystack sep], [sep needle sep]));
