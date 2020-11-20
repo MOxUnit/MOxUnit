@@ -67,7 +67,7 @@ function test_function_handle_test_case_reset_warning()
 function s=get_warning_state(id)
 % return empty array if warning state not present, or 'on' or 'off'
     w=warning('query');
-    idx=strmatch(id,{w.identifier},'exact');
+    idx=find(strcmp(id,{w.identifier}))';
 
     if isempty(idx)
         s=[];
