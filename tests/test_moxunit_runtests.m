@@ -307,7 +307,7 @@ function c=cleanup_helper(task,varargin)
 
                 for k=1:numel(directories)
                     directory=directories{k};
-                    if isdir(directory)
+                    if moxunit_util_isfolder(directory)
                         rmdir(directory,'s');
                     end
                 end
