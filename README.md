@@ -45,7 +45,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
         %
         % Note: if MOxUnit was retrieved using 'git', then the name of
         %       top-level directory is 'MOxUnit', not 'MOxUnit-master'
-        cd MOxUnit-master/MoxUnit
+        cd MOxUnit-master/MOxUnit
 
         % add the current directory to the Matlab/GNU Octave path
         moxunit_set_path()
@@ -296,5 +296,3 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Travis-ci]: https://travis-ci.org
 [Shippable]: https://app.shippable.com/
-
-
