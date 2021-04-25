@@ -1,9 +1,9 @@
 function tf=moxunit_util_isfolder(folderName)
 % return true if the argument is a folder
-% 
+%
 % This function is needed to keep compatibility with older versions of Octave and Matlab
 % for which the function isfolder didn't exist yet.
-% 
+%
 % tf=moxunit_util_isfolder(folderName)
 %
 % Output:

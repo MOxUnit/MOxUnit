@@ -11,7 +11,8 @@ function v=moxunit_util_platform_version()
 
     version_str=version();
 
-    parts=regexp(version_str,'\s','split');
+    % support also strings stuch as 6.1.1~hg.2021.01.26
+    parts=regexp(version_str,'[^0-9.]','split');
     first_part=parts{1};
 
     num_parts=regexp(first_part,'\.','split');
