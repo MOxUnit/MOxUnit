@@ -6,11 +6,14 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 % Inputs:
 %   a           float array
 %   b           float array
-%   f           function handle to a function that takes one vector input
-%               and returns a scalar output.
+%   f           preprocessing function, typically @abs or @norm
 %   nonfin_eq   if true, non-finite elements are treated equal if they
 %               are both NaN or both Infinity with the same sign
-%   tol_type    'relative' or 'absolute' (default: 'relative')
+%   tol_type    one of 'relative', 'absolute' } 'old' style
+%                       'RelTol', 'AbsTol'    } 'new' style
+%               (default: 'relative')
+%               note: 'RelTol' and 'relative' have different behaviour,
+%                     see below for details.
 %   tol         tolerance       } default: sqrt(eps) if a is double,
 %   floor_tol   floor_tolerance } sqrt(eps('single')) otherwise)
 %   msg         optional custom message
@@ -37,16 +40,27 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 %
 %           all(f(a(:)-b(:))<=tol*max(f(a(:)),f(b(:)))+floor_tol);
 %
-%   - If tol_type is 'absolute', a and b are almost equal if
+%   - If tol_type is 'absolute' or 'AbsTol', a and b are almost equal if
 %
 %           all(f(a(:)-b(:))<=tol);
 %
-%   - It follows that if any value in a or b is not finite (+Inf, -Inf, or
-%     NaN), then a and b are not almost equal.
-%   - This is a helper function for assertElementsAlmostEqual and
-%     assertVectorsAlmostEqual
+%   - If tol_type is 'RelTol', a and b are almost equal if
 %
-% See also: assertElementsAlmostEqual, assertVectorsAlmostEqual
+%           all(f(a(:)-b(:))<=tol.*f(b(:)))
+%
+%     *** note the assymetry in the first two arguments in this case   ***
+%     *** (it is possible that a is almost equal to b, but b not to a) ***
+%
+%   - It follows that if any value in a or b is not finite (+Inf, -Inf, or
+%     NaN), then a and b are not almost equal (unless nonfin_eq is true).
+%   - the options 'absolute' and 'relative' are present for earlier
+%     compatibility with xUnit, whereas 'AbsTol' en 'RelTol' are present
+%     for compatibility with the more recent Matlab testing framework.
+%   - This is a helper function for assertElementsAlmostEqual,
+%     assertVectorsAlmostEqual, and assertEqual.
+%
+% See also: assertElementsAlmostEqual, assertVectorsAlmostEqual,
+%           assertEqual
 %
 % NNO Jan 2014
 
@@ -65,7 +79,7 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
         error_id=get_error_id(f, 'notFloat');
     else
         whatswrong='';
-        error_id=[];
+        error_id='';
     end
 
     if ~isempty(error_id)
@@ -76,8 +90,10 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
     switch tol_type
         case 'relative'
             test_func=@(x,y) f(x-y)<=tol*max(f(y),f(x))+floor_tol;
-        case 'absolute'
+        case {'absolute','AbsTol'}
             test_func=@(x,y) f(x-y)<=tol;
+        case 'RelTol'
+            test_func=@(x,y) f(x-y)<=tol.*f(y);
 
         otherwise
             error('compareFloats:unrecognizedToleranceType',...
@@ -86,6 +102,7 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 
     a_vec=a(:);
     b_vec=b(:);
+
     if isreal(a)
         cmp_func=@()test_func(a_vec,b_vec);
     else
@@ -106,7 +123,8 @@ function [message,error_id,whatswrong]=moxunit_util_floats_almost_equal(a,b,f,no
 
     if ~all_equal
         whatswrong=sprintf(['inputs are not equal within '...
-                                '%s tolerance %d'],tol_type,tol);
+                                '%s tolerance%s'],...
+                                 tol_type,sprintf(' %d',tol));
 
         error_id=get_error_id(f, 'tolExceeded');
     end
@@ -143,7 +161,8 @@ function [message,tol_type,tol,floor_tol]=get_params(a,varargin)
     for k=1:n
         arg=varargin{k};
         if ischar(arg)
-            if (strcmp(arg,'relative') || strcmp(arg,'absolute')) && ...
+            if any(strcmp(arg,{'relative','absolute',...
+                                'AbsTol','RelTol'})) && ...
                     isnumeric(tol_type)
 
                 tol_type=arg;
@@ -154,8 +173,8 @@ function [message,tol_type,tol,floor_tol]=get_params(a,varargin)
                 continue
             else
                 error('compareFloats:unrecognizedToleranceType',...
-                        ['Tolerance type must be ''absolute'' '...
-                            'or ''relative''']);
+                        ['Tolerance type must be ''absolute'', '...
+                            '''relative'', ''AbsTol'', or ''RelTol''']);
             end
 
         elseif isscalar(arg)
