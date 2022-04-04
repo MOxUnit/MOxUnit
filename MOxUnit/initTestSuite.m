@@ -136,6 +136,8 @@
                     assert(numel(idx)==1, 'name match should be unique');
                     add_test=sub_func_struct(idx).nargout==0;
                 end
+            elseif strncmp(name, '@', 1) %manipulation so it can handle anonymes functions
+                add_test=true;
             end
         end
 
