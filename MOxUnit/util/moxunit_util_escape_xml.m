@@ -14,7 +14,7 @@ function str_esc=moxunit_util_escape_xml(str)
 %                           >       &gt;
 %                           <       &lt;
 %                           "       &quot;
-%                           '       %apos;
+%                           '       &apos;
 
 % Handle the ampersand first to avoid that output from other symbols will
 % be escaped. On purpose the ampersand is not part of the table below, to
