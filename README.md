@@ -7,8 +7,12 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - [Defining MOxUnit tests](#defining-moxunit-tests)
 - [Running MOxUnit tests](#running-moxunit-tests)
 - [Use with CI](#use-with-ci)
-  - [Octave](#octave)
-  - [Matlab](#matlab)
+  - [Travis-CI](#travis-ci)
+    - [Octave](#octave)
+    - [Matlab](#matlab)
+  - [Github-CI](#github-ci)
+    - [Octave](#octave-1)
+    - [Matlab](#matlab-1)
 - [Compatibility notes](#compatibility-notes)
 - [Limitations](#limitations)
 
@@ -151,9 +155,11 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
 
 ## Use with CI
 
+### Travis-CI
+
 MOxUnit can be used with the [Travis-ci] service for continuous integration (CI) testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). This file is also used by [Shippable]. As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
 
-### Octave
+#### Octave
 
 The easiest test to set up on Travis and/or Shippable is with [GNU Octave]. Make sure your code is Octave compatible. Note that many Matlab projects tend to use functionality not present in Octave (such as particular functions), whereasand writing code that is both Matlab- and Octave-compatible may require some additional efforts.
 
@@ -187,7 +193,7 @@ In this case `make test` is used to run the tests. To avoid a Makefile and run t
 
 Note that MOxUnit tests **itself** on travis, with [this](https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml) travis file.
 
-### Matlab
+#### Matlab
 
 Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) directly. You can use MOxUnit with it, but its tricky because:
   1) Travis only supports Matlab 2020a and, presumably, higher (at the time of writing 2020a is the newest version).
@@ -209,6 +215,11 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) 
   ```
 
   `exit(double(~ans))` ensures that the build fails if MOxUnit tests fail.
+
+### Github-CI
+
+#### Octave
+#### Matlab
 
 ## Compatibility notes
 
