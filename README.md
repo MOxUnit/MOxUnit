@@ -288,6 +288,8 @@ jobs:
 You can test your code with Matlab on Github actions with several operating systems and Matlab versions.
 To use it, create a YML file in your `.github/workflows` with the following content.
 
+You will need to update the values for `path/to/src` and `path/to/tests` to make sure it points to where your source code and tests are.
+
 ```yml
 name: CI matlab
 
