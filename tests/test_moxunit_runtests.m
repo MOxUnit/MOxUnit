@@ -147,13 +147,27 @@ function test_moxunit_runtests_partitions
     end
 
 
+function c=get_next_file_counter()
+    % Octave 6.2 may have a caching issue, where it confused file created
+    % before with the same file name but different path.
+    persistent counter
+    if isempty(counter)
+        counter=0;
+    else
+        counter=counter+1;
+    end
+    c=counter;
+
 function count=add_tests(test_dir,do_add,cell_with_tests)
     count=0;
     if do_add
         for k=1:numel(cell_with_tests)
             idx=cleanup_helper('count');
 
-            name=sprintf('test_%03d',idx);
+            % make a name never used before; this should caching issues
+            % that seems to affect Octave 6.2 on OSX
+            name=sprintf('test_%03d_%d',idx,get_next_file_counter());
+
             fn=fullfile(test_dir,sprintf('%s.m',name));
             cleanup_helper('add_file',fn);
             write_test_mfile(fn,name,cell_with_tests{k});

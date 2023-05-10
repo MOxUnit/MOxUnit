@@ -39,6 +39,7 @@ function result=moxunit_runtests(varargin)
 %                             pi=1 and pc=1, meaning that all tests are
 %                             run. A use case is parallelization of test
 %                             cases over multiple processes.
+%   '-randomize_order'      if provided, randomize the order of the tests
 %
 %
 % Output:
@@ -88,6 +89,9 @@ function result=moxunit_runtests(varargin)
                                         params.to_test_spec,...
                                         mfile_test_filename_pattern,...
                                         params.add_recursive);
+    if params.randomize_order
+        suite=randomizeTestOrder(suite);
+    end
 
     % show summary of test suite
     if params.verbosity>0
@@ -97,6 +101,7 @@ function result=moxunit_runtests(varargin)
     % initialize test results
     suite_name=class(suite);
     test_report=MOxUnitTestReport(params.verbosity,params.fid,suite_name);
+
 
     % run all tests with helper
     test_report=run_all_tests(suite, test_report, params);
@@ -231,6 +236,7 @@ function params=get_params(varargin)
     params.with_coverage=false;
     params.partition_index=1;
     params.partition_count=1;
+    params.randomize_order=false;
 
     % allocate space for filenames
     n=numel(varargin);
@@ -269,6 +275,9 @@ function params=get_params(varargin)
                 if params.fid==-1
                     error('Could not open file %s for writing', fn);
                 end
+
+                % making sure the log file is closed on error
+                % cleaner=onCleanup(@()close_fid_gt2(params.fid));
 
             case {'-cover','-cover_xml_file','-junit_xml_file',...
                         '-cover_json_file','-cover_html_dir',...
@@ -315,6 +324,9 @@ function params=get_params(varargin)
                 end
                 params.partition_count=value;
 
+            case '-randomize_order'
+                params.randomize_order=true;
+
             otherwise
 
                 if ~isempty(dir(arg))
@@ -326,6 +338,7 @@ function params=get_params(varargin)
                     try
                         fclose(params.fid);
                     end %#ok<TRYNC>
+
                     error('moxunit:illegalParameter',...
                     'Parameter not recognised or file missing: %s', arg);
                 end
