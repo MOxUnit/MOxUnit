@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        matlab_version: [R2021a, R2021b, R2022a, R2022b, R2023a]
+        matlab_version: [R2020a, R2020b, R2021a, R2021b, R2022a, R2022b, R2023a]
         os: [ubuntu-latest, macos-latest, windows-latest]
       fail-fast: false  # Don't cancel all jobs if one fails
 
@@ -38,11 +38,14 @@ jobs:
       with:
         release: ${{ matrix.matlab_version }}
 
-    # use actions/checkout to checkout your repository to the GitHub Actions runner
-    - uses: actions/checkout@v3
-      with:
-        submodules: true
-        fetch-depth: 1
+    # Uncomment the line below to use actions/checkout
+    # to checkout your repository (or the one whose tests you want to run)
+    # to the GitHub Actions runner.
+    # This is not done in this example because the following step
+    # checks out Moxunit and we don't want to checkout the repository twice.
+
+    # - name: Checkout repository
+    # - uses: actions/checkout@v3
 
     - name: Install Moxunit # and MOcov
       run: |
