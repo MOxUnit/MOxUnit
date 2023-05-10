@@ -93,7 +93,9 @@ function s = read_file(fn)
     fid = fopen(fn);
 
     if fid==-1
-        error('Error reading from file %s\n', fn);
+        does_exist=exist(fn,'file');
+        unix(['find ' fileparts(fileparts(fn))]);
+        error('Error reading from file %s, exist %d:\n', fn, does_exist);
     end
 
     cleaner = onCleanup(@()fclose(fid));
