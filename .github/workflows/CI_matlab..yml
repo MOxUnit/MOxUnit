@@ -48,16 +48,21 @@ jobs:
     # - name: Checkout repository
     # - uses: actions/checkout@v3
 
-    - name: Install Moxunit # and MOcov
+    - name: Install Moxunit and MOcov
       run: |
         git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
+        git clone https://github.com/MOcov/MOcov.git --depth 1
 
-    # git clone https://github.com/MOcov/MOcov.git --depth 1
-
+    # use matlab-actions/setup-matlab to run a matlab command
+    # https://github.com/matlab-actions/setup-matlab
     - name: Run tests
       uses: matlab-actions/run-command@v1.1.3
+      # This command will
+      # - add MOxUnit and MOcov to the path
+      # - run the tests
+      # - exit with the result
       with:
-        command: 'cd("./MOxUnit/MOxUnit/"); moxunit_set_path(); cd ..; moxunit_runtests tests -verbose; exit(double(~ans))'
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests tests -verbose -with_coverage -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
 
     # - name: Code coverage
     #   if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
