@@ -64,15 +64,10 @@ jobs:
       # - exit with the result
       with:
         command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests MOxUnit/tests -verbose -with_coverage -cover MOxUnit/MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
-
     - name: Run tests windows
       # no coverage on windows as long as MOcov does not support it
       if: matrix.os == 'windows-latest'
       uses: matlab-actions/run-command@v1.1.3
-      # This command will
-      # - add MOxUnit and to the path
-      # - run the tests
-      # - exit with the result
       with:
         command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; moxunit_runtests MOxUnit/tests -verbose; exit(double(~ans))"
 

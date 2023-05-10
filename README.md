@@ -12,6 +12,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
     - [Matlab](#matlab)
   - [Github-CI](#github-ci)
     - [Octave](#octave-1)
+      - [Using the moxunit Github action](#using-the-moxunit-github-action)
     - [Matlab](#matlab-1)
 - [Compatibility notes](#compatibility-notes)
 - [Limitations](#limitations)
@@ -219,7 +220,185 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) 
 ### Github-CI
 
 #### Octave
+
+##### Using the moxunit Github action
+
+There is a "preset" github action will test your code with Ubuntu and Octave. 
+To use it, create a YML file in your `.github/workflows` with the following content.
+
+You will need to update the line
+
+```yml
+        src: FIXME
+```
+
+to make sure it points to where your source code is.
+
+```yaml
+name: CI octave action
+
+# Controls when the action will run. 
+# Triggers the workflow on push or pull request
+# events but only for the master branch. 
+# Update accordingly if you want to test other branches ('main', 'dev' or all with '*')
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "unit-tests"
+  unit-tests:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Use A Github Action to perform tests
+    - name: run unit tests and documentation tests, generate coverage report
+      uses: joergbrech/moxunit-action@v1.1
+      with:
+        tests: tests
+        src: FIXME
+        with_coverage: true
+        doc_tests: true
+        cover_xml_file: coverage.xml
+
+    # Store the coverage report as an artifact
+    - name: Store Coverage report as artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage_xml_file
+        path: coverage.xml
+    
+    # Use a Github Action to publish coverage reports
+    - name: Publish coverage report to codecov.io
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
+```
+
 #### Matlab
+
+You can test your code with Matlab on Github actions with several operating systems and Matlab versions.
+To use it, create a YML file in your `.github/workflows` with the following content.
+
+```yml
+name: CI matlab
+
+# - Installs
+#   - MATLAB github action
+#   - MOXunit
+#   - MOcov
+# - Runs tests
+# - If tests pass, uploads coverage to codecov
+
+# Controls when the action will run. 
+# Triggers the workflow:
+#   - on push for the master branch 
+#   - on pull request for all branches
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: ['*']
+
+jobs:
+  matlab_tests:
+
+    strategy:
+      matrix:
+        # Note that some older versions (e.g R2020a, R2020b...) may not be available on all OS
+        matlab_version: [R2022a, R2022b, R2023a]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false  # Don't cancel all jobs if one fails
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    # use matlab-actions/setup-matlab to setup a specific version of MATLAB
+    # https://github.com/matlab-actions/setup-matlab
+    - name: Install MATLAB
+      uses: matlab-actions/setup-matlab@v1.2.4
+      with:
+        release: ${{ matrix.matlab_version }}
+
+    # Checkout your repository (or the one whose tests you want to run)
+    # to the GitHub Actions runner.
+    - name: Checkout repository
+    - uses: actions/checkout@v3
+
+    - name: Install Moxunit and MOcov
+      run: |
+        git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
+        git clone https://github.com/MOcov/MOcov.git --depth 1
+
+    # use matlab-actions/setup-matlab to run a matlab command
+    # https://github.com/matlab-actions/setup-matlab
+    # NOTE: the different behavior with no coverage on windows 
+    # given that there are currently some issues to fix on MOcov when running on windows
+    # see https://github.com/MOcov/MOcov/issues/28
+    - name: Run tests
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+      uses: matlab-actions/run-command@v1.1.3
+      # This command will
+      # - add MOxUnit and MOcov to the path
+      # - run the tests
+      # - exit with the result
+      with:
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml; exit(double(~ans))"
+    - name: Run tests windows
+      if: matrix.os == 'windows-latest'
+      uses: matlab-actions/run-command@v1.1.3
+      with:
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; moxunit_runtests path/to/tests -verbose; exit(double(~ans))"
+
+    - name: Upload code coverage
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+      uses: codecov/codecov-action@v3
+      with:
+        file: coverage.xml
+        flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
+        name: codecov-umbrella 
+        fail_ci_if_error: false
+```
+
+Note that MOxUnit and MOcov have to be added to the path as part of the command
+before running the tests, which can make the one-liner command quite long and hard to read.
+
+```yml
+      uses: matlab-actions/run-command@v1.1.3
+      with:
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml; exit(double(~ans))"
+```
+
+So you can instead create a `run_tests.m` file in your repository with the following content:
+
+```matlab
+cd('./MOxUnit/MOxUnit/');
+moxunit_set_path();
+cd ../..;
+
+addpath(fullfile(pwd, 'MOcov', 'MOcov'));
+
+moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml;
+
+exit(double(~ans))
+```
+
+And simplify your workflow like this.
+
+```yml
+      uses: matlab-actions/run-command@v1.1.3
+      with:
+        command: "run_tests"
+```
 
 ## Compatibility notes
 
