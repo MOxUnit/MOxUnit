@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        # Note that older versions (R2020a, R2020b, R2021a, R2021b) may not be available on all OS
+        # Note that some older versions (e.g R2020a, R2020b...) may not be available on all OS
         matlab_version: [R2022a, R2022b, R2023a]
         os: [ubuntu-latest, macos-latest, windows-latest]
       fail-fast: false  # Don't cancel all jobs if one fails
@@ -62,7 +62,7 @@ jobs:
       # - run the tests
       # - exit with the result
       with:
-        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests tests -verbose -with_coverage -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests MOxUnit/tests -verbose -with_coverage -cover MOxUnit/MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
 
     # - name: Code coverage
     #   if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
