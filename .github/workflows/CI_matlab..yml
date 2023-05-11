@@ -39,7 +39,7 @@ jobs:
       with:
         release: ${{ matrix.matlab_version }}
 
-    # Uncomment the line below to use actions/checkout
+    # Uncomment the lines below to use actions/checkout
     # to checkout your repository (or the one whose tests you want to run)
     # to the GitHub Actions runner.
     # This is not done in this example because the following step
@@ -56,7 +56,6 @@ jobs:
     # use matlab-actions/setup-matlab to run a matlab command
     # https://github.com/matlab-actions/setup-matlab
     - name: Run tests
-      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
       uses: matlab-actions/run-command@v1.1.3
       # This command will
       # - add MOxUnit and MOcov to the path
@@ -64,18 +63,10 @@ jobs:
       # - exit with the result
       with:
         command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests MOxUnit/tests -verbose -with_coverage -cover MOxUnit/MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
-    - name: Run tests windows
-      # no coverage on windows as long as MOcov does not support it
-      if: matrix.os == 'windows-latest'
-      uses: matlab-actions/run-command@v1.1.3
-      with:
-        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; moxunit_runtests MOxUnit/tests -verbose; exit(double(~ans))"
 
     # uncomment the lines below to upload coverage to codecov
+
     # - name: Code coverage
-    #   if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
-    #   # no coverage on windows as long as MOcov does not support it
-    #   # see https://github.com/MOcov/MOcov/issues/28
     #   uses: codecov/codecov-action@v3
     #   with:
     #     file: coverage.xml

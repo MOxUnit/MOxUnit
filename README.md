@@ -343,11 +343,7 @@ jobs:
 
     # use matlab-actions/setup-matlab to run a matlab command
     # https://github.com/matlab-actions/setup-matlab
-    # NOTE: the different behavior with no coverage on windows 
-    # given that there are currently some issues to fix on MOcov when running on windows
-    # see https://github.com/MOcov/MOcov/issues/28
     - name: Run tests
-      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
       uses: matlab-actions/run-command@v1.1.3
       # This command will
       # - add MOxUnit and MOcov to the path
@@ -355,14 +351,8 @@ jobs:
       # - exit with the result
       with:
         command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml; exit(double(~ans))"
-    - name: Run tests windows
-      if: matrix.os == 'windows-latest'
-      uses: matlab-actions/run-command@v1.1.3
-      with:
-        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; moxunit_runtests path/to/tests -verbose; exit(double(~ans))"
 
     - name: Upload code coverage
-      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
       uses: codecov/codecov-action@v3
       with:
         file: coverage.xml
