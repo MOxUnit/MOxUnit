@@ -7,7 +7,7 @@ function test_suite=test_moxunit_util_isfolder
 
 
 function test_moxunit_util_isfolder_basics()
-    % current direcoty
+    % current directory
     assertTrue(moxunit_util_isfolder(pwd));
     assertTrue(moxunit_util_isfolder('.'));
     assertTrue(moxunit_util_isfolder('..'));
