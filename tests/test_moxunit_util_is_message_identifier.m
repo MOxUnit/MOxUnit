@@ -51,7 +51,7 @@ function test_test_moxunit_util_is_message_identifier_false
     end
 
 function test_test_moxunit_util_is_message_identifier_octave
-    % in octave, the '-' is allowed to be in message identifers;
+    % in octave, the '-' is allowed to be in message identifiers;
     % in Matlab this is not allowed.
     % For compatibility we allow the '-' to be allowed in message
     % identifiers

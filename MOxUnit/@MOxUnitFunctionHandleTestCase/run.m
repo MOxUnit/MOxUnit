@@ -82,7 +82,7 @@ function e_trimmed=trim_stack(e)
     for pos=n_stack:-1:1
         if strcmp(stack(pos).file,this_file)
             % found first match with this filename, now trim this function
-            % and their callig functions
+            % and their calling functions
             trimmed_stack=stack(1:(pos-1));
 
             e_trimmed=e;
