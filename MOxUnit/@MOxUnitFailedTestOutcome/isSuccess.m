@@ -1,5 +1,5 @@
 function tf=isSuccess(obj)
-% return whether this test was a succes
+% return whether this test was a success
 %
 % tf=isSuccess(obj)
 %

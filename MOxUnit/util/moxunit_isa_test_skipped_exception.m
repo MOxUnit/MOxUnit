@@ -8,7 +8,7 @@ function tf=moxunit_isa_test_skipped_exception(exception)
 %                       .identifier
 %
 % Output:
-%   tf                  true if exception.identifer is equal to that
+%   tf                  true if exception.identifier is equal to that
 %                       thrown by moxunit_throw_test_skipped_exception
 %
 % Notes:
