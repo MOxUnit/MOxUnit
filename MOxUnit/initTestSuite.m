@@ -70,7 +70,8 @@
     if numel(call_stack)==1
         example_syntax=get_example_syntax();
 
-        error(['The script ''%s'' must be called from within '...
+        error('MOxUnit:initTestSuite:noCaller',...
+        ['The script ''%s'' must be called from within '...
                     'another function, typically using the '...
                     'following syntax:\n\n%s'...
                     ],...
@@ -79,6 +80,7 @@
     end
 
     caller_fn=call_stack(idx+1).file;
+    caller_fn_name=call_stack(idx+1).name;
     sub_func_struct=moxunit_util_mfile_subfunctions(caller_fn);
 
     has_error=false;
@@ -96,7 +98,7 @@
             func_name=call_stack(2).name;
             example_syntax=get_example_syntax();
 
-            func_error=@()error(...
+            func_error=@()error('MOxUnit:initTestSuite:noTestFunctions', ...
                     ['In %s:\nThe variable ''test_functions'' is '...
                     'not assigned and this version\nof Matlab does '...
                     'not support the assignment of function handles\n'...
@@ -147,6 +149,14 @@
         end
 
     end
+    
+    % Warn if a test suite is being initialized but can't be provided
+    % Fully qualified names (e.g., caller_fn) is not supported in octave
+    if ~nargout(caller_fn_name)
+        warning('MOxUnit:initTestSuite:noReturnObject',...
+            'File does not return a test object: %s\n',...
+            caller_fn);
+    end
 
     % If not called from another function, execute the test directly
     % and remove the test_suite variable
@@ -157,4 +167,5 @@
         % when run without explicitly assigning output to a variable
         clear test_suite;
     end
+
 
