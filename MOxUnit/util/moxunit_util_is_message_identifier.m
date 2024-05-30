@@ -25,7 +25,7 @@ function tf = moxunit_util_is_message_identifier(id)
 %     realistic, real world use cases where allowing it would change
 %     behaviour of functions. We would like to be consistent across the
 %     Matlab and Octave platforms, and with hyphens used often in Octave,
-%     this function also consideres hyphens to be part of a message
+%     this function also considers hyphens to be part of a message
 %     identifier
 
     if ~ischar(id)

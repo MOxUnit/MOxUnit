@@ -136,7 +136,7 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
 
 - `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
   - `-verbose`: show verbose output.
-  - `-quiet`: supress all output
+  - `-quiet`: suppress all output
   - `directory`: run unit tests in directory `directory`.
   - `file.m`: run unit tests in file `file.m`.
   - `-recursive`: add files from directories recursively.

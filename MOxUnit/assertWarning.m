@@ -42,7 +42,7 @@ function assertWarning(func, expected_id, message)
 %
 % Notes:
 % - This function allows one to test for warnings being thrown, and
-%   optionally, pass a custome message in response to a failure.
+%   optionally, pass a custom message in response to a failure.
 % - It is assumed that all input variables are of the correct type, valid
 %   (if applicable), and given in the correct order.
 %
