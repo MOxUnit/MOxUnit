@@ -19,8 +19,7 @@ on:
         branches: ['*']
 
 jobs:
-    matlab_tests:
-
+    tests:
         strategy:
             matrix:
         # Note that some older versions (e.g R2020a, R2020b...) may not be available on all OS
@@ -52,11 +51,12 @@ jobs:
                 command: cd('./MOxUnit/'); moxunit_set_path(); cd ..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests tests -verbose -with_coverage
                     -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))
 
-    # uncomment the lines below to upload coverage to codecov
-    # - name: Code coverage
-    #   uses: codecov/codecov-action@v3
-    #   with:
-    #     file: coverage.xml
-    #     flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
-    #     name: codecov-umbrella
-    #     fail_ci_if_error: false
+        # uncomment the lines below to upload coverage to codecov
+        -   name: Code coverage
+            uses: codecov/codecov-action@v4
+            with:
+                file: coverage.xml
+                flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
+                name: codecov-octave
+                fail_ci_if_error: false
+                # token: ${{ secrets.CODECOV_TOKEN }}
