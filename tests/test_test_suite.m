@@ -137,6 +137,45 @@ function test_test_suite_run()
     assert(all(has_been_tested));
 
 
+function names=helper_get_test_names(suite)
+    n=countTestNodes(suite);
+    names=cell(n,1);
+    for k=1:n
+        nd=getTestNode(suite,k);
+        names{k}=getName(nd);
+    end
+
+function test_test_suite_randomize_order()
+    n_tests=100+ceil(rand()*5);
+
+    assert(n_tests>100,'not enough tests');
+
+    suite=MOxUnitTestSuite();
+
+    for i=1:n_tests
+        tc=MOxUnitTestCase(rand_str(),rand_str());
+        if mod(i,2)==0
+            % add test case directly
+            nd=tc;
+        else
+            % add test case in suite with a single test
+            nd=MOxUnitTestSuite(rand_str());
+            nd=addTest(nd,tc);
+        end
+        suite=addTest(suite,nd);
+    end
+
+    original_names=helper_get_test_names(suite);
+    suite=randomizeTestOrder(suite);
+
+    % if we have enough tests, it is almost certain that the
+    % randomized order is different from the original order
+    randomized_names=helper_get_test_names(suite);
+
+    assertEqual(sort(randomized_names),sort(original_names));
+    assertNotEqual(randomized_names,original_names);
+
+
 
 
 
