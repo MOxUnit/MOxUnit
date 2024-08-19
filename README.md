@@ -1,4 +1,9 @@
-# MOxUnit [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/MOxUnit/MOxUnit) ![Test](https://github.com/MOxUnit/MOxUnit/workflows/CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master) <!-- omit in toc -->
+[![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/MOxUnit/MOxUnit)
+[![CI matlab](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_matlab..yml/badge.svg)](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_matlab..yml)
+[![CI octave](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_octave.yml/badge.svg)](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_octave.yml)
+[![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master) <!-- omit in toc -->
+
+# MOxUnit 
 
 MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
@@ -40,7 +45,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - Manual installation:
 
-    + Download the [[MOxUnit zip archive] from the [MOxUnit] website, and extract it. This should
+    + Download the [MOxUnit zip archive] from the [MOxUnit] website, and extract it. This should
       result in a directory called ``MOxUnit-master``.
     + Start Matlab or GNU Octave.
     + On the Matlab or GNU Octave prompt, go to the directory that contains the new ``MOxUnit-master`` directory, then run:
