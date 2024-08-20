@@ -1,4 +1,9 @@
-# MOxUnit [![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/MOxUnit/MOxUnit) ![Test](https://github.com/MOxUnit/MOxUnit/workflows/CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master) <!-- omit in toc -->
+[![Build Status](https://travis-ci.org/nno/MOxUnit.svg?branch=master)](https://travis-ci.org/MOxUnit/MOxUnit)
+[![CI matlab](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_matlab..yml/badge.svg)](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_matlab..yml)
+[![CI octave](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_octave.yml/badge.svg)](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_octave.yml)
+[![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master) <!-- omit in toc -->
+
+# MOxUnit 
 
 MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
@@ -7,8 +12,13 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 - [Defining MOxUnit tests](#defining-moxunit-tests)
 - [Running MOxUnit tests](#running-moxunit-tests)
 - [Use with CI](#use-with-ci)
-  - [Octave](#octave)
-  - [Matlab](#matlab)
+  - [Travis-CI](#travis-ci)
+    - [Octave](#octave)
+    - [Matlab](#matlab)
+  - [Github-CI](#github-ci)
+    - [Octave](#octave-1)
+      - [Using the moxunit Github action](#using-the-moxunit-github-action)
+    - [Matlab](#matlab-1)
 - [Compatibility notes](#compatibility-notes)
 - [Limitations](#limitations)
 
@@ -35,7 +45,7 @@ MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
 - Manual installation:
 
-    + Download the [[MOxUnit zip archive] from the [MOxUnit] website, and extract it. This should
+    + Download the [MOxUnit zip archive] from the [MOxUnit] website, and extract it. This should
       result in a directory called ``MOxUnit-master``.
     + Start Matlab or GNU Octave.
     + On the Matlab or GNU Octave prompt, go to the directory that contains the new ``MOxUnit-master`` directory, then run:
@@ -151,9 +161,11 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
 
 ## Use with CI
 
+### Travis-CI
+
 MOxUnit can be used with the [Travis-ci] service for continuous integration (CI) testing. This is achieved by setting up a [.travis.yml configuration file](.travis.yml). This file is also used by [Shippable]. As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made. If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
 
-### Octave
+#### Octave
 
 The easiest test to set up on Travis and/or Shippable is with [GNU Octave]. Make sure your code is Octave compatible. Note that many Matlab projects tend to use functionality not present in Octave (such as particular functions), whereasand writing code that is both Matlab- and Octave-compatible may require some additional efforts.
 
@@ -187,7 +199,7 @@ In this case `make test` is used to run the tests. To avoid a Makefile and run t
 
 Note that MOxUnit tests **itself** on travis, with [this](https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml) travis file.
 
-### Matlab
+#### Matlab
 
 Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) directly. You can use MOxUnit with it, but its tricky because:
   1) Travis only supports Matlab 2020a and, presumably, higher (at the time of writing 2020a is the newest version).
@@ -209,6 +221,181 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) 
   ```
 
   `exit(double(~ans))` ensures that the build fails if MOxUnit tests fail.
+
+### Github-CI
+
+#### Octave
+
+##### Using the moxunit Github action
+
+There is a "preset" github action will test your code with Ubuntu and Octave. 
+To use it, create a YML file in your `.github/workflows` with the following content.
+
+You will need to update the line
+
+```yml
+        src: FIXME
+```
+
+to make sure it points to where your source code is.
+
+```yaml
+name: CI octave action
+
+# Controls when the action will run. 
+# Triggers the workflow on push or pull request
+# events but only for the master branch. 
+# Update accordingly if you want to test other branches ('main', 'dev' or all with '*')
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "unit-tests"
+  unit-tests:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Use A Github Action to perform tests
+    - name: run unit tests and documentation tests, generate coverage report
+      uses: joergbrech/moxunit-action@v1.1
+      with:
+        tests: tests
+        src: FIXME
+        with_coverage: true
+        doc_tests: true
+        cover_xml_file: coverage.xml
+
+    # Store the coverage report as an artifact
+    - name: Store Coverage report as artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage_xml_file
+        path: coverage.xml
+    
+    # Use a Github Action to publish coverage reports
+    - name: Publish coverage report to codecov.io
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
+```
+
+#### Matlab
+
+You can test your code with Matlab on Github actions with several operating systems and Matlab versions.
+To use it, create a YML file in your `.github/workflows` with the following content.
+
+You will need to update the values for `path/to/src` and `path/to/tests` to make sure it points to where your source code and tests are.
+
+```yml
+name: CI matlab
+
+# - Installs
+#   - MATLAB github action
+#   - MOXunit
+#   - MOcov
+# - Runs tests
+# - If tests pass, uploads coverage to codecov
+
+# Controls when the action will run. 
+# Triggers the workflow:
+#   - on push for the master branch 
+#   - on pull request for all branches
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: ['*']
+
+jobs:
+  matlab_tests:
+
+    strategy:
+      matrix:
+        # Note that some older versions (e.g R2020a, R2020b...) may not be available on all OS
+        matlab_version: [R2022a, R2022b, R2023a]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false  # Don't cancel all jobs if one fails
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    # use matlab-actions/setup-matlab to setup a specific version of MATLAB
+    # https://github.com/matlab-actions/setup-matlab
+    - name: Install MATLAB
+      uses: matlab-actions/setup-matlab@v1.2.4
+      with:
+        release: ${{ matrix.matlab_version }}
+
+    # Checkout your repository (or the one whose tests you want to run)
+    # to the GitHub Actions runner.
+    - name: Checkout repository
+    - uses: actions/checkout@v3
+
+    - name: Install Moxunit and MOcov
+      run: |
+        git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
+        git clone https://github.com/MOcov/MOcov.git --depth 1
+
+    # use matlab-actions/setup-matlab to run a matlab command
+    # https://github.com/matlab-actions/setup-matlab
+    - name: Run tests
+      uses: matlab-actions/run-command@v1.1.3
+      # This command will
+      # - add MOxUnit and MOcov to the path
+      # - run the tests
+      # - exit with the result
+      with:
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml; exit(double(~ans))"
+
+    - name: Upload code coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: coverage.xml
+        flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
+        name: codecov-umbrella 
+        fail_ci_if_error: false
+```
+
+Note that MOxUnit and MOcov have to be added to the path as part of the command
+before running the tests, which can make the one-liner command quite long and hard to read.
+
+```yml
+      uses: matlab-actions/run-command@v1.1.3
+      with:
+        command: "cd('./MOxUnit/MOxUnit/'); moxunit_set_path(); cd ../..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml; exit(double(~ans))"
+```
+
+So you can instead create a `run_tests.m` file in your repository with the following content:
+
+```matlab
+cd('./MOxUnit/MOxUnit/');
+moxunit_set_path();
+cd ../..;
+
+addpath(fullfile(pwd, 'MOcov', 'MOcov'));
+
+moxunit_runtests path/to/tests -verbose -with_coverage -cover path/to/src -cover_xml_file coverage.xml;
+
+exit(double(~ans))
+```
+
+And simplify your workflow like this.
+
+```yml
+      uses: matlab-actions/run-command@v1.1.3
+      with:
+        command: "run_tests"
+```
 
 ## Compatibility notes
 

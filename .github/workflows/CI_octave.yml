@@ -1,0 +1,53 @@
+---
+name: CI octave
+
+# - Installs
+#   - octave
+#   - MOcov
+# - checks out MOXunit
+# - Runs tests
+# - If tests pass, uploads coverage to codecov
+
+# Controls when the action will run.
+# Triggers the workflow:
+#   - on push for the master branch
+#   - on pull request for all branches
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: ['*']
+
+env:
+    OCTFLAGS: --no-gui --no-window-system --silent
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+        -   name: Checkout repository
+            uses: actions/checkout@v4
+        -   name: Install MOcov
+            run: |
+                git clone https://github.com/MOcov/MOcov.git --depth 1
+        -   name: Install Octave
+            run: |
+                sudo apt-get -y -qq update
+                sudo apt-get -y install \
+                  octave
+                make install
+                make -C MOcov install
+        -   name: Octave version
+            run: octave --version                
+        -   name: Run tests
+            run: octave $OCTFLAGS --eval "moxunit_runtests tests -verbose -with_coverage -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
+
+        # uncomment the lines below to upload coverage to codecov
+        -   name: Code coverage
+            uses: codecov/codecov-action@v4
+            with:
+                file: coverage.xml
+                flags: octave
+                name: codecov-octave
+                fail_ci_if_error: false
+                # token: ${{ secrets.CODECOV_TOKEN }}
