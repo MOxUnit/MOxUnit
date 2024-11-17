@@ -16,4 +16,3 @@ function c=countTestCases(obj)
         t=getTestNode(obj,k);
         c=c+countTestCases(t);
     end
-

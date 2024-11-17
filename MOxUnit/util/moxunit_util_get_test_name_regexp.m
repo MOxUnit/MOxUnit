@@ -9,4 +9,3 @@ function re=moxunit_util_get_test_name_regexp()
 
     test_re='[Tt][Ee][sS][tT]';
     re=sprintf('^((%s.*)|(.*%s))$',test_re,test_re);
-

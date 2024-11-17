@@ -84,4 +84,3 @@ function joined=moxunit_util_strjoin(strings, delim)
 
     % join them
     joined=[joined_cells{:}];
-

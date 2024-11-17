@@ -105,4 +105,3 @@ function s=rand_str()
 
 function assert_contains(a,b)
     assert(~isempty(strfind(a,b)))
-

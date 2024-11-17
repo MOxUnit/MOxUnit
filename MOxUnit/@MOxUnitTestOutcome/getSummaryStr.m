@@ -85,5 +85,3 @@ function s=get_classname(test_)
     [pth,file_name]=fileparts(location);
 
     s=sprintf('%s',file_name);
-
-

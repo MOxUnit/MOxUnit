@@ -142,6 +142,3 @@ function remove_paths(full_paths)
             delete(p);
         end
     end
-
-
-

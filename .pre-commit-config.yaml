@@ -1,3 +1,4 @@
+---
 repos:
 
 -   repo: https://github.com/pre-commit/pre-commit-hooks
@@ -9,7 +10,7 @@ repos:
     -   id: check-json
     -   id: check-added-large-files
     -   id: pretty-format-json
-    -   id: check-case-conflict    
+    -   id: check-case-conflict
 
 -   repo: https://github.com/codespell-project/codespell
     rev: v2.3.0
@@ -20,4 +21,4 @@ repos:
     rev: 0.2.3
     hooks:
     -   id: yamlfmt
-        args: [--mapping, '4', --sequence, '4', --offset, '0']    
+        args: [--mapping, '4', --sequence, '4', --offset, '0']

@@ -30,6 +30,3 @@ function test_platform_version
 function v=dots_to_vec(s)
     parts=regexp(s,'\.','split');
     v=cellfun(@str2num,parts);
-
-
-

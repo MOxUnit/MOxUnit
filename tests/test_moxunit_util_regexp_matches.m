@@ -59,5 +59,3 @@ function assert_regexp_matches(needle, pat)
 
 function assert_regexp_not_matches(needle, pat)
     assertFalse(moxunit_util_regexp_matches(needle,pat));
-
-

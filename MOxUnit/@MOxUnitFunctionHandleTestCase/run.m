@@ -92,4 +92,3 @@ function e_trimmed=trim_stack(e)
     end
 
     assert(false,'This should not happen');
-
