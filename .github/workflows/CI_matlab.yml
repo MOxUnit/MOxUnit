@@ -49,7 +49,7 @@ jobs:
       # - run the tests
       # - exit with the result
             with:
-                command: "run_tests"
+                command: cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run run_tests;
 
         # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
