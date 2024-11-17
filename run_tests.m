@@ -1,4 +1,5 @@
-cd('./MOxUnit/');
+
+% Script used to run tests with github CI
 moxunit_set_path();
 cd ..;
 addpath(fullfile(pwd, 'MOcov', 'MOcov'));
