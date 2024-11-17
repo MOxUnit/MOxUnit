@@ -1,3 +1,0 @@
-# Mocov
-
-## coming soon
