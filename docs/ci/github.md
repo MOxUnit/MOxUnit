@@ -23,7 +23,7 @@ https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#single-li
 --8<-- ".github/workflows/CI_octave_action.yml"
 ```
 
-### 'Manual' set up 
+### 'Manual' set up
 
 If you do not use the [github action](#using-the-moxunit-github-action),
 you have to install octave and all the relevant toolboxes.

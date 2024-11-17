@@ -1,6 +1,6 @@
 # Installation
 
-# Using the shell 
+## Using the shell
 
 This requires a Unix-like operating system such as GNU/Linux or Apple OSX.
 

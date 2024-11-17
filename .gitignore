@@ -17,4 +17,8 @@ env
 git_log.txt
 git_summary.txt
 
+package-lock.json
+package.json
+node_modules
+
 octave-workspace

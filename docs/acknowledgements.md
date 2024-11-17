@@ -1,12 +1,12 @@
 # Acknowledgements
 
-- The object-oriented class structure was inspired by the [Python unit test] framework.
-- The `assert*` function signatures are aimed to be compatible with Steve Eddin's [Matlab xUnit test framework].
+-   The object-oriented class structure was inspired by the [Python unit test] framework.
+-   The `assert*` function signatures are aimed to be compatible with Steve Eddin's [Matlab xUnit test framework].
 
-## Projects that use MOxUnit and MOcov 
+## Projects that use MOxUnit and MOcov
 
-- [CoSMoMVPA](https://github.com/CoSMoMVPA/CoSMoMVPA)
-- [bidspm](https://github.com/cpp-lln-lab/bidspm)
+-   [CoSMoMVPA](https://github.com/CoSMoMVPA/CoSMoMVPA)
+-   [bidspm](https://github.com/cpp-lln-lab/bidspm)
 
 <!--  -->
 
