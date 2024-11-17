@@ -1,7 +1,7 @@
 ---
 site_name: MOxUnit
 repo_url: https://github.com/MOxUnit/MOxUnit
-# site_url: 
+# site_url:
 
 plugins:
   - search
@@ -11,7 +11,20 @@ docs_dir: docs
 use_directory_urls: false
 
 nav:
--   About: index.md
+  - Home: index.md
+  - MOxUnit:
+      - moxunit/installation.md
+      - moxunit/usage.md
+  - MoCov:
+      - mocov/index.md      
+  - MoDox:
+      - modox/index.md           
+  - Continuous Integration:
+      - ci/github.md
+      - ci/travis.md
+  - acknowledgements.md
+  - contributors.md
+  - contact.md
 
 theme:
   name: material
@@ -61,6 +74,13 @@ theme:
 edit_uri: https://github.com/MOxUnit/MOxUnit/edit/master/docs/
 
 markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
   - abbr
   - admonition
   - attr_list
@@ -72,4 +92,3 @@ markdown_extensions:
 copyright:
   Copyright &copy; MoxUnit Contributors - <a
   href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-

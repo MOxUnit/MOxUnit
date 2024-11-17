@@ -43,13 +43,13 @@ jobs:
     # https://github.com/matlab-actions/setup-matlab
         -   name: Run tests
             uses: matlab-actions/run-command@v2
-      # This command will
+      # This command will call the script run_tests.m that will:
+      # - set up moxunit
       # - add MOcov to the path
       # - run the tests
       # - exit with the result
             with:
-                command: cd('./MOxUnit/'); moxunit_set_path(); cd ..; addpath(fullfile(pwd, 'MOcov', 'MOcov')); moxunit_runtests tests -verbose -with_coverage
-                    -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))
+                command: "run_tests"
 
         # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
