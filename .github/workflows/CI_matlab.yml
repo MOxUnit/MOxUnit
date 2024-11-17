@@ -54,7 +54,7 @@ jobs:
       # - run the tests
       # - exit with the result
             with:
-                command: cd ..; ls; run run_tests;
+                command: run run_tests;
 
         # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
