@@ -1,5 +1,6 @@
 
 % Script used to run tests with github CI
+cd('MOxUnit')
 moxunit_set_path();
 cd ..;
 addpath(fullfile(pwd, 'MOcov', 'MOcov'));

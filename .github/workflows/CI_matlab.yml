@@ -18,6 +18,11 @@ on:
     pull_request:
         branches: ['*']
 
+# cancel previous runs on the same branch / PR        
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     tests:
         strategy:
@@ -49,7 +54,7 @@ jobs:
       # - run the tests
       # - exit with the result
             with:
-                command: pwd; ls; run run_tests;
+                command: cd ..; ls; run run_tests;
 
         # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
