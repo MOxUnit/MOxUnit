@@ -15,6 +15,9 @@ repository-code: https://github.com/MOxUnit/MOxUnit.git
 message: If you use this software, please cite it as below.
 
 keywords:
+  - testing-framework
+  - MATLAB
+  - octave
 
 authors:
   - given-names: Nikolaas N.
