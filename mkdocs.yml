@@ -1,0 +1,94 @@
+---
+site_name: MOxUnit
+repo_url: https://github.com/MOxUnit/MOxUnit
+# site_url:
+
+plugins:
+  - search
+
+docs_dir: docs
+
+use_directory_urls: false
+
+nav:
+  - Home: index.md
+  - MOxUnit:
+      - moxunit/installation.md
+      - moxunit/usage.md
+  - MoCov:
+      - mocov/index.md      
+  - MoDox:
+      - modox/index.md           
+  - Continuous Integration:
+      - ci/github.md
+      - ci/travis.md
+  - acknowledgements.md
+  - contributors.md
+  - contact.md
+
+theme:
+  name: material
+  favicon: assets/favicon/favicon-32x32.png
+  logo: assets/logo/moxunit_logo_600px.png
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.code.copy
+    - content.tooltips
+    - footnotes
+    - header.autohide
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    annotation: material/arrow-right-circle
+  palette:
+    - media: (prefers-color-scheme)
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: orange
+      accent: green
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: orange
+      accent: green
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+edit_uri: https://github.com/MOxUnit/MOxUnit/edit/master/docs/
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - abbr
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      anchorlink: true
+      toc_depth: 3
+
+copyright:
+  Copyright &copy; MoxUnit Contributors - <a
+  href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
