@@ -72,4 +72,3 @@ function test_assert_vectors_almost_equal_passes
     assertVectorsAlmostEqual(0,1,'absolute',1);
     assertVectorsAlmostEqual(1:6,1e-10+(1:6))
     assertVectorsAlmostEqual(1:6,sparse(1e-10+(1:6)))
-

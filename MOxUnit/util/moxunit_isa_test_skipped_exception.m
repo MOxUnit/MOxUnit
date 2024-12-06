@@ -33,6 +33,3 @@ function tf=moxunit_isa_test_skipped_exception(exception)
 
     tf=strcmp(exception.identifier,...
                 cached_test_skipped_identifier);
-
-
-

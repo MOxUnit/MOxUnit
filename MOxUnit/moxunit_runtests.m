@@ -399,10 +399,3 @@ function check_cover_consistency(params)
     if with_coverage && isempty(params.cover)
         error('Option ''-with_coverage'' requires ''-cover''');
     end
-
-
-
-
-
-
-

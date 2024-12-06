@@ -19,4 +19,3 @@ function test_assert_true_exceptions
 
 function test_assert_true_passes
     assertTrue(true);
-

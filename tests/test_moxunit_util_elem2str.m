@@ -164,5 +164,3 @@ function assert_expected_output(to_compare,varargin)
 function tf=is_equal_modulo_whitespace(a,b)
     simplify_whitespace=@(x)regexprep(x,'\s+',' ');
     tf=isequal(simplify_whitespace(a),simplify_whitespace(b));
-
-

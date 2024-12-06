@@ -37,4 +37,3 @@ function obj=MOxUnitTestReport(verbosity,stream,name)
     s.name=name;
     s.test_outcomes=cell(0);
     obj=class(s,class_name);
-

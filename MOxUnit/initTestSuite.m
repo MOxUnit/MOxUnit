@@ -149,7 +149,7 @@
         end
 
     end
-    
+
     % Warn if a test suite is being initialized but can't be provided
     % Fully qualified names (e.g., caller_fn) is not supported in octave
     if ~nargout(caller_fn_name)
@@ -167,5 +167,3 @@
         % when run without explicitly assigning output to a variable
         clear test_suite;
     end
-
-

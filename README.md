@@ -3,7 +3,7 @@
 [![CI octave](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_octave.yml/badge.svg)](https://github.com/MOxUnit/MOxUnit/actions/workflows/CI_octave.yml)
 [![Coverage Status](https://coveralls.io/repos/github/MOxUnit/MOxUnit/badge.svg?branch=master)](https://coveralls.io/github/MOxUnit/MOxUnit?branch=master) <!-- omit in toc -->
 
-# MOxUnit 
+# MOxUnit
 
 MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
@@ -174,7 +174,7 @@ A simple `.travis.yml` file for a project could look like that:
 ```yaml
 language: generic
 os: linux
-      
+
 before_install:
   - sudo apt-get install octave
 
@@ -182,7 +182,7 @@ before_script:
   - git clone https://github.com/MOxUnit/MOxUnit.git
   - make -C MOxUnit install
 
-script:        
+script:
   - make test
 ```
 
@@ -205,7 +205,7 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) 
   1) Travis only supports Matlab 2020a and, presumably, higher (at the time of writing 2020a is the newest version).
   2) Makefile installation does not work with Matlab on travis.
   3) Nor does calling Matlab from the command line in a usual way - with ` matlab -nodesktop -nosplash ...` . Instead it has to be called with the `-batch` flag.
-  
+
   Therefore, `.travis.yml` file looks as follows:
   ```yml
   language: matlab
@@ -215,8 +215,8 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) 
   # Just clone MOxUnit, `don't make install` it (!)
   before_script:
     - git clone https://github.com/MOxUnit/MOxUnit.git
-      
-  script: 
+
+  script:
     - matlab -batch 'back=cd("./MOxUnit/MOxUnit/"); moxunit_set_path(); cd(back); moxunit_runtests tests -verbose; exit(double(~ans))'
   ```
 
@@ -228,7 +228,7 @@ Travis [now supports Matlab](https://docs.travis-ci.com/user/languages/matlab/) 
 
 ##### Using the moxunit Github action
 
-There is a "preset" github action will test your code with Ubuntu and Octave. 
+There is a "preset" github action will test your code with Ubuntu and Octave.
 To use it, create a YML file in your `.github/workflows` with the following content.
 
 You will need to update the line
@@ -242,9 +242,9 @@ to make sure it points to where your source code is.
 ```yaml
 name: CI octave action
 
-# Controls when the action will run. 
+# Controls when the action will run.
 # Triggers the workflow on push or pull request
-# events but only for the master branch. 
+# events but only for the master branch.
 # Update accordingly if you want to test other branches ('main', 'dev' or all with '*')
 on:
   push:
@@ -280,7 +280,7 @@ jobs:
       with:
         name: coverage_xml_file
         path: coverage.xml
-    
+
     # Use a Github Action to publish coverage reports
     - name: Publish coverage report to codecov.io
       uses: codecov/codecov-action@v1
@@ -305,9 +305,9 @@ name: CI matlab
 # - Runs tests
 # - If tests pass, uploads coverage to codecov
 
-# Controls when the action will run. 
+# Controls when the action will run.
 # Triggers the workflow:
-#   - on push for the master branch 
+#   - on push for the master branch
 #   - on pull request for all branches
 on:
   push:
@@ -362,7 +362,7 @@ jobs:
       with:
         file: coverage.xml
         flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
-        name: codecov-umbrella 
+        name: codecov-umbrella
         fail_ci_if_error: false
 ```
 

@@ -32,4 +32,3 @@ function test_strjoin_exceptions
     aet({'a','b','c'},[]);
     aet({'a','b','c'},{'x'});
     aet({'a','b','c'},{1,2});
-

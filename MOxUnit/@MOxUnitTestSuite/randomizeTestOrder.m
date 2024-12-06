@@ -31,7 +31,3 @@ end
 for k=1:n
     obj=setTestNode(obj,k,rnd_tests{k});
 end
-
-
-
-

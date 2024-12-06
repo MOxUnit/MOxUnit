@@ -23,5 +23,3 @@ function obj=MOxUnitFunctionHandleTestCase(name,location,function_handle)
 
     obj=class(s,'MOxUnitFunctionHandleTestCase',...
                     MOxUnitTestCase(name,location));
-
-

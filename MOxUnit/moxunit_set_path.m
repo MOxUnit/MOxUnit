@@ -43,4 +43,3 @@ function directories_added=moxunit_set_path()
 
 function pc=get_path_cell()
     pc=regexp(path(), pathsep(), 'split');
-

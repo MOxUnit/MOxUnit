@@ -35,4 +35,3 @@ function tf=moxunit_util_isfolder(folderName)
     end
 
     tf = cached_handle(folderName);
-

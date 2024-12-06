@@ -30,7 +30,3 @@ function obj=reportTestOutcome(obj, test_outcome)
     end
 
     fprintf(stream,'%s%s',outcome_str,postfix);
-
-
-
-

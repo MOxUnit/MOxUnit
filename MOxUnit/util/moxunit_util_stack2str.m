@@ -39,4 +39,3 @@ function check_input(stack)
     if ~isempty(missing_keys)
         error('Missing key in stack: ''%s''',missing_keys{1});
     end
-

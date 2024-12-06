@@ -196,5 +196,3 @@ function [message,tol_type,tol,floor_tol]=get_params(a,varargin)
     if isempty(tol_type)
         tol_type='relative';
     end
-
-

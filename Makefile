@@ -99,7 +99,7 @@ ifeq ($(MATLAB_BIN),)
 	# for Apple OSX, try to locate Matlab elsewhere if not found
     MATLAB_BIN=$(shell ls /Applications/MATLAB_R20*/bin/${MATLAB} 2>/dev/null | tail -1)
 endif
-	
+
 MATLAB_RUN=$(MATLAB_BIN) -nojvm -nodisplay -nosplash -r
 OCTAVE_RUN=$(OCTAVE_BIN) --no-gui --quiet --eval
 
@@ -124,7 +124,7 @@ install:
 	fi;
 	$(MAKE) install-matlab
 	$(MAKE) install-octave
-	
+
 
 uninstall-matlab:
 	@if [ -n "$(MATLAB_BIN)" ]; then \
@@ -132,14 +132,14 @@ uninstall-matlab:
 	else \
 		echo "matlab binary could not be found, skipping"; \
 	fi;
-	
+
 uninstall-octave:
 	@if [ -n "$(OCTAVE_BIN)" ]; then \
 		$(OCTAVE_RUN) "$(UNINSTALL)"; \
 	else \
 		echo "octave binary could not be found, skipping"; \
 	fi;
-	
+
 uninstall:
 	@if [ -z "$(MATLAB_BIN)$(OCTAVE_BIN)" ]; then \
 		@echo "Neither matlab binary nor octave binary could be found" \
@@ -170,6 +170,3 @@ test:
 	fi;
 	$(MAKE) test-matlab
 	$(MAKE) test-octave
-
-
-
