@@ -6,7 +6,8 @@ function assertElementsAlmostEqual(a,b,varargin)
 % Inputs:
 %   a               float array
 %   b               float array
-%   tol_type        'relative' or 'absolute' (default: 'relative')
+%   tol_type        one of: 'relative', 'absolute'
+%                   (default: 'relative')
 %   tol             tolerance       } default: sqrt(eps) if a is double,
 %   floor_tol       floor_tolerance } sqrt(eps('single')) otherwise)
 %   msg             optional custom message
