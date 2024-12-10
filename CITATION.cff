@@ -1,0 +1,41 @@
+# schema: https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md
+
+cff-version: 1.2.0
+
+title: MOxUnit
+
+abstract: MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
+
+version: 0.1.0
+
+license: MIT
+
+repository-code: https://github.com/MOxUnit/MOxUnit.git
+
+message: If you use this software, please cite it as below.
+
+keywords:
+  - testing-framework
+  - MATLAB
+  - octave
+
+authors:
+  - given-names: Nikolaas N.
+    family-names: Oosterhof
+    email: n.oosterhof@gmail.com
+  - given-names: Scott
+    family-names: Lowe
+  - given-names: Thomas
+    family-names: Feher
+  - given-names: Joel
+    family-names: LeBlanc
+  - given-names: Anderson
+    family-names: Bravalheri
+  - given-names: Sven
+    family-names: Baars
+  - given-names: Marcin
+    family-names: Konowalczyk
+  - family-names: Gau
+    given-names: Rémi
+    email: remi.gau@inria.fr
+    affiliation: INRIA, Paris Saclay, France

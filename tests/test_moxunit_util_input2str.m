@@ -24,5 +24,3 @@ function test_moxunit_util_input2str_basics
 
 function s=randstr()
     s=char(rand(1,10)*24+65);
-
-

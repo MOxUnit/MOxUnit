@@ -54,4 +54,3 @@ function test_assert_elements_almost_equal_passes
     assertElementsAlmostEqual([-Inf,Inf,NaN,2],[-Inf,Inf,NaN,2]);
     assertElementsAlmostEqual(0,sparse(0));
     assertElementsAlmostEqual(double(0),single(0));
-

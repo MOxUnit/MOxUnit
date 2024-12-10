@@ -3,4 +3,3 @@ function obj=MOxUnitTestOutcome(test_,duration)
     s.test=test_;
     s.duration=duration;
     obj=class(s,'MOxUnitTestOutcome');
-

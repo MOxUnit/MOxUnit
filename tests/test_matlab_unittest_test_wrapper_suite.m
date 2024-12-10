@@ -120,4 +120,3 @@ function [fn,is_passing]=helper_build_matlab_unittest_test()
 
     fprintf(fid,test_header);
     fprintf(fid,'%s',lines{:});
-

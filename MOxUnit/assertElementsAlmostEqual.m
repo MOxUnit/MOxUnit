@@ -66,6 +66,3 @@ function assertElementsAlmostEqual(a,b,varargin)
     else
         throwAsCaller(MException(error_id,'%s',full_message));
     end
-
-
-

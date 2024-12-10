@@ -22,6 +22,3 @@ function test_moxunit_util_escape_xml_basics
     aeq('&apos','&amp;apos');
     aeq('&lt','&amp;lt');
     aeq('&gt','&amp;gt');
-
-
-

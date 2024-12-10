@@ -22,4 +22,3 @@ function string=getProgressStr(obj,verbosity)
     else
         string='';
     end
-

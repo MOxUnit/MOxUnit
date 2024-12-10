@@ -263,7 +263,3 @@ function assert_equal_modulo_whitespace(a,b)
     if ~both_empty
         assertEqual(strsplit_by_whitespace(a),strsplit_by_whitespace(b));
     end
-
-
-
-
