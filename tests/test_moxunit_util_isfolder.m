@@ -1,10 +1,9 @@
-function test_suite=test_moxunit_util_isfolder
+function test_suite = test_moxunit_util_isfolder
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
-        test_functions=localfunctions();
+        test_functions = localfunctions();
     catch % no problem; early Matlab versions can use initTestSuite fine
     end
     initTestSuite;
-
 
 function test_moxunit_util_isfolder_basics()
     % current directory
@@ -19,6 +18,6 @@ function test_moxunit_util_isfolder_basics()
     % illegal input type
     assertExceptionThrown(@()moxunit_util_isfolder(struct));
 
-function s=rand_str()
+function s = rand_str()
     n = 25;
-    s=char(26*rand(1,n)+65);
+    s = char(26 * rand(1, n) + 65);

@@ -1,15 +1,15 @@
-function tf=isSuccess(obj)
-% return whether this test was a success
-%
-% tf=isSuccess(obj)
-%
-% Input:
-%   obj                     MoxUnitErroredTestOutcome object
-%
-% Output:
-%   tf                      set to false, because an errored test is not a
-%                           success
-%
-% See also: @MoxUnitTestOutcome
+function tf = isSuccess(obj)
+    % return whether this test was a success
+    %
+    % tf=isSuccess(obj)
+    %
+    % Input:
+    %   obj                     MoxUnitErroredTestOutcome object
+    %
+    % Output:
+    %   tf                      set to false, because an errored test is not a
+    %                           success
+    %
+    % See also: @MoxUnitTestOutcome
 
-    tf=false;
+    tf = false;
