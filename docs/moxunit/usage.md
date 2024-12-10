@@ -79,7 +79,7 @@ Examples of unit tests are in MOxUnit's `tests` directory, which test some of MO
       ans =
         logical
         1
-      ```
+    ```
 
 -   `moxunit_runtests`, by default, gives non-verbose output and runs all tests in the current directory. This can be changed using the following arguments:
     -   `-verbose`: show verbose output.
