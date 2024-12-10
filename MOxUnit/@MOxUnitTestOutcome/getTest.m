@@ -6,4 +6,3 @@ function test_=getTest(obj)
 % Input:
 %   obj
     test_=obj.test;
-

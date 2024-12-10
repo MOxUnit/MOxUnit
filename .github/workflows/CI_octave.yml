@@ -38,7 +38,7 @@ jobs:
                 make install
                 make -C MOcov install
         -   name: Octave version
-            run: octave --version                
+            run: octave --version
         -   name: Run tests
             run: octave $OCTFLAGS --eval "moxunit_runtests tests -verbose -with_coverage -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
 

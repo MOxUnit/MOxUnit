@@ -13,4 +13,3 @@ function test_test_node_basics
 
     assertEqual(getName(nd),name);
     assertFalse(isempty(strfind(str(nd), 'MOxUnitTestNode')));
-

@@ -35,8 +35,7 @@ authors:
     family-names: Baars
   - given-names: Marcin
     family-names: Konowalczyk
-  - family-names: Gau 
+  - family-names: Gau
     given-names: Rémi
     email: remi.gau@inria.fr
     affiliation: INRIA, Paris Saclay, France
-

@@ -129,9 +129,3 @@ function str=statistics_text(obj)
                                     'UniformOutput',false);
         str=sprintf('%s (%s)',str,moxunit_util_strjoin(cell_stats,', '));
     end
-
-
-
-
-
-

@@ -106,4 +106,3 @@ function text=apply_text_replacements(replacements, text)
         row=replacements(k,:);
         text = strrep(text, row{1}, row{2});
     end
-

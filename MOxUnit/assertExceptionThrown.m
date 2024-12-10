@@ -177,4 +177,3 @@ function tf=exception_id_matches(expected_id,found_id)
 
     tf=is_wildcard_id(expected_id) ...
             || isequal(expected_id,found_id);
-

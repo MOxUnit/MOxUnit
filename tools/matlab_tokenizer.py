@@ -209,4 +209,3 @@ class SkipUntilTokenPattern(TokenPattern):
 class SkipUntilTypeTokenPattern(SkipUntilTokenPattern):
     def __init__(self, type):
         super(SkipUntilTypeTokenPattern, self).__init__(None, type)
-
