@@ -53,7 +53,7 @@ jobs:
 
         # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
-            uses: codecov/codecov-action@v4
+            uses: codecov/codecov-action@v5
             with:
                 file: coverage.xml
                 flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
