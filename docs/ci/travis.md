@@ -17,7 +17,7 @@ A simple `.travis.yml` file for a project could look like that:
 ```yaml
 language: generic
 os: linux
-      
+
 before_install:
   - sudo apt-get install octave
 
@@ -25,7 +25,7 @@ before_script:
   - git clone https://github.com/MOxUnit/MOxUnit.git
   - make -C MOxUnit install
 
-script:        
+script:
   - make test
 ```
 
@@ -53,7 +53,7 @@ You can use MOxUnit with it, but its tricky because:
 1.  Makefile installation does not work with Matlab on travis.
 
 1.  Nor does calling Matlab from the command line in a usual way - with ` matlab -nodesktop -nosplash ...` . Instead it has to be called with the `-batch` flag.
-  
+
     Therefore, `.travis.yml` file looks as follows:
 
     ```yaml
@@ -64,8 +64,8 @@ You can use MOxUnit with it, but its tricky because:
     # Just clone MOxUnit, `don't make install` it (!)
     before_script:
       - git clone https://github.com/MOxUnit/MOxUnit.git
-        
-    script: 
+
+    script:
       - matlab -batch 'back=cd("./MOxUnit/MOxUnit/"); moxunit_set_path(); cd(back); moxunit_runtests tests -verbose; exit(double(~ans))'
     ```
 

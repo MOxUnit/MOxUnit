@@ -17,7 +17,7 @@ and testing of 'doc strings'.
 !!! warning -- "Limitations"
 
     Currently MOxUnit does not support:
-    
+
     - Documentation tests require [MOdox].
     - Support for setup and teardown functions in `TestCase` classes.
     - Subclasses of MOxUnit's classes (`MOxUnitTestCase`, `MOxUnitTestSuite`, `MOxUnitTestReport`) have to be defined using "old-style" object-oriented syntax.
