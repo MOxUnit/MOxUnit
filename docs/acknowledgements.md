@@ -5,9 +5,9 @@
 
 ## Projects that use MOxUnit and MOcov
 
--   [CoSMoMVPA](https://github.com/CoSMoMVPA/CoSMoMVPA)
--   [bidspm](https://github.com/cpp-lln-lab/bidspm)
-
+-   [CoSMoMVPA](https://github.com/CoSMoMVPA/CoSMoMVPA): A multi-modal, multi-variate pattern analysis (MVPA) toolbox in Matlab / GNU Octave for cognitive neuroscientists.
+-   [bidspm](https://github.com/cpp-lln-lab/bidspm): A toolbox to perform MRI data analysis on a [BIDS data set](https://bids.neuroimaging.io/) using SPM12.
+-   [ONSAS](https://github.com/ONSAS/ONSAS): an Open Nonlinear Structural Analysis Solver.
 <!--  -->
 
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
