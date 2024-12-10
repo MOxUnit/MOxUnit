@@ -51,7 +51,7 @@ https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#single-li
 Note that this wokflow calls the following script:
 
 ```matlab
---8<-- ".github/workflows/run_tests.m"
+--8<-- ".github/workflows/run_tests_gh_ci.m"
 ```
 
 !!! warning

@@ -1,5 +1,10 @@
-
 % Script used to run tests with github CI
+
+IS_CI = getenv('CI');
+if ~IS_CI
+    error('This script should only run in continuous integration.')
+end
+
 cd('MOxUnit')
 moxunit_set_path();
 cd ..;

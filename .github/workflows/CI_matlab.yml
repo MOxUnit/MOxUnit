@@ -48,13 +48,13 @@ jobs:
     # https://github.com/matlab-actions/setup-matlab
         -   name: Run tests
             uses: matlab-actions/run-command@v2
-      # This command will call the script run_tests.m that will:
+      # This command will call the script run_tests_gh_ci.m that will:
       # - set up moxunit
       # - add MOcov to the path
       # - run the tests
       # - exit with the result
             with:
-                command: run run_tests;
+                command: run run_tests_gh_ci;
 
         # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
