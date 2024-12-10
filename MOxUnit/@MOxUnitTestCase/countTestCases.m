@@ -1,2 +1,2 @@
-function c=countTestCases(obj)
-    c=1;
+function c = countTestCases(obj)
+    c = 1;

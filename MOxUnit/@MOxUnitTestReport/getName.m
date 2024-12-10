@@ -1,2 +1,2 @@
-function name=getName(obj)
-    name=obj.name;
+function name = getName(obj)
+    name = obj.name;
