@@ -8,7 +8,7 @@ OCTAVE?=octave
 
 TESTDIR=$(CURDIR)/tests
 ROOTDIR=$(CURDIR)/MOxUnit
-UTILDIR=$(ROOTDIR)/util
+UTILDIR=$(ROOTDIR)/utildoc-serve
 
 ADDPATH=orig_dir=pwd();cd('$(ROOTDIR)');moxunit_set_path();cd(orig_dir)
 RMPATH=rmpath('$(ROOTDIR)');
@@ -170,3 +170,22 @@ test:
 	fi;
 	$(MAKE) test-matlab
 	$(MAKE) test-octave
+
+# DOCUMENTATION
+.PHONY: doc-install doc-serve remark
+
+doc-install:
+	pip install requirements
+
+doc-serve:
+	mkdocs serve -a localhost:8080
+
+package.json:
+	npm install `cat npm-requirements.txt`
+
+# Linting
+remark: package.json
+	npx remark \
+		./docs \
+		--frail \
+		--rc-path .remarkrc
