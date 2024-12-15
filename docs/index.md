@@ -10,7 +10,7 @@ and testing of 'doc strings'.
     - Uses object-oriented TestCase, TestSuite and TestResult classes, allowing for user-defined extensions.
     - Can be used directly with continuous integration services, such as [GitHub](./ci/github.md), [Travis-ci](./ci/travis.md) and [Shippable].
     - Supports JUnit-like XML output for use with Shippable and other test results visualization approaches.
-    - Supports the generation of code coverage reports using [MOCov]
+    - Supports the generation of code coverage reports using [MOCov](./mocov/index.md)
     - Provides compatibility with the (now unsupported) Steve Eddin's [Matlab xUnit test framework], and with recent Matlab test functionality.
     - Distributed under the MIT license, a permissive free software license.
 
@@ -25,10 +25,18 @@ and testing of 'doc strings'.
 
 <!--  -->
 
+
+[coveralls.io]: https://coveralls.io/
 [GNU Octave]: http://www.gnu.org/software/octave/
 [Matlab]: http://www.mathworks.com/products/matlab/
+[Matlab xUnit test framework]: http://it.mathworks.com/matlabcentral/fileexchange/22846-matlab-xunit-test-framework
+[MOcov]: https://github.com/MOcov/MOcov
 [MOdox]: https://github.com/MOdox/MOdox
 [MOxUnit]: https://github.com/MOxUnit/MOxUnit
+[MOxUnit .travis.yml]: https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml
 [MOxUnit zip archive]: https://github.com/MOxUnit/MOxUnit/archive/master.zip
-[MOcov]: https://github.com/MOcov/MOcov
+[Python unit test]: https://docs.python.org/2.6/library/unittest.html
 [Shippable]: https://app.shippable.com/
+[Shippable]: https://shippable.com
+[Travis-ci]: https://travis-ci.org
+[travis.yml configuration file]: https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml

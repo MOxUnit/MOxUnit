@@ -9,3 +9,4 @@ Thanks to the following contributors:
 -   Sven Baars
 -   'jdbancal'
 -   Marcin Konowalczyk
+-   Oliver Heimlich

@@ -38,7 +38,7 @@ To avoid a Makefile and run tests directly through Octave, the script has to cal
   - git clone https://github.com/MOxUnit/MOxUnit.git
 
   script:
-    - octave --no-gui --eval "addpath('~/git/MOxUnit/MOxUnit');moxunit_set_path;moxunit_runtests('tests')"
+    - octave --no-gui --eval "addpath('~/git/MOxUnit/MOxUnit'); moxunit_set_path; moxunit_runtests('tests')"
   ```
 
 Note that MOxUnit tests **itself** on travis, with [this](https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml) travis file.
@@ -70,14 +70,3 @@ You can use MOxUnit with it, but its tricky because:
     ```
 
     `exit(double(~ans))` ensures that the build fails if MOxUnit tests fail.
-
-<!--  -->
-
-[Travis-ci]: https://travis-ci.org
-[GNU Octave]: http://www.gnu.org/software/octave/
-[Matlab]: http://www.mathworks.com/products/matlab/
-[MOdox]: https://github.com/MOdox/MOdox
-[MOxUnit]: https://github.com/MOxUnit/MOxUnit
-[MOxUnit zip archive]: https://github.com/MOxUnit/MOxUnit/archive/master.zip
-[MOcov]: https://github.com/MOcov/MOcov
-[Shippable]: https://app.shippable.com/

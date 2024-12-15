@@ -1,8 +1,10 @@
 # Installation
 
-## Using the shell
+## Installation using the shell
 
-This requires a Unix-like operating system such as GNU/Linux or Apple OSX.
+!!! warning -- "requirements"
+
+    This requires a Unix-like operating system such as GNU/Linux or Apple OSX.
 
 ```bash
 git clone https://github.com/MOxUnit/MOxUnit.git
