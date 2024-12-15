@@ -11,7 +11,6 @@
         and then adding that directory to the search path.
         The `evalc.cc` implementation is Copyright 2015 Oliver Heimlich, distributed under the GPL v3+ license.
 
-
 ## Installation using the shell
 
 !!! warning -- "requirements"
@@ -30,7 +29,9 @@ If both Matlab and GNU Octave are available on your machine, it will install MOd
 ## Manual installation
 
 -   Download the zip archive from the [MOdox] repository.
+
 -   Start Matlab or GNU Octave.
+
 -   On the Matlab or GNU Octave prompt, `cd` to the `MOdox` root directory, then run:
 
     ```matlab

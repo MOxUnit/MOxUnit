@@ -7,21 +7,31 @@ for typical use cases this invokes running a test suite.
 
 There are two methods to generate coverage while evaluating such an expression or function handle.
 
-### Coverage using the 'file' method
+### Using the 'file' method
 
 This is the default method used.
 
-- Coverage information is stored internally by the function `mocov_line_covered`, which keeps this information through the use of persistent variables. Initially the coverage information is reset to being empty.
-- This method considers all files in a directory (and its subdirectories).
-- A temporary directory is created where modified versions of each file is stored.
-- Prior to evaluating the expression or function handle, for each file, MOcov determines which of its lines can be executed. Each line that can be executed is prefixed by a call to `mocov_line_covered`, which cause it to update internal state to record the filename and line number that was executed, and the result stored in the temporary directory.
-- The search path is updated to include the new temporary directory.
+-   Coverage information is stored internally by the function `mocov_line_covered`,
+    which keeps this information through the use of persistent variables.
+    Initially the coverage information is reset to being empty.
 
-After evaluating the expression or function handle, the temporary directory is deleted and the search path restored. Line coverage information is then extracted from the internal state of `mocov_line_covered`.
+-   This method considers all files in a directory (and its subdirectories).
+
+-   A temporary directory is created where modified versions of each file is stored.
+
+-   Prior to evaluating the expression or function handle, for each file, MOcov determines which of its lines can be executed.
+    Each line that can be executed is prefixed by a call to `mocov_line_covered`,
+    which cause it to update internal state to record the filename and line number that was executed,
+    and the result stored in the temporary directory.
+
+-   The search path is updated to include the new temporary directory.
+
+After evaluating the expression or function handle, the temporary directory is deleted and the search path restored.
+Line coverage information is then extracted from the internal state of `mocov_line_covered`.
 
 This method runs on both GNU Octave and Matlab, but is typically slow.
 
-### Coverage using the 'profile' method
+### Using the 'profile' method
 
 -   It uses the Matlab profiler.
 -   This method runs on Matlab only (not on GNU Octave), but is generally faster.

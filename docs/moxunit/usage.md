@@ -1,4 +1,4 @@
-# Using MOxUnit
+# Usage
 
 ## Defining MOxUnit tests
 

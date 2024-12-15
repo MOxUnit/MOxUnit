@@ -7,10 +7,11 @@ The help section of a function "foo" is the text shown when running "help foo".
 
 Documentation tests must be placed in an example section starting with a header
 that consists of exactly one of the strings (optionally surrounded by whitespace):
--  `Example`,
--  `Examples`,
--  `Example:`
--  `Examples:`
+
+-   `Example`
+-   `Examples`
+-   `Example:`
+-   `Examples:`
 
 Subsequent lines, if indented (by being prefixed by more whitespace than the example header),
 are used to construct documentation tests.
@@ -62,7 +63,7 @@ function foo()
     %   error('this is never executed)
     %
     %
-    % % tests end here because test indentation has ended
+    % tests end here because test indentation has ended
 ```
 
 ## Running documentation tests

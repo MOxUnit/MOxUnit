@@ -1,7 +1,9 @@
 # Travis-CI
 
 MOxUnit can be used with the [Travis-ci] service for continuous integration (CI) testing.
-This is achieved by setting up a [.travis.yml configuration file](.travis.yml).
+
+<!-- TODO ADD missing link -->
+This is achieved by setting up a [.travis.yml configuration file].
 This file is also used by [Shippable].
 As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made.
 If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
