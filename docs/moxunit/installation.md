@@ -17,8 +17,8 @@ If both Matlab and GNU Octave are available on your machine, it will install MOx
 
 ## Manual installation
 
--   Download the [MOxUnit zip archive] from the [MOxUnit] website, and extract it. This should
-    result in a directory called ``MOxUnit-master``.
+-   Download the [MOxUnit zip archive] from the MOxUnit repository, and extract it.
+    This should result in a directory called ``MOxUnit-master``.
 
 -   Start Matlab or GNU Octave.
 

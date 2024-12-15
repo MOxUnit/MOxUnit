@@ -28,7 +28,7 @@ If both Matlab and GNU Octave are available on your machine, it will install MOd
 
 ## Manual installation
 
--   Download the zip archive from the [MOdox] repository.
+-   Download the zip archive from the [MOdox repository](https://github.com/MOdox/MOdox).
 
 -   Start Matlab or GNU Octave.
 

@@ -21,4 +21,4 @@ MOdox is documentation test ("doctest") framework for Matlab and GNU Octave.
 
 MOdox can be used with the [Travis-ci] and [Shippable] services for continuous integration testing.
 This is achieved by setting up a `travis.yml` file.
-For an example in the related [MOxUnit] project, see the [MOxUnit travis.yml] file.
+For an example in the related MOxUnit project, see the [MOxUnit travis.yml] file.

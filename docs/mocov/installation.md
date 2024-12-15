@@ -21,7 +21,7 @@ If both Matlab and GNU Octave are available on your machine, it will install MOc
 
 ## Manual installation
 
--   Download the zip archive from the [MOcov] repository.
+-   Download the zip archive from the [MOcov repository](https://github.com/MOcov/MOcov).
 
 -   Start Matlab or GNU Octave.
 

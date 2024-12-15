@@ -57,7 +57,7 @@ Typical use cases for MOcov are:
     Results are stored in JSON, XML and HTML formats.
 
 -   As a specific example of the use case above,
-    when using the [MOxUnit] unit test platform such tests can be run as
+    when using the MOxUnit unit test platform such tests can be run as
 
     ```matlab
     success = moxunit_runtests( 'path/with/tests', ...
