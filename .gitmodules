@@ -1,0 +1,8 @@
+[submodule "MOcov"]
+	path = MOcov
+	url = https://github.com/MOxUnit/MOcov
+	datalad-url = https://github.com/MOxUnit/MOcov
+[submodule "MOdox"]
+	path = MOdox
+	url = https://github.com/MOxUnit/MOdox
+	datalad-url = https://github.com/MOxUnit/MOdox
