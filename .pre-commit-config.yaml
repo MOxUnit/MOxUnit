@@ -10,7 +10,6 @@ repos:
     -   id: check-json
     -   id: check-ast
     -   id: check-added-large-files
-    -   id: pretty-format-json
     -   id: check-case-conflict
 
 
