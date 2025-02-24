@@ -4,13 +4,12 @@ MOxUnit can be used with the [Travis-ci] service for continuous integration (CI)
 
 <!-- TODO ADD missing link -->
 This is achieved by setting up a [.travis.yml configuration file].
-This file is also used by [Shippable].
-As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made.
+As a result, the test suite is run automatically on both [Travis-ci] every time it is pushed to the github repository, or when a pull request is made.
 If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
 
 ## Octave
 
-The easiest test to set up on Travis and/or Shippable is with [GNU Octave].
+The easiest test to set up on Travis is with [GNU Octave].
 Make sure your code is Octave compatible.
 Note that many Matlab projects tend to use functionality not present in Octave (such as particular functions), whereasand writing code that is both Matlab- and Octave-compatible may require some additional efforts.
 
@@ -42,8 +41,6 @@ To avoid a Makefile and run tests directly through Octave, the script has to cal
   script:
     - octave --no-gui --eval "addpath('~/git/MOxUnit/MOxUnit'); moxunit_set_path; moxunit_runtests('tests')"
   ```
-
-Note that MOxUnit tests **itself** on travis, with [this](https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml) travis file.
 
 ## Matlab
 

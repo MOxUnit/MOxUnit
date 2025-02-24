@@ -92,12 +92,12 @@ Typical use cases for MOcov are:
     coverage results are stored in JSON, XML and HTML formats.
 
 -   Use with continuous integration service,
-    such as [Shippable] or [travis-ci] combined with [coveralls.io].
+    such as [travis-ci] combined with [coveralls.io].
     See the [travis.yml configuration file] in the [MOxUnit] project for an example.
 
-### Use with travis-ci and Shippable
+### Use with travis-ci
 
-MOcov can be used with the [Travis-ci] and [Shippable] services for continuous integration testing.
+MOcov can be used with the [Travis-ci]  services for continuous integration testing.
 This is achieved by setting up a `travis.yml` file.
 Due to recursiveness issues, MOcov cannot use these services to generate coverage reports for itself;
 for an example in the related [MOxUnit] project,

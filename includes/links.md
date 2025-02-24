@@ -10,7 +10,4 @@ https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#auto-appe
 [MOxUnit .travis.yml]: https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml
 [MOxUnit zip archive]: https://github.com/MOxUnit/MOxUnit/archive/master.zip
 [Python unit test]: https://docs.python.org/2.6/library/unittest.html
-[Shippable]: https://app.shippable.com/
-[Shippable]: https://shippable.com
 [Travis-ci]: https://travis-ci.org
-[travis.yml configuration file]: https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml

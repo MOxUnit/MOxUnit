@@ -5,7 +5,7 @@ MOcov is a coverage report generator for Matlab and GNU-Octave.
 !!! note -- "Features"
 
     -   Runs on both the [Matlab] and [GNU Octave] platforms.
-    -   Can be used directly with continuous integration services, such as [coveralls.io] and [Shippable].
+    -   Can be used directly with continuous integration services, such as [coveralls.io].
     -   Integrates with [MOxUnit](../index.md), a unit test framework for Matlab and GNU Octave.
     -   Supports the Matlab profiler.
     -   Writes coverage reports in HTML, JSON and XML formats.
