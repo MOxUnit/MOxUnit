@@ -10,6 +10,12 @@ on:
         branches: [master]
     workflow_dispatch:
 
+# cancel previous runs on the same branch / PR
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "unit-tests"
