@@ -1,7 +1,9 @@
 # Travis-CI
 
 MOxUnit can be used with the [Travis-ci] service for continuous integration (CI) testing.
-This is achieved by setting up a [.travis.yml configuration file](.travis.yml).
+
+<!-- TODO ADD missing link -->
+This is achieved by setting up a [.travis.yml configuration file].
 This file is also used by [Shippable].
 As a result, the test suite is run automatically on both [Travis-ci] and [Shippable] every time it is pushed to the github repository, or when a pull request is made.
 If a test fails, or if all tests pass after a test failed before, the developers are notified by email.
@@ -38,7 +40,7 @@ To avoid a Makefile and run tests directly through Octave, the script has to cal
   - git clone https://github.com/MOxUnit/MOxUnit.git
 
   script:
-    - octave --no-gui --eval "addpath('~/git/MOxUnit/MOxUnit');moxunit_set_path;moxunit_runtests('tests')"
+    - octave --no-gui --eval "addpath('~/git/MOxUnit/MOxUnit'); moxunit_set_path; moxunit_runtests('tests')"
   ```
 
 Note that MOxUnit tests **itself** on travis, with [this](https://github.com/MOxUnit/MOxUnit/blob/master/.travis.yml) travis file.
@@ -70,14 +72,3 @@ You can use MOxUnit with it, but its tricky because:
     ```
 
     `exit(double(~ans))` ensures that the build fails if MOxUnit tests fail.
-
-<!--  -->
-
-[Travis-ci]: https://travis-ci.org
-[GNU Octave]: http://www.gnu.org/software/octave/
-[Matlab]: http://www.mathworks.com/products/matlab/
-[MOdox]: https://github.com/MOdox/MOdox
-[MOxUnit]: https://github.com/MOxUnit/MOxUnit
-[MOxUnit zip archive]: https://github.com/MOxUnit/MOxUnit/archive/master.zip
-[MOcov]: https://github.com/MOcov/MOcov
-[Shippable]: https://app.shippable.com/
