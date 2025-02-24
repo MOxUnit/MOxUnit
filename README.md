@@ -7,5 +7,4 @@
 
 MOxUnit is a lightweight unit test framework for Matlab and GNU Octave.
 
-<!-- TODO add link -->
-For more information see our documentation
+For more information see [our documentation](http://moxunit.github.io/MOxUnit/).

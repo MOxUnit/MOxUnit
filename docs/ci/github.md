@@ -7,7 +7,8 @@ with the content described in one of the following sections.
 
 !!! warning
 
-    The example shown below is the one we use for own repository and may need some tweaking to work on yours.
+    The example shown below is the one we use for the MOxUnit repository
+    and may need some tweaking to work on yours.
 
 ## Octave
 
@@ -51,12 +52,12 @@ https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#single-li
 Note that this wokflow calls the following script:
 
 ```matlab
---8<-- ".github/workflows/run_tests_gh_ci.m"
+--8<-- "run_tests_gh_ci.m"
 ```
 
 !!! warning
 
-    You may need to use a slightly different run_test.m
+    You may need to use a slightly different `run_tests_gh_ci.m`
     by updating the values for `path/to/src` and `path/to/tests`
     to make sure it points to where your source code and tests are.
 
