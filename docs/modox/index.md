@@ -5,7 +5,7 @@ MOdox is documentation test ("doctest") framework for Matlab and GNU Octave.
 !!! note -- "Features"
 
     -   Runs on both the [Matlab] and [GNU Octave] platforms.
-    -   Can be used directly with continuous integration services, such as [coveralls.io] and [Shippable].
+    -   Can be used directly with continuous integration services, such as [coveralls.io].
     -   Extends [MOxUnit](../moxunit/index.md), a unit test framework for Matlab and GNU Octave.
 
 !!! note -- "Compatibility notes"
@@ -17,8 +17,8 @@ MOdox is documentation test ("doctest") framework for Matlab and GNU Octave.
     -   Expressions with the "for" keyword are not supported in Octave because `evalc` does not seem to support it
     -   It is possible to indicate that an expression throws an exception, but not *which* exception.
 
-## Use with travis-ci and Shippable
+## Use with travis-ci
 
-MOdox can be used with the [Travis-ci] and [Shippable] services for continuous integration testing.
+MOdox can be used with the [Travis-ci] services for continuous integration testing.
 This is achieved by setting up a `travis.yml` file.
 For an example in the related MOxUnit project, see the [MOxUnit travis.yml] file.

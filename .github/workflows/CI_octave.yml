@@ -51,7 +51,7 @@ jobs:
         -   name: Code coverage
             uses: codecov/codecov-action@v5
             with:
-                file: coverage.xml
+                files: coverage.xml
                 flags: octave
                 name: codecov-octave
                 fail_ci_if_error: false
