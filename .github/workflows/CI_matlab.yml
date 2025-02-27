@@ -24,17 +24,21 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
+
     tests:
+
         strategy:
             matrix:
-        # Note that some older versions (e.g R2020a, R2020b...) may not be available on all OS
+                # Note that some older versions (e.g R2020a, R2020b...) may not be available on all OS
                 matlab_version: [R2022a, R2022b, R2023a, R2023b]
                 os: [ubuntu-latest, macos-latest, windows-latest]
             fail-fast: false # Don't cancel all jobs if one fails
+
         runs-on: ${{ matrix.os }}
+
         steps:
-    # use matlab-actions/setup-matlab to setup a specific version of MATLAB
-    # https://github.com/matlab-actions/setup-matlab
+        # use matlab-actions/setup-matlab to setup a specific version of MATLAB
+        # https://github.com/matlab-actions/setup-matlab
         -   name: Install MATLAB
             uses: matlab-actions/setup-matlab@v2
             with:
@@ -44,24 +48,25 @@ jobs:
         -   name: Install MOcov
             run: |
                 git clone https://github.com/MOcov/MOcov.git --depth 1
-    # use matlab-actions/setup-matlab to run a matlab command
-    # https://github.com/matlab-actions/setup-matlab
+
+        # use matlab-actions/setup-matlab to run a matlab command
+        # https://github.com/matlab-actions/setup-matlab
         -   name: Run tests
             uses: matlab-actions/run-command@v2
-      # This command will call the script run_tests_gh_ci.m that will:
-      # - set up moxunit
-      # - add MOcov to the path
-      # - run the tests
-      # - exit with the result
+
+            # This command will call the script run_tests_gh_ci.m that will:
+            # - set up moxunit
+            # - add MOcov to the path
+            # - run the tests
+            # - exit with the result
             with:
                 command: run run_tests_gh_ci;
 
-        # uncomment the lines below to upload coverage to codecov
         -   name: Code coverage
             uses: codecov/codecov-action@v5
             with:
                 files: coverage.xml
                 flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
-                name: codecov-octave
+                name: codecov-matlab
                 fail_ci_if_error: false
-                # token: ${{ secrets.CODECOV_TOKEN }}
+                token: ${{ secrets.CODECOV_TOKEN }}
