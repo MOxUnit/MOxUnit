@@ -15,20 +15,17 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "unit-tests"
+
     unit-tests:
-    # The type of runner that the job will run on
+
         runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         -   uses: actions/checkout@v4
 
-    # Use A Github Action to perform tests
+        # Use A Github Action to perform tests
         -   name: run unit tests and documentation tests, generate coverage report
             uses: joergbrech/moxunit-action@v1.1
             with:
@@ -38,7 +35,6 @@ jobs:
                 doc_tests: true
                 cover_xml_file: coverage.xml
 
-    # Store the coverage report as an artifact
         -   name: Store Coverage report as artifact
             uses: actions/upload-artifact@v4
             with:

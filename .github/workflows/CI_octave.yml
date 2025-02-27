@@ -47,7 +47,7 @@ jobs:
         -   name: Run tests
             run: octave $OCTFLAGS --eval "moxunit_runtests tests -verbose -with_coverage -cover MOxUnit -cover_xml_file coverage.xml; exit(double(~ans))"
 
-        # uncomment the lines below to upload coverage to codecov
+
         -   name: Code coverage
             uses: codecov/codecov-action@v5
             with:
@@ -55,4 +55,4 @@ jobs:
                 flags: octave
                 name: codecov-octave
                 fail_ci_if_error: false
-                # token: ${{ secrets.CODECOV_TOKEN }}
+                token: ${{ secrets.CODECOV_TOKEN }}
