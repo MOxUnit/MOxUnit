@@ -6,8 +6,10 @@
 #
 babel==2.15.0
     # via mkdocs-material
-certifi==2024.6.2
-    # via requests
+certifi==2025.1.31
+    # via
+    #   -r requirements.in
+    #   requests
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
