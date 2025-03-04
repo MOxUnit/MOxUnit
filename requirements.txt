@@ -18,8 +18,9 @@ ghp-import==2.1.0
     # via mkdocs
 idna==3.7
     # via requests
-jinja2==3.1.4
+jinja2==3.1.5
     # via
+    #   -r requirements.in
     #   mkdocs
     #   mkdocs-material
 markdown==3.6
@@ -71,7 +72,9 @@ requests==2.32.3
     # via mkdocs-material
 six==1.16.0
     # via python-dateutil
-urllib3==2.2.1
-    # via requests
+urllib3==2.3.0
+    # via
+    #   -r requirements.in
+    #   requests
 watchdog==4.0.1
     # via mkdocs
