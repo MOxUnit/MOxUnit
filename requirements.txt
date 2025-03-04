@@ -6,8 +6,10 @@
 #
 babel==2.15.0
     # via mkdocs-material
-certifi==2024.6.2
-    # via requests
+certifi==2025.1.31
+    # via
+    #   -r requirements.in
+    #   requests
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
@@ -18,8 +20,9 @@ ghp-import==2.1.0
     # via mkdocs
 idna==3.7
     # via requests
-jinja2==3.1.4
+jinja2==3.1.5
     # via
+    #   -r requirements.in
     #   mkdocs
     #   mkdocs-material
 markdown==3.6
@@ -71,7 +74,9 @@ requests==2.32.3
     # via mkdocs-material
 six==1.16.0
     # via python-dateutil
-urllib3==2.2.1
-    # via requests
+urllib3==2.3.0
+    # via
+    #   -r requirements.in
+    #   requests
 watchdog==4.0.1
     # via mkdocs
