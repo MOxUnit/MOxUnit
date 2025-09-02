@@ -44,7 +44,7 @@ jobs:
             with:
                 release: ${{ matrix.matlab_version }}
         -   name: Checkout repository
-            uses: actions/checkout@v4
+            uses: actions/checkout@v5
         -   name: Install MOcov
             run: |
                 git clone https://github.com/MOcov/MOcov.git --depth 1
