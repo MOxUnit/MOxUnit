@@ -60,9 +60,15 @@ function assertWarning(func, expected_id, message)
 
     state = warning('query');
     try
-        % In octave, silencing warnings does not allow us to
-        % get them through lastwarn
-        warning('error', 'all');
+        % In octave, we need to set the state using a struct because
+        %     warning('error','all');
+        % is not allowed:
+        %  => error: warning: cannot specify "all" warning ID with state "error"
+        % However the following achieves exactly the same effect.
+        error_state = struct();
+        error_state.identifier = 'all';
+        error_state.state = 'error';
+        error_state(new_state);
     catch
         % In matlab, setting all warnings to errors is not allowed
         warning('off', 'all');
