@@ -68,7 +68,7 @@ function assertWarning(func, expected_id, message)
         error_state = struct();
         error_state.identifier = 'all';
         error_state.state = 'error';
-        error_state(new_state);
+        warning(error_state);
     catch
         % In matlab, setting all warnings to errors is not allowed
         warning('off', 'all');
