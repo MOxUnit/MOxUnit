@@ -74,7 +74,8 @@ Note that this wokflow calls the following script:
     ```
 
 Alternatively, the commands can be part of a CI*.yaml file. For example, CoSMoMVPA
-uses the following snippet in `CI_matlab.yml`:
+uses more or less the following configuration in `CI_matlab.yml` (for simplicity,
+the documentation tests are left out):
 
 ```yaml
         steps:
@@ -96,13 +97,12 @@ uses the following snippet in `CI_matlab.yml`:
                     cosmo_set_path()
                     savepath()
 
-        -   name: Download MOxUnit, MOcov, MOdox
+        -   name: Download MOxUnit, MOcov
             run: |
                 git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
                 git clone https://github.com/MOcov/MOcov.git --depth 1
-                git clone https://github.com/MOdox/MOdox.git --depth 1
 
-        -   name: Install MOxUnit, MOcov, MOdox
+        -   name: Install MOxUnit, MOcov
             uses: matlab-actions/run-command@v2
             with:
                 command: |
@@ -113,16 +113,15 @@ uses the following snippet in `CI_matlab.yml`:
                     prefix=[origin '/']
                     cd([prefix 'MOxUnit/MOxUnit']); moxunit_set_path()
                     cd([prefix 'MOcov/MOcov']); addpath(pwd)
-                    cd([prefix 'MOdox/MOdox']); addpath(pwd)
                     savepath()
                     disp('Path is now')
                     disp(path)
 
-        -   name: Run tests
+        -   name: Run unit tests (no documentation tests)
             uses: matlab-actions/run-command@v2
             with:
                 command: |
-                    result=cosmo_run_tests('-verbose', '-cover', 'mvpa', '-with_coverage', '-cover_xml_file', 'coverage.xml')
+                    result=moxunit_runtests('tests','-verbose', '-cover', 'mvpa', '-with_coverage', '-cover_xml_file', 'coverage.xml');
                     exit(~result);
 
         -   name: Code coverage
