@@ -36,7 +36,7 @@ jobs:
                 cover_xml_file: coverage.xml
 
         -   name: Store Coverage report as artifact
-            uses: actions/upload-artifact@v4
+            uses: actions/upload-artifact@v5
             with:
                 name: coverage_xml_file
                 path: coverage.xml
