@@ -63,7 +63,7 @@ jobs:
                 command: run run_tests_gh_ci;
 
         -   name: Code coverage
-            uses: codecov/codecov-action@v5
+            uses: codecov/codecov-action@v6
             with:
                 files: coverage.xml
                 flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
