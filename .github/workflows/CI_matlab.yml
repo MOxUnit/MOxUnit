@@ -52,7 +52,7 @@ jobs:
         # use matlab-actions/setup-matlab to run a matlab command
         # https://github.com/matlab-actions/setup-matlab
         -   name: Run tests
-            uses: matlab-actions/run-command@v2
+            uses: matlab-actions/run-command@v3
 
             # This command will call the script run_tests_gh_ci.m that will:
             # - set up moxunit
