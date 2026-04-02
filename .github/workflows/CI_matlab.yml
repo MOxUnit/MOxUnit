@@ -40,7 +40,7 @@ jobs:
         # use matlab-actions/setup-matlab to setup a specific version of MATLAB
         # https://github.com/matlab-actions/setup-matlab
         -   name: Install MATLAB
-            uses: matlab-actions/setup-matlab@v2
+            uses: matlab-actions/setup-matlab@v3
             with:
                 release: ${{ matrix.matlab_version }}
         -   name: Checkout repository
@@ -63,7 +63,7 @@ jobs:
                 command: run run_tests_gh_ci;
 
         -   name: Code coverage
-            uses: codecov/codecov-action@v5
+            uses: codecov/codecov-action@v6
             with:
                 files: coverage.xml
                 flags: ${{ matrix.os }}_matlab-${{ matrix.matlab_version }}
