@@ -40,7 +40,7 @@ jobs:
         # use matlab-actions/setup-matlab to setup a specific version of MATLAB
         # https://github.com/matlab-actions/setup-matlab
         -   name: Install MATLAB
-            uses: matlab-actions/setup-matlab@v2
+            uses: matlab-actions/setup-matlab@v3
             with:
                 release: ${{ matrix.matlab_version }}
         -   name: Checkout repository
